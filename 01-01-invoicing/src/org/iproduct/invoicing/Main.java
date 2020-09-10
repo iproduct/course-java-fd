@@ -1,6 +1,7 @@
 package org.iproduct.invoicing;
 
 import org.iproduct.invoicing.dao.MockProductDao;
+import org.iproduct.invoicing.dao.MockProductDaoArrays;
 import org.iproduct.invoicing.dao.ProductDao;
 import org.iproduct.invoicing.model.Product;
 
@@ -21,7 +22,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        ProductDao productRepo = new MockProductDao();
+        ProductDao productRepo = new MockProductDaoArrays();
         Product[] sampleProducts = {
                 new Product("BK002", "UML Distilled", 28.7),
                 new Product("BK001", "Thinking in Java", 35.5),
@@ -32,9 +33,17 @@ public class Main {
             productRepo.create(p);
         }
         printProducts(productRepo.findAll());
+
+        // delete product
         productRepo.deleteById(3L);
         System.out.println();
         printProducts(productRepo.findAll());
 
+        // update product
+        Product p2 = productRepo.findById(2L);
+        p2.setPrice(p2.getPrice() + 10);
+        productRepo.update(p2);
+        System.out.println();
+        printProducts(productRepo.findAll());
     }
 }
