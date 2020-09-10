@@ -4,9 +4,10 @@ import org.iproduct.invoicing.dao.MockProductDao;
 import org.iproduct.invoicing.dao.MockProductDaoArrays;
 import org.iproduct.invoicing.dao.ProductDao;
 import org.iproduct.invoicing.model.Product;
+import org.iproduct.invoicing.util.ProductNameComparator;
+import org.iproduct.invoicing.util.ProductPriceComparator;
 
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.*;
 
 import static org.iproduct.invoicing.model.Unit.PCS;
 
@@ -32,7 +33,9 @@ public class Main {
         for (Product p : sampleProducts) {
             productRepo.create(p);
         }
-        printProducts(productRepo.findAll());
+        List<Product> products = new LinkedList<>(productRepo.findAll());
+        Collections.sort(products, new ProductPriceComparator().reversed());
+        printProducts(products);
 
         // delete product
         productRepo.deleteById(3L);
