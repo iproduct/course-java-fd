@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import static org.iproduct.invoicing.model.Unit.*;
 
-public class Product {
+public class Product implements Comparable<Product> {
 //    private static long nextId = 0;
     private Long id; // = ++nextId;
     private String code;
@@ -14,12 +14,11 @@ public class Product {
     private Unit unit = PCS; //default
 
     // No args constructor
-    Product() {
-        unit = KG; //constructor
+    public Product() {
     }
 
     // Required args constructor
-    Product(String code, String name, double price) {
+    public Product(String code, String name, double price) {
         this.code = code;
         this.name = name;
         this.price = price;
@@ -39,6 +38,10 @@ public class Product {
         this.name = name;
         this.price = price;
         this.unit = unit;
+    }
+
+    public Product(Long id) {
+        this.id = id;
     }
 
     public Long getId() {
@@ -128,4 +131,8 @@ public class Product {
         System.out.println(p1.equals(p2));
     }
 
+    @Override
+    public int compareTo(Product other) {
+        return this.id.compareTo(other.id);
+    }
 }
