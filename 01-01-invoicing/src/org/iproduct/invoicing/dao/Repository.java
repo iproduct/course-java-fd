@@ -5,6 +5,7 @@ import org.iproduct.invoicing.model.Product;
 import java.util.Collection;
 import java.util.List;
 
+// Repository API
 public interface Repository<K, E extends Identifiable<K>> {
     Collection<E> findAll();
     E findById(K id);
