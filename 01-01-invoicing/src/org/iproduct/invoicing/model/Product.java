@@ -1,11 +1,13 @@
 package org.iproduct.invoicing.model;
 
+import org.iproduct.invoicing.dao.Identifiable;
+
 import java.util.Arrays;
 import java.util.Objects;
 
 import static org.iproduct.invoicing.model.Unit.*;
 
-public class Product implements Comparable<Product> {
+public class Product implements Comparable<Product>, Identifiable<Long> {
 //    private static long nextId = 0;
     private Long id; // = ++nextId;
     private String code;

@@ -1,8 +1,7 @@
 package org.iproduct.invoicing;
 
-import org.iproduct.invoicing.dao.MockProductDao;
-import org.iproduct.invoicing.dao.MockProductDaoArrays;
-import org.iproduct.invoicing.dao.ProductDao;
+import org.iproduct.invoicing.dao.*;
+import org.iproduct.invoicing.model.Issuer;
 import org.iproduct.invoicing.model.Product;
 import org.iproduct.invoicing.util.ProductNameComparator;
 import org.iproduct.invoicing.util.ProductPriceComparator;
@@ -23,7 +22,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        ProductDao productRepo = new MockProductDaoArrays();
+        KeyGenerator<Long> longKeyGenerator = new LongKeyGenerator();
+        Repository<Long, Product> productRepo = new MockRepository<>(longKeyGenerator);
         Product[] sampleProducts = {
                 new Product("BK002", "UML Distilled", 28.7),
                 new Product("BK001", "Thinking in Java", 35.5),
@@ -48,5 +48,21 @@ public class Main {
         productRepo.update(p2);
         System.out.println();
         printProducts(productRepo.findAll());
+
+        // Issuer tests
+        System.out.println("\nIssuer Demos:\n-------------------------------------------------");
+        List<Issuer> issuers = Arrays.asList(new Issuer[] {
+                new Issuer(123456789L, "IT Bookstore Ltd.", "Sofia, Ivan Asen 25A",
+                        "BGUNCR1234567890", "BGUNCR",
+                        "+(359) 2 896123", "BG123456789"),
+                new Issuer(567889432L, "Best Software AD", "Sofia, 1000",
+                        "BGFIB123456ASD7890", "BGFIB",
+                        "+(359) 2 567789", "BG567889432"),
+        });
+        KeyGenerator<Long> issuerKeyGenerator = new LongKeyGenerator();
+        Repository<Long, Issuer> issuerRepo = new MockRepository<>(issuerKeyGenerator);
+        issuers.forEach(issuer -> issuerRepo.create(issuer));
+        issuerRepo.findAll().forEach(issuer -> System.out.println(issuer));
+
     }
 }
