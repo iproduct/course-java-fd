@@ -8,6 +8,11 @@ import org.iproduct.invoicing.model.Issuer;
 import org.iproduct.invoicing.model.Product;
 import org.iproduct.invoicing.util.ProductNameComparator;
 import org.iproduct.invoicing.util.ProductPriceComparator;
+import org.iproduct.invoicing.view.Alignment;
+import org.iproduct.invoicing.view.PrintUtils;
+
+import static org.iproduct.invoicing.view.Alignment.*;
+import static org.iproduct.invoicing.view.PrintUtils.ColumnDescriptor;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -15,6 +20,7 @@ import java.util.logging.Logger;
 
 import static java.util.logging.Level.SEVERE;
 import static org.iproduct.invoicing.model.Unit.PCS;
+import static org.iproduct.invoicing.view.PrintUtils.printTable;
 
 public class Main {
     private static final Logger LOG = Logger.getLogger("org.iproduct.invoicing.Main");
@@ -82,6 +88,16 @@ public class Main {
         Repository<Long, Contragent> issuerRepo = new MockRepository<>(issuerKeyGenerator);
         issuers.forEach(issuer -> issuerRepo.create(issuer));
         issuerRepo.findAll().forEach(issuer -> System.out.println(issuer.toString()));
+
+        List<ColumnDescriptor> descriptors = List.of(
+                new ColumnDescriptor("id", "ID", 3, RIGHT),
+                new ColumnDescriptor("code", "Code", 5, LEFT),
+                new ColumnDescriptor("name", "Name", 20, LEFT),
+                new ColumnDescriptor("price", "Price", 8, RIGHT),
+                new ColumnDescriptor("unit", "Unit", 3, CENTER)
+        );
+        System.out.println();
+        System.out.println(printTable(descriptors, null));
 
     }
 }
