@@ -1,6 +1,7 @@
 package org.iproduct.invoicing;
 
 import org.iproduct.invoicing.dao.*;
+import org.iproduct.invoicing.exceptions.NonexistingEntityException;
 import org.iproduct.invoicing.model.Client;
 import org.iproduct.invoicing.model.Contragent;
 import org.iproduct.invoicing.model.Issuer;
@@ -9,10 +10,14 @@ import org.iproduct.invoicing.util.ProductNameComparator;
 import org.iproduct.invoicing.util.ProductPriceComparator;
 
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import static java.util.logging.Level.SEVERE;
 import static org.iproduct.invoicing.model.Unit.PCS;
 
 public class Main {
+    private static final Logger LOG = Logger.getLogger("org.iproduct.invoicing.Main");
     public static void printProducts(Collection<Product> products) {
 //        Iterator<Product> productIterator = products.iterator();
 //        while(productIterator.hasNext()) {
@@ -40,14 +45,22 @@ public class Main {
         printProducts(products);
 
         // delete product
-        productRepo.deleteById(3L);
+        try {
+            productRepo.deleteById(6L);
+        } catch (NonexistingEntityException e) {
+            LOG.log(SEVERE, "Error deleting product:", e);
+        }
         System.out.println();
         printProducts(productRepo.findAll());
 
         // update product
         Product p2 = productRepo.findById(2L);
         p2.setPrice(p2.getPrice() + 10);
-        productRepo.update(p2);
+        try {
+            productRepo.update(p2);
+        } catch (NonexistingEntityException e) {
+            LOG.log(SEVERE, "Error updating product:", e);
+        }
         System.out.println();
         printProducts(productRepo.findAll());
 

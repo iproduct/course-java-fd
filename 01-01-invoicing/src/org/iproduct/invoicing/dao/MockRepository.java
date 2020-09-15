@@ -1,6 +1,10 @@
 package org.iproduct.invoicing.dao;
 
+import org.iproduct.invoicing.exceptions.NonexistingEntityException;
+
 import java.util.*;
+
+import static java.lang.String.format;
 
 public class MockRepository<K, E extends Identifiable<K>> implements Repository<K, E>{
     private Map<K, E> items = new HashMap<>();
@@ -34,13 +38,20 @@ public class MockRepository<K, E extends Identifiable<K>> implements Repository<
     }
 
     @Override
-    public E update(E item) {
+    public E update(E item) throws NonexistingEntityException {
+        if(findById(item.getId()) == null) {
+            throw new NonexistingEntityException(format("Entity with ID=%s does not exist.", item.getId()));
+        }
         return items.put(item.getId(), item);
     }
 
     @Override
-    public E deleteById(K id) {
-        return items.remove(id);
+    public E deleteById(K id) throws NonexistingEntityException {
+        E result = items.remove(id);
+        if(result == null) {
+            throw new NonexistingEntityException(format("Entity with ID=%s does not exist.", id));
+        }
+        return result;
     }
 
     @Override

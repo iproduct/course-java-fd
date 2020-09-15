@@ -1,5 +1,6 @@
 package org.iproduct.invoicing.dao;
 
+import org.iproduct.invoicing.exceptions.NonexistingEntityException;
 import org.iproduct.invoicing.model.Product;
 
 import java.util.Collection;
@@ -10,7 +11,7 @@ public interface Repository<K, E extends Identifiable<K>> {
     Collection<E> findAll();
     E findById(K id);
     E create(E item);
-    E update(E item);
-    E deleteById(K id);
+    E update(E item) throws NonexistingEntityException;
+    E deleteById(K id) throws NonexistingEntityException;
     long size();
 }
