@@ -9,6 +9,7 @@ import org.iproduct.invoicing.model.Product;
 import org.iproduct.invoicing.util.ProductNameComparator;
 import org.iproduct.invoicing.util.ProductPriceComparator;
 import org.iproduct.invoicing.view.Alignment;
+import org.iproduct.invoicing.view.InputUtils;
 import org.iproduct.invoicing.view.PrintUtils;
 
 import static org.iproduct.invoicing.view.Alignment.*;
@@ -111,5 +112,8 @@ public class Main {
         );
         System.out.println();
         System.out.println(printTable(contragentDescriptors, contragents));
+
+        // test input utilities
+        InputUtils.inputString(null, null);
     }
 }
