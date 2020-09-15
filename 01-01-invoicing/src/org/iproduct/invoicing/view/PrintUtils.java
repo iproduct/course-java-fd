@@ -3,6 +3,8 @@ package org.iproduct.invoicing.view;
 import org.iproduct.invoicing.dao.Identifiable;
 
 import javax.swing.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import static org.iproduct.invoicing.view.Alignment.CENTER;
@@ -22,7 +24,7 @@ public class PrintUtils {
             this.alignment = alignment;
         }
     }
-    public static String printTable(List<ColumnDescriptor> columns, List<Identifiable<Long>> items) {
+    public static String printTable(List<ColumnDescriptor> columns, List<?> items) {
         StringBuilder sb = new StringBuilder();
         int width = columns.stream().mapToInt(column -> column.width).sum() + columns.size() + 1;
         sb.append("-".repeat(width)).append("\n|");
@@ -31,6 +33,19 @@ public class PrintUtils {
            sb.append("|");
         }
         sb.append("\n").append("-".repeat(width)).append("\n|");
+//        try {
+//            StringBuilder propName = new StringBuilder(columns.get(0).property);
+//            propName.setCharAt(0, Character.toTitleCase(propName.charAt(0)));
+//            Method accessor = itemClass.getMethod("get" + propName);
+//            System.out.println("!!!!\n" + accessor.invoke(items.get(0)));
+//        } catch (NoSuchMethodException e) {
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (InvocationTargetException e) {
+//            e.printStackTrace();
+//        }
+
         return sb.toString();
     }
 

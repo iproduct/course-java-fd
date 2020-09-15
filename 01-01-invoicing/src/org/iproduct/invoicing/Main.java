@@ -37,12 +37,12 @@ public class Main {
     public static void main(String[] args) {
         KeyGenerator<Long> longKeyGenerator = new LongKeyGenerator();
         Repository<Long, Product> productRepo = new MockRepository<>(longKeyGenerator);
-        Product[] sampleProducts = {
+        List<Product> sampleProducts = List.of(
                 new Product("BK002", "UML Distilled", 28.7),
                 new Product("BK001", "Thinking in Java", 35.5),
                 new Product("BK003", "Head-first Java", 32.7),
-                new Product("BK004", "Effective Java", 45.5),
-        };
+                new Product("BK004", "Effective Java", 45.5)
+                );
         for (Product p : sampleProducts) {
             productRepo.create(p);
         }
@@ -90,14 +90,14 @@ public class Main {
         issuerRepo.findAll().forEach(issuer -> System.out.println(issuer.toString()));
 
         List<ColumnDescriptor> descriptors = List.of(
-                new ColumnDescriptor("id", "ID", 3, RIGHT),
-                new ColumnDescriptor("code", "Code", 5, LEFT),
-                new ColumnDescriptor("name", "Name", 20, LEFT),
-                new ColumnDescriptor("price", "Price", 8, RIGHT),
-                new ColumnDescriptor("unit", "Unit", 3, CENTER)
+                new ColumnDescriptor("id", "ID", 4, RIGHT),
+                new ColumnDescriptor("code", "Code", 7, LEFT),
+                new ColumnDescriptor("name", "Name", 30, LEFT),
+                new ColumnDescriptor("price", "Price", 10, RIGHT),
+                new ColumnDescriptor("unit", "Unit", 4, CENTER)
         );
         System.out.println();
-        System.out.println(printTable(descriptors, null));
+        System.out.println(printTable(descriptors, sampleProducts));
 
     }
 }
