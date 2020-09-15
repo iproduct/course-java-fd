@@ -24,39 +24,59 @@ public class PrintUtils {
             this.alignment = alignment;
         }
     }
-    public static String printTable(List<ColumnDescriptor> columns, List<?> items) {
+
+    public static String printTable(List<ColumnDescriptor> columns, List<?> items, Class itemClass) {
         StringBuilder sb = new StringBuilder();
         int width = columns.stream().mapToInt(column -> column.width).sum() + columns.size() + 1;
         sb.append("-".repeat(width)).append("\n|");
-        for(ColumnDescriptor c: columns){
-           appendAligned(sb, c.width, CENTER, c.label);
-           sb.append("|");
+        for (ColumnDescriptor c : columns) {
+            appendAligned(sb, c.width, CENTER, c.label);
+            sb.append("|");
         }
         sb.append("\n").append("-".repeat(width)).append("\n|");
-//        try {
-//            StringBuilder propName = new StringBuilder(columns.get(0).property);
-//            propName.setCharAt(0, Character.toTitleCase(propName.charAt(0)));
-//            Method accessor = itemClass.getMethod("get" + propName);
-//            System.out.println("!!!!\n" + accessor.invoke(items.get(0)));
-//        } catch (NoSuchMethodException e) {
-//            e.printStackTrace();
-//        } catch (IllegalAccessException e) {
-//            e.printStackTrace();
-//        } catch (InvocationTargetException e) {
-//            e.printStackTrace();
-//        }
 
+        // build accessor method name
+        for (int line = 0; line < items.size(); line++) {
+            for (int i = 0; i < columns.size(); i++) {
+                ColumnDescriptor column = columns.get(i);
+                StringBuilder propName = new StringBuilder(column.property);
+                propName.setCharAt(0, Character.toTitleCase(propName.charAt(0)));
+                propName.insert(0, "get");
+                // Call accessor method by reflection
+                try {
+                    Method accessor = itemClass.getMethod(propName.toString());
+                    Object result = accessor.invoke(items.get(line));
+                    if(result instanceof Double) {
+                        result = String.format("%" + column.width + ".2f", result);
+                    }
+                    appendAligned(sb, column.width, column.alignment, result.toString());
+                    sb.append("|");
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+            sb.append("\n").append((line < items.size() - 1) ? "|" : "");
+        }
+        sb.append("-".repeat(width)).append("\n");
         return sb.toString();
     }
 
     private static void appendAligned(StringBuilder sb, int width, Alignment alignment, String label) {
         int spacesBefore = 0, spacesAfter = 0;
-        if(label.length() > width) {
+        if (label.length() > width) {
             label = label.substring(0, width);
         }
-        switch(alignment) {
-            case LEFT: spacesAfter = width - label.length(); break;
-            case RIGHT: spacesBefore = width - label.length(); break;
+        switch (alignment) {
+            case LEFT:
+                spacesAfter = width - label.length();
+                break;
+            case RIGHT:
+                spacesBefore = width - label.length();
+                break;
             case CENTER:
                 spacesBefore = (width - label.length()) / 2;
                 spacesAfter = width - label.length() - spacesBefore;

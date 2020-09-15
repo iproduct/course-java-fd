@@ -91,13 +91,13 @@ public class Main {
 
         List<ColumnDescriptor> descriptors = List.of(
                 new ColumnDescriptor("id", "ID", 4, RIGHT),
-                new ColumnDescriptor("code", "Code", 7, LEFT),
+                new ColumnDescriptor("code", "Code", 7, CENTER),
                 new ColumnDescriptor("name", "Name", 30, LEFT),
                 new ColumnDescriptor("price", "Price", 10, RIGHT),
                 new ColumnDescriptor("unit", "Unit", 4, CENTER)
         );
         System.out.println();
-        System.out.println(printTable(descriptors, sampleProducts));
+        System.out.println(printTable(descriptors, sampleProducts, Product.class));
 
     }
 }
