@@ -25,7 +25,7 @@ public class PrintUtils {
         }
     }
 
-    public static String printTable(List<ColumnDescriptor> columns, List<?> items, Class itemClass) {
+    public static String printTable(List<ColumnDescriptor> columns, List<?> items) {
         StringBuilder sb = new StringBuilder();
         int width = columns.stream().mapToInt(column -> column.width).sum() + columns.size() + 1;
         sb.append("-".repeat(width)).append("\n|");
@@ -44,20 +44,23 @@ public class PrintUtils {
                 propName.insert(0, "get");
                 // Call accessor method by reflection
                 try {
-                    Method accessor = itemClass.getMethod(propName.toString());
+                    Method accessor = items.get(line).getClass().getMethod(propName.toString());
                     Object result = accessor.invoke(items.get(line));
-                    if(result instanceof Double) {
+                    if(result == null) {
+                        result = "null";
+                    } else if(result instanceof Double) {
                         result = String.format("%" + column.width + ".2f", result);
                     }
                     appendAligned(sb, column.width, column.alignment, result.toString());
-                    sb.append("|");
                 } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
+                    appendAligned(sb, column.width, CENTER, "-");
+//                    e.printStackTrace();
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 } catch (InvocationTargetException e) {
                     e.printStackTrace();
                 }
+                sb.append("|");
             }
             sb.append("\n").append((line < items.size() - 1) ? "|" : "");
         }

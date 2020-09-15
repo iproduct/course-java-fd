@@ -72,7 +72,7 @@ public class Main {
 
         // Issuer tests
         System.out.println("\nIssuer Demos:\n-------------------------------------------------");
-        List<Contragent> issuers = Arrays.asList(new Contragent[] {
+        List<Contragent> contragents = Arrays.asList(new Contragent[] {
                 new Issuer(123456789L, "IT Bookstore Ltd.", "Sofia, Ivan Asen 25A",
                         "BGUNCR1234567890", "BGUNCR",
                         "+(359) 2 896123", "BG123456789"),
@@ -86,10 +86,11 @@ public class Main {
         });
         KeyGenerator<Long> issuerKeyGenerator = new LongKeyGenerator();
         Repository<Long, Contragent> issuerRepo = new MockRepository<>(issuerKeyGenerator);
-        issuers.forEach(issuer -> issuerRepo.create(issuer));
+        contragents.forEach(issuer -> issuerRepo.create(issuer));
         issuerRepo.findAll().forEach(issuer -> System.out.println(issuer.toString()));
 
-        List<ColumnDescriptor> descriptors = List.of(
+        // print products
+        List<ColumnDescriptor> productDescriptors = List.of(
                 new ColumnDescriptor("id", "ID", 4, RIGHT),
                 new ColumnDescriptor("code", "Code", 7, CENTER),
                 new ColumnDescriptor("name", "Name", 30, LEFT),
@@ -97,7 +98,18 @@ public class Main {
                 new ColumnDescriptor("unit", "Unit", 4, CENTER)
         );
         System.out.println();
-        System.out.println(printTable(descriptors, sampleProducts, Product.class));
+        System.out.println(printTable(productDescriptors, sampleProducts));
 
+        // print contragents
+        List<ColumnDescriptor> contragentDescriptors = List.of(
+                new ColumnDescriptor("id", "ID", 4, RIGHT),
+                new ColumnDescriptor("name", "Name", 30, LEFT),
+                new ColumnDescriptor("address", "Address", 30, LEFT),
+                new ColumnDescriptor("telephone", "Phone", 18, CENTER),
+                new ColumnDescriptor("vatNumber", "VAT #", 12, LEFT),
+                new ColumnDescriptor("email", "Email", 20, LEFT)
+        );
+        System.out.println();
+        System.out.println(printTable(contragentDescriptors, contragents));
     }
 }
