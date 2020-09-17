@@ -9,10 +9,12 @@ import org.iproduct.invoicing.model.Product;
 import org.iproduct.invoicing.util.ProductNameComparator;
 import org.iproduct.invoicing.util.ProductPriceComparator;
 import org.iproduct.invoicing.view.Alignment;
+import org.iproduct.invoicing.view.FieldType;
 import org.iproduct.invoicing.view.InputUtils;
 import org.iproduct.invoicing.view.PrintUtils;
 
 import static org.iproduct.invoicing.view.Alignment.*;
+import static org.iproduct.invoicing.view.FieldType.DECIMAL;
 import static org.iproduct.invoicing.view.PrintUtils.ColumnDescriptor;
 
 import java.util.*;
@@ -22,6 +24,8 @@ import java.util.logging.Logger;
 import static java.util.logging.Level.SEVERE;
 import static org.iproduct.invoicing.model.Unit.PCS;
 import static org.iproduct.invoicing.view.PrintUtils.printTable;
+
+import static org.iproduct.invoicing.view.InputUtils.FieldConfig;
 
 public class Main {
     private static final Logger LOG = Logger.getLogger("org.iproduct.invoicing.Main");
@@ -114,6 +118,10 @@ public class Main {
         System.out.println(printTable(contragentDescriptors, contragents));
 
         // test input utilities
-        InputUtils.inputString(null, null);
+        InputUtils.inputInstance(List.of(
+                new FieldConfig("name", "Product Name", null),
+                new FieldConfig("code", "Product Code", null, ),
+                new FieldConfig("price", "Price", null, DECIMAL, 8, 2)
+        ), null);
     }
 }
