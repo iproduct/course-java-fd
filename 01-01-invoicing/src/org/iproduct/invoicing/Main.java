@@ -56,13 +56,13 @@ public class Main {
         printProducts(products);
 
         // delete product
-        try {
-            productRepo.deleteById(6L);
-        } catch (NonexistingEntityException e) {
-            LOG.log(SEVERE, "Error deleting product:", e);
-        }
-        System.out.println();
-        printProducts(productRepo.findAll());
+//        try {
+//            productRepo.deleteById(6L);
+//        } catch (NonexistingEntityException e) {
+//            LOG.log(SEVERE, "Error deleting product:", e);
+//        }
+//        System.out.println();
+//        printProducts(productRepo.findAll());
 
         // update product
         Product p2 = productRepo.findById(2L);
@@ -119,8 +119,8 @@ public class Main {
 
         // test input utilities
         InputUtils.inputInstance(List.of(
-                new FieldConfig("name", "Product Name", null),
-                new FieldConfig("code", "Product Code", null, ),
+                new FieldConfig("name", "Product Name"),
+                new FieldConfig("code", "Product Code", null, "^[A-Z]{3}\\d{3}$" ),
                 new FieldConfig("price", "Price", null, DECIMAL, 8, 2)
         ), null);
     }
