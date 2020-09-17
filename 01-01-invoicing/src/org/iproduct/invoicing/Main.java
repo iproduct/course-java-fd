@@ -6,26 +6,20 @@ import org.iproduct.invoicing.model.Client;
 import org.iproduct.invoicing.model.Contragent;
 import org.iproduct.invoicing.model.Issuer;
 import org.iproduct.invoicing.model.Product;
-import org.iproduct.invoicing.util.ProductNameComparator;
 import org.iproduct.invoicing.util.ProductPriceComparator;
-import org.iproduct.invoicing.view.Alignment;
-import org.iproduct.invoicing.view.FieldType;
 import org.iproduct.invoicing.view.InputUtils;
-import org.iproduct.invoicing.view.PrintUtils;
 
 import static org.iproduct.invoicing.view.Alignment.*;
 import static org.iproduct.invoicing.view.FieldType.DECIMAL;
 import static org.iproduct.invoicing.view.PrintUtils.ColumnDescriptor;
 
 import java.util.*;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static java.util.logging.Level.SEVERE;
-import static org.iproduct.invoicing.model.Unit.PCS;
 import static org.iproduct.invoicing.view.PrintUtils.printTable;
 
-import static org.iproduct.invoicing.view.InputUtils.FieldConfig;
+import org.iproduct.invoicing.view.FieldConfig;
 
 public class Main {
     private static final Logger LOG = Logger.getLogger("org.iproduct.invoicing.Main");
