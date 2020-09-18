@@ -1,4 +1,4 @@
-package org.iproduct.invoicing.service;
+package org.iproduct.invoicing;
 
 import org.iproduct.invoicing.dao.KeyGenerator;
 import org.iproduct.invoicing.dao.LongKeyGenerator;
@@ -9,6 +9,10 @@ import org.iproduct.invoicing.model.Client;
 import org.iproduct.invoicing.model.Contragent;
 import org.iproduct.invoicing.model.Issuer;
 import org.iproduct.invoicing.model.Product;
+import org.iproduct.invoicing.service.ContragentService;
+import org.iproduct.invoicing.service.ContragentServiceImpl;
+import org.iproduct.invoicing.service.ProductService;
+import org.iproduct.invoicing.service.ProductServiceImpl;
 import org.iproduct.invoicing.view.MenuItem;
 import org.iproduct.invoicing.view.commands.AddProductCommand;
 import org.iproduct.invoicing.view.commands.Command;
