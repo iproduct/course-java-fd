@@ -119,13 +119,22 @@ public class Main {
         System.out.println(printTable(contragentDescriptors, contragentService.getAllContragents()));
 
         // test input utilities
-        Product product = new Product();
+//        Product product = new Product();
+//        InputUtils.inputInstance(List.of(
+//                new FieldConfig("name", "Product Name"),
+//                new FieldConfig("code", "Product Code", null, "^[A-Z]{2}\\d{3}$" ),
+//                new FieldConfig("price", "Price", null, DECIMAL, 8, 2)
+//        ), product);
+//        productService.addProduct(product);
+//        System.out.println(printTable(productDescriptors, productService.getAllProducts()));
+
+        Contragent client = new Client();
         InputUtils.inputInstance(List.of(
                 new FieldConfig("name", "Product Name"),
                 new FieldConfig("code", "Product Code", null, "^[A-Z]{2}\\d{3}$" ),
                 new FieldConfig("price", "Price", null, DECIMAL, 8, 2)
-        ), product);
-        productService.addProduct(product);
-        System.out.println(printTable(productDescriptors, productService.getAllProducts()));
+        ), client);
+        contragentService.addContragent(client);
+        System.out.println(printTable(productDescriptors, contragentService.getAllContragents()));
     }
 }

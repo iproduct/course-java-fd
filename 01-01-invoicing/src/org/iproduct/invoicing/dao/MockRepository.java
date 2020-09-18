@@ -11,6 +11,8 @@ public class MockRepository<K, E extends Identifiable<K>> implements Repository<
     private KeyGenerator<K> generator;
 
     // DI in constructor
+    public MockRepository() {
+    }
     public MockRepository(KeyGenerator<K> generator) {
         this.generator = generator;
     }
@@ -33,7 +35,9 @@ public class MockRepository<K, E extends Identifiable<K>> implements Repository<
 
     @Override
     public E create(E item) {
-        item.setId(generator.getNextId());
+        if(generator != null) {
+            item.setId(generator.getNextId());
+        }
         return items.put(item.getId(), item);
     }
 

@@ -164,7 +164,12 @@ public class InputUtils {
     }
 
     public static LocalDate inputDate(FieldConfig config) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(config.dateFormat);
+        DateTimeFormatter dtf;
+        if(config.dateFormat != null) {
+            dtf = DateTimeFormatter.ofPattern(config.dateFormat);
+        } else {
+            dtf = DateTimeFormatter.ISO_DATE;
+        }
         String answer;
         boolean error;
         LocalDate result = null;
