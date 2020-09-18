@@ -131,6 +131,7 @@ public class Main {
         Contragent client = new Client();
         InputUtils.inputInstance(List.of(
                 new FieldConfig("name", "Product Name"),
+                new FieldConfig("name", "Product Name"),
                 new FieldConfig("code", "Product Code", null, "^[A-Z]{2}\\d{3}$" ),
                 new FieldConfig("price", "Price", null, DECIMAL, 8, 2)
         ), client);

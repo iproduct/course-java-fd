@@ -22,8 +22,13 @@ public class InputUtils {
             try {
                 switch (fc.type) {
                     case INTEGER:
-                        result = inputInteger(fc);
+                        result = inputLong(fc).intValue();
                         method = instance.getClass().getMethod(methodName.toString(), Integer.class);
+                        method.invoke(instance, result);
+                        break;
+                    case LONG:
+                        result = inputLong(fc);
+                        method = instance.getClass().getMethod(methodName.toString(), Long.class);
                         method.invoke(instance, result);
                         break;
                     case DECIMAL:
@@ -84,7 +89,7 @@ public class InputUtils {
         return answer;
     }
 
-    public static Integer inputInteger(FieldConfig config) {
+    public static Long inputLong(FieldConfig config) {
         String answer;
         boolean error;
         do {
@@ -112,7 +117,7 @@ public class InputUtils {
                 }
             }
             try {
-                return Integer.valueOf(answer);
+                return Long.valueOf(answer);
             } catch (NumberFormatException ex) {
                 System.out.println("The answer should be a valid integer number.");
                 error = true;
