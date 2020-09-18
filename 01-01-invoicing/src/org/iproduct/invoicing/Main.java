@@ -6,6 +6,10 @@ import org.iproduct.invoicing.model.Client;
 import org.iproduct.invoicing.model.Contragent;
 import org.iproduct.invoicing.model.Issuer;
 import org.iproduct.invoicing.model.Product;
+import org.iproduct.invoicing.service.ContragentService;
+import org.iproduct.invoicing.service.ContragentServiceImpl;
+import org.iproduct.invoicing.service.ProductService;
+import org.iproduct.invoicing.service.ProductServiceImpl;
 import org.iproduct.invoicing.util.ProductPriceComparator;
 import org.iproduct.invoicing.view.InputUtils;
 
@@ -36,6 +40,7 @@ public class Main {
     public static void main(String[] args) {
         KeyGenerator<Long> longKeyGenerator = new LongKeyGenerator();
         Repository<Long, Product> productRepo = new MockRepository<>(longKeyGenerator);
+        ProductService productService = new ProductServiceImpl(productRepo);
         List<Product> sampleProducts = List.of(
                 new Product("BK002", "UML Distilled", 28.7),
                 new Product("BK001", "Thinking in Java", 35.5),
@@ -43,9 +48,9 @@ public class Main {
                 new Product("BK004", "Effective Java", 45.5)
                 );
         for (Product p : sampleProducts) {
-            productRepo.create(p);
+            productService.addProduct(p);
         }
-        List<Product> products = new LinkedList<>(productRepo.findAll());
+        List<Product> products = productService.getAllProducts();
         Collections.sort(products, new ProductPriceComparator().reversed());
         printProducts(products);
 
@@ -59,15 +64,15 @@ public class Main {
 //        printProducts(productRepo.findAll());
 
         // update product
-        Product p2 = productRepo.findById(2L);
+        Product p2 = productService.getProductById(2L);
         p2.setPrice(p2.getPrice() + 10);
         try {
-            productRepo.update(p2);
+            productService.updateProduct(p2);
         } catch (NonexistingEntityException e) {
             LOG.log(SEVERE, "Error updating product:", e);
         }
         System.out.println();
-        printProducts(productRepo.findAll());
+        printProducts(productService.getAllProducts());
 
         // Issuer tests
         System.out.println("\nIssuer Demos:\n-------------------------------------------------");
@@ -84,9 +89,11 @@ public class Main {
                         "(+359) 32 34534", null,"dimitar@gmail.com", true),
         });
         KeyGenerator<Long> issuerKeyGenerator = new LongKeyGenerator();
-        Repository<Long, Contragent> issuerRepo = new MockRepository<>(issuerKeyGenerator);
-        contragents.forEach(issuer -> issuerRepo.create(issuer));
-        issuerRepo.findAll().forEach(issuer -> System.out.println(issuer.toString()));
+        Repository<Long, Contragent> contragentRepo = new MockRepository<>(issuerKeyGenerator);
+        ContragentService contragentService = new ContragentServiceImpl(contragentRepo);
+
+        contragents.forEach(issuer -> contragentService.addContragent(issuer));
+        contragentService.getAllContragents().forEach(issuer -> System.out.println(issuer.toString()));
 
         // print products
         List<ColumnDescriptor> productDescriptors = List.of(
@@ -97,7 +104,7 @@ public class Main {
                 new ColumnDescriptor("unit", "Unit", 4, CENTER)
         );
         System.out.println();
-        System.out.println(printTable(productDescriptors, sampleProducts));
+        System.out.println(printTable(productDescriptors, productService.getAllProducts()));
 
         // print contragents
         List<ColumnDescriptor> contragentDescriptors = List.of(
@@ -109,13 +116,16 @@ public class Main {
                 new ColumnDescriptor("email", "Email", 20, LEFT)
         );
         System.out.println();
-        System.out.println(printTable(contragentDescriptors, contragents));
+        System.out.println(printTable(contragentDescriptors, contragentService.getAllContragents()));
 
         // test input utilities
+        Product product = new Product();
         InputUtils.inputInstance(List.of(
                 new FieldConfig("name", "Product Name"),
-                new FieldConfig("code", "Product Code", null, "^[A-Z]{3}\\d{3}$" ),
+                new FieldConfig("code", "Product Code", null, "^[A-Z]{2}\\d{3}$" ),
                 new FieldConfig("price", "Price", null, DECIMAL, 8, 2)
-        ), null);
+        ), product);
+        productService.addProduct(product);
+        System.out.println(printTable(productDescriptors, productService.getAllProducts()));
     }
 }

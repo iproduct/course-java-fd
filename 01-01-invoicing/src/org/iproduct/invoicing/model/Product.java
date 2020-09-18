@@ -12,7 +12,7 @@ public class Product implements Comparable<Product>, Identifiable<Long> {
     private Long id; // = ++nextId;
     private String code;
     private String name;
-    private double price;
+    private Double price;
     private Unit unit = PCS; //default
 
     // No args constructor
@@ -20,13 +20,13 @@ public class Product implements Comparable<Product>, Identifiable<Long> {
     }
 
     // Required args constructor
-    public Product(String code, String name, double price) {
+    public Product(String code, String name, Double price) {
         this.code = code;
         this.name = name;
         this.price = price;
     }
 
-    public Product(String code, String name, double price, Unit unit) {
+    public Product(String code, String name, Double price, Unit unit) {
         this.code = code;
         this.name = name;
         this.price = price;
@@ -34,7 +34,7 @@ public class Product implements Comparable<Product>, Identifiable<Long> {
     }
 
     // All args constructor
-    public Product(Long id, String code, String name, double price, Unit unit) {
+    public Product(Long id, String code, String name, Double price, Unit unit) {
         this.id = id;
         this.code = code;
         this.name = name;
@@ -70,11 +70,11 @@ public class Product implements Comparable<Product>, Identifiable<Long> {
         this.name = name;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 

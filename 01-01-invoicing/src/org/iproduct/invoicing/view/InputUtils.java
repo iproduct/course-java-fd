@@ -1,5 +1,7 @@
 package org.iproduct.invoicing.view;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -11,15 +13,41 @@ public class InputUtils {
     private static Scanner sc = new Scanner(System.in);
 
     public static void inputInstance(List<FieldConfig> fieldConfigs, Object instance) {
-//        String result = sc.nextLine();
-//        System.out.println("You entered: " + result);
         for (FieldConfig fc : fieldConfigs) {
+            StringBuilder methodName = new StringBuilder(fc.property);
+            methodName.setCharAt(0, Character.toTitleCase(methodName.charAt(0)));
+            methodName.insert(0, "set");
             Object result = null;
-            switch (fc.type) {
-                case INTEGER: result = inputInteger(fc); break;
-                case DECIMAL: result = inputDouble(fc); break;
-                case STRING: result = inputString(fc); break;
-                case DATE: result = inputDate(fc);
+            Method method;
+            try {
+                switch (fc.type) {
+                    case INTEGER:
+                        result = inputInteger(fc);
+                        method = instance.getClass().getMethod(methodName.toString(), Integer.class);
+                        method.invoke(instance, result);
+                        break;
+                    case DECIMAL:
+                        result = inputDouble(fc);
+                        method = instance.getClass().getMethod(methodName.toString(), Double.class);
+                        method.invoke(instance, result);
+                        break;
+                    case STRING:
+                        result = inputString(fc);
+                        method = instance.getClass().getMethod(methodName.toString(), String.class);
+                        method.invoke(instance, result);
+                        break;
+                    case DATE:
+                        result = inputDate(fc);
+                        method = instance.getClass().getMethod(methodName.toString(), LocalDate.class);
+                        method.invoke(instance, result);
+                        break;
+                }
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
             }
             System.out.println("You entered: " + result);
         }
@@ -30,7 +58,7 @@ public class InputUtils {
         boolean error;
         do {
             error = false;
-            System.out.printf("Enter %s" + (config.defaultValue != null || config.optional ? " [<Enter> for '%s']": "") + ":",
+            System.out.printf("Enter %s" + (config.defaultValue != null || config.optional ? " [<Enter> for '%s']" : "") + ":",
                     config.label, config.defaultValue);
             answer = sc.nextLine(); // read answer from console
             if (answer.isEmpty()) {
@@ -61,7 +89,7 @@ public class InputUtils {
         boolean error;
         do {
             error = false;
-            System.out.printf("Enter %s" + (config.defaultValue != null || config.optional ? " [<Enter> for '%s']": "") + ":",
+            System.out.printf("Enter %s" + (config.defaultValue != null || config.optional ? " [<Enter> for '%s']" : "") + ":",
                     config.label, config.defaultValue);
             answer = sc.nextLine(); // read answer from console
             if (answer.isEmpty()) {
@@ -99,7 +127,7 @@ public class InputUtils {
         Double result = null;
         do {
             error = false;
-            System.out.printf("Enter %s" + (config.defaultValue != null || config.optional ? " [<Enter> for '%s']": "") + ":",
+            System.out.printf("Enter %s" + (config.defaultValue != null || config.optional ? " [<Enter> for '%s']" : "") + ":",
                     config.label, config.defaultValue);
             answer = sc.nextLine(); // read answer from console
             if (answer.isEmpty()) {
@@ -123,7 +151,7 @@ public class InputUtils {
             }
             try {
                 result = Double.valueOf(answer);
-                if(config.fraction > 0) {
+                if (config.fraction > 0) {
                     double power = Math.pow(10, config.fraction);
                     result = (Math.round(result * power)) / power;
                 }
@@ -142,7 +170,7 @@ public class InputUtils {
         LocalDate result = null;
         do {
             error = false;
-            System.out.printf("Enter %s" + (config.defaultValue != null || config.optional ? " [<Enter> for '%s']": "") + ":",
+            System.out.printf("Enter %s" + (config.defaultValue != null || config.optional ? " [<Enter> for '%s']" : "") + ":",
                     config.label, config.defaultValue);
             answer = sc.nextLine(); // read answer from console
             if (answer.isEmpty()) {
