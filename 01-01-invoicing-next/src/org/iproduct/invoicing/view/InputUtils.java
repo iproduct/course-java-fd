@@ -1,5 +1,7 @@
 package org.iproduct.invoicing.view;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -14,12 +16,61 @@ public class InputUtils {
 //        String result = sc.nextLine();
 //        System.out.println("You entered: " + result);
         for (FieldConfig fc : fieldConfigs) {
+            StringBuilder propSetter = new StringBuilder(fc.property);
+            propSetter.setCharAt(0, Character.toTitleCase(propSetter.charAt(0)));
+            propSetter.insert(0, "set");
             Object result = null;
             switch (fc.type) {
-                case INTEGER: result = inputInteger(fc); break;
-                case DECIMAL: result = inputDouble(fc); break;
-                case STRING: result = inputString(fc); break;
+                case INTEGER:
+                    result = inputInteger(fc);
+                    try {
+                        Method method = instance.getClass().getMethod(propSetter.toString(), Integer.class);
+                        method.invoke(instance, result);
+                    } catch (NoSuchMethodException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case DECIMAL:
+                    result = inputDouble(fc);
+                    try {
+                        Method method = instance.getClass().getMethod(propSetter.toString(), double.class);
+                        method.invoke(instance, result);
+                    } catch (NoSuchMethodException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case STRING: result = inputString(fc);
+                    try {
+                        Method method = instance.getClass().getMethod(propSetter.toString(), String.class);
+                        method.invoke(instance, result);
+                    } catch (NoSuchMethodException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                    break;
                 case DATE: result = inputDate(fc);
+                    try {
+                        Method method = instance.getClass().getMethod(propSetter.toString(), LocalDate.class);
+                        method.invoke(instance, result);
+                    } catch (NoSuchMethodException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                    break;
             }
             System.out.println("You entered: " + result);
         }
@@ -136,7 +187,12 @@ public class InputUtils {
     }
 
     public static LocalDate inputDate(FieldConfig config) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(config.dateFormat);
+        DateTimeFormatter dtf;
+        if(config.dateFormat != null) {
+            dtf = DateTimeFormatter.ofPattern(config.dateFormat);
+        } else {
+            dtf = DateTimeFormatter.ISO_DATE;
+        }
         String answer;
         boolean error;
         LocalDate result = null;

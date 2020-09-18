@@ -13,9 +13,11 @@ public class DateTimeDemo2 {
 	public static void main(String[] args) {
 		LocalDate today = LocalDate.now();
 		LocalDate dateOfBirth = LocalDate.of(1982, Month.MAY, 14);
-		LocalDateTime now = LocalDateTime.now();
 		LocalTime timeOfBirth = LocalTime.of(14, 50);
 		LocalDateTime dateTimeOfBirth = LocalDateTime.of(dateOfBirth, timeOfBirth);
+
+		LocalDateTime now = LocalDateTime.now();
+
 		Period howOld = Period.between(dateOfBirth, today);
 		Duration age = Duration.between(dateTimeOfBirth, now);
 		long daysOld = ChronoUnit.DAYS.between(dateOfBirth, today);
