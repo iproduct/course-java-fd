@@ -34,6 +34,14 @@ public class FieldConfig {
         this.type = STRING;
     }
 
+    public FieldConfig(String property, String label, boolean optional, String regex) {
+        this.property = property;
+        this.label = label;
+        this.optional = optional;
+        this.type = STRING;
+        this.regex = regex;
+    }
+
     public FieldConfig(String property, String label, String defaultValue, String regex) {
         this.property = property;
         this.label = label;

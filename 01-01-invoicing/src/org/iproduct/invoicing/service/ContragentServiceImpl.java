@@ -1,6 +1,7 @@
 package org.iproduct.invoicing.service;
 
 import org.iproduct.invoicing.dao.Repository;
+import org.iproduct.invoicing.exceptions.EntityAlreadyExistsException;
 import org.iproduct.invoicing.exceptions.NonexistingEntityException;
 import org.iproduct.invoicing.model.Contragent;
 
@@ -26,7 +27,7 @@ public class ContragentServiceImpl implements ContragentService {
     }
 
     @Override
-    public Contragent addContragent(Contragent contragent) {
+    public Contragent addContragent(Contragent contragent) throws EntityAlreadyExistsException {
         return contragentRepo.create(contragent);
     }
 

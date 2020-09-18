@@ -15,6 +15,7 @@ import org.iproduct.invoicing.view.InputUtils;
 
 import static org.iproduct.invoicing.view.Alignment.*;
 import static org.iproduct.invoicing.view.FieldType.DECIMAL;
+import static org.iproduct.invoicing.view.FieldType.LONG;
 import static org.iproduct.invoicing.view.PrintUtils.ColumnDescriptor;
 
 import java.util.*;
@@ -85,11 +86,10 @@ public class Main {
                         "+(359) 2 567789", "BG567889432"),
                 new Client(123456789L, "ABC Ltd.", "Sofia, Ivan Asen 25A",
                         "(+359) 2 896123", "BG123456789", "abc@abv.bg"),
-                new Client(567889432L, "Dimitar Petrov", "Provdiv, ul. Centralna, 56",
+                new Client(867889432L, "Dimitar Petrov", "Provdiv, ul. Centralna, 56",
                         "(+359) 32 34534", null,"dimitar@gmail.com", true),
         });
-        KeyGenerator<Long> issuerKeyGenerator = new LongKeyGenerator();
-        Repository<Long, Contragent> contragentRepo = new MockRepository<>(issuerKeyGenerator);
+        Repository<Long, Contragent> contragentRepo = new MockRepository<>();
         ContragentService contragentService = new ContragentServiceImpl(contragentRepo);
 
         contragents.forEach(issuer -> contragentService.addContragent(issuer));
@@ -108,7 +108,7 @@ public class Main {
 
         // print contragents
         List<ColumnDescriptor> contragentDescriptors = List.of(
-                new ColumnDescriptor("id", "ID", 4, RIGHT),
+                new ColumnDescriptor("id", "ID", 10, RIGHT),
                 new ColumnDescriptor("name", "Name", 30, LEFT),
                 new ColumnDescriptor("address", "Address", 30, LEFT),
                 new ColumnDescriptor("telephone", "Phone", 18, CENTER),
@@ -130,12 +130,14 @@ public class Main {
 
         Contragent client = new Client();
         InputUtils.inputInstance(List.of(
-                new FieldConfig("name", "Product Name"),
-                new FieldConfig("name", "Product Name"),
-                new FieldConfig("code", "Product Code", null, "^[A-Z]{2}\\d{3}$" ),
-                new FieldConfig("price", "Price", null, DECIMAL, 8, 2)
-        ), client);
+                new FieldConfig("id", "Client ID", null, LONG, 10),
+                new FieldConfig("name", "Client Name"),
+                new FieldConfig("address", "Address"),
+                new FieldConfig("telephone", "Phone", true),
+                new FieldConfig("vatNumber", "VAT Number", true, "^BG[1-9]\\d{8}$"),
+                new FieldConfig("email", "Email", true, "^[A-Za-z0-9+_.-]+@(.+)$")
+                ), client);
         contragentService.addContragent(client);
-        System.out.println(printTable(productDescriptors, contragentService.getAllContragents()));
+        System.out.println(printTable(contragentDescriptors, contragentService.getAllContragents()));
     }
 }

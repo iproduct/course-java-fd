@@ -1,5 +1,6 @@
 package org.iproduct.invoicing.dao;
 
+import org.iproduct.invoicing.exceptions.EntityAlreadyExistsException;
 import org.iproduct.invoicing.exceptions.NonexistingEntityException;
 
 import java.util.*;
@@ -34,9 +35,13 @@ public class MockRepository<K, E extends Identifiable<K>> implements Repository<
     }
 
     @Override
-    public E create(E item) {
+    public E create(E item) throws EntityAlreadyExistsException {
         if(generator != null) {
             item.setId(generator.getNextId());
+        } else {
+            if(items.containsKey(item.getId())) {
+                throw new EntityAlreadyExistsException(format("Entity with ID=%s already exists.", item.getId()));
+            }
         }
         return items.put(item.getId(), item);
     }
