@@ -22,7 +22,7 @@ import java.util.*;
 import java.util.logging.Logger;
 
 import static java.util.logging.Level.SEVERE;
-import static org.iproduct.invoicing.view.PrintUtils.printTable;
+import static org.iproduct.invoicing.view.PrintUtils.formatTable;
 
 import org.iproduct.invoicing.view.FieldConfig;
 
@@ -114,7 +114,7 @@ public class Main {
                 new ColumnDescriptor("unit", "Unit", 4, CENTER)
         );
         System.out.println();
-        System.out.println(printTable(productDescriptors, productService.getAllProducts()));
+        System.out.println(formatTable(productDescriptors, productService.getAllProducts()));
 
         // print contragents
         List<ColumnDescriptor> contragentDescriptors = List.of(
@@ -126,7 +126,7 @@ public class Main {
                 new ColumnDescriptor("email", "Email", 20, LEFT)
         );
         System.out.println();
-        System.out.println(printTable(contragentDescriptors, contragentService.getAllContragents()));
+        System.out.println(formatTable(contragentDescriptors, contragentService.getAllContragents()));
 
         // test input utilities
         Product product = new Product();
@@ -141,7 +141,7 @@ public class Main {
         } catch (EntityAlreadyExistsException e) {
             LOG.log(SEVERE, "Error creating product:", e);
         }
-        System.out.println(printTable(productDescriptors, productService.getAllProducts()));
+        System.out.println(formatTable(productDescriptors, productService.getAllProducts()));
 
 //        Contragent client = new Client();
 //        InputUtils.inputInstance(List.of(

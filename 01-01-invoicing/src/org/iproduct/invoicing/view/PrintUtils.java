@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.iproduct.invoicing.view.Alignment.CENTER;
 
@@ -25,7 +26,7 @@ public class PrintUtils {
         }
     }
 
-    public static String printTable(List<ColumnDescriptor> columns, List<?> items) {
+    public static String formatTable(List<ColumnDescriptor> columns, List<?> items) {
         StringBuilder sb = new StringBuilder();
         int width = columns.stream().mapToInt(column -> column.width).sum() + columns.size() + 1;
         sb.append("-".repeat(width)).append("\n|");
@@ -85,6 +86,17 @@ public class PrintUtils {
                 spacesAfter = width - label.length() - spacesBefore;
         }
         sb.append(" ".repeat(spacesBefore)).append(label).append(" ".repeat(spacesAfter));
+    }
+
+    public static String formatMenu(List<MenuItem> menu) {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < menu.size(); i++){
+            sb.append(i+1).append(") ").append(menu.get(i).getLabel()).append("\n");
+        }
+        return sb.toString();
+//        return menu.stream()
+//                .map(MenuItem::getLabel)
+//                .collect(Collectors.joining("\n"));
     }
 
 

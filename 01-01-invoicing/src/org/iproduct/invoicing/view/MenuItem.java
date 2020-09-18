@@ -8,6 +8,7 @@ public enum MenuItem {
     PRINT_PRODUCTS("Print All Products"),
     WRITE_TO_FILE("Write to File"),
     READ_FROM_FILE("Read from File"),
+    EXIT_SUBMENU("Exit Menu"),
     EXIT("Exit");
 
     private String label;

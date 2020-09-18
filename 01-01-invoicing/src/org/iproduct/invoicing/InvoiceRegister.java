@@ -14,15 +14,11 @@ import org.iproduct.invoicing.service.ContragentService;
 import org.iproduct.invoicing.service.ContragentServiceImpl;
 import org.iproduct.invoicing.service.ProductService;
 import org.iproduct.invoicing.service.ProductServiceImpl;
-import org.iproduct.invoicing.view.InputUtils;
 import org.iproduct.invoicing.view.MenuItem;
 import org.iproduct.invoicing.view.commands.AddProductCommand;
 import org.iproduct.invoicing.view.commands.Command;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 import static java.util.logging.Level.SEVERE;
@@ -30,9 +26,7 @@ import static org.iproduct.invoicing.view.Alignment.*;
 import static org.iproduct.invoicing.view.InputUtils.aswerYesNoQuestion;
 import static org.iproduct.invoicing.view.InputUtils.inputInt;
 import static org.iproduct.invoicing.view.MenuItem.*;
-import static org.iproduct.invoicing.view.PrintUtils.printTable;
-
-import static org.iproduct.invoicing.view.PrintUtils.ColumnDescriptor;
+import static org.iproduct.invoicing.view.PrintUtils.*;
 
 public class InvoiceRegister {
     private static final Logger LOG = Logger.getLogger("o.i.i.s.InvoiceRegister");
@@ -48,7 +42,7 @@ public class InvoiceRegister {
     private ProductService productService;
     private Repository<Long, Contragent> contragentRepo;
     private ContragentService contragentService;
-    private Map<MenuItem, Command> commands;
+    private Map<MenuItem, Command> commands = new HashMap<>();
     private List<MenuItem> mainMenu = new ArrayList<>();
 
 
@@ -97,7 +91,7 @@ public class InvoiceRegister {
 
         // Initialize menus
         commands.put(ADD_PRODUCT, new AddProductCommand(productService));
-        commands.put(PRINT_PRODUCTS, () -> printTable(PRODUCT_DESCRIPTORS, productService.getAllProducts()));
+        commands.put(PRINT_PRODUCTS, () -> formatTable(PRODUCT_DESCRIPTORS, productService.getAllProducts()));
         commands.put(EXIT, () -> {
             if (aswerYesNoQuestion("Are you shure you want to exit")) {
                 System.exit(0);
@@ -116,7 +110,7 @@ public class InvoiceRegister {
         int choice;
         do {
             System.out.println();
-//            printMainMenu();
+            System.out.println(formatMenu(mainMenu));
             choice = inputInt("Choose an option", 1, mainMenu.size());
             MenuItem chosenItem = mainMenu.get(choice - 1);
             try {
@@ -141,5 +135,11 @@ public class InvoiceRegister {
 
     public ContragentService getContragentService() {
         return contragentService;
+    }
+
+    public static void main(String[] args) {
+        InvoiceRegister register = new InvoiceRegister();
+        register.init();
+        register.showMainMenu();
     }
 }
