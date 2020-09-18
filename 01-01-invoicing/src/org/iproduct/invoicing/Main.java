@@ -1,6 +1,7 @@
 package org.iproduct.invoicing;
 
 import org.iproduct.invoicing.dao.*;
+import org.iproduct.invoicing.exceptions.EntityAlreadyExistsException;
 import org.iproduct.invoicing.exceptions.NonexistingEntityException;
 import org.iproduct.invoicing.model.Client;
 import org.iproduct.invoicing.model.Contragent;
@@ -49,7 +50,11 @@ public class Main {
                 new Product("BK004", "Effective Java", 45.5)
                 );
         for (Product p : sampleProducts) {
-            productService.addProduct(p);
+            try {
+                productService.addProduct(p);
+            } catch (EntityAlreadyExistsException e) {
+                LOG.log(SEVERE, "Error creating product:", e);
+            }
         }
         List<Product> products = productService.getAllProducts();
         Collections.sort(products, new ProductPriceComparator().reversed());
@@ -84,7 +89,7 @@ public class Main {
                 new Issuer(567889432L, "Best Software AD", "Sofia, 1000",
                         "BGFIB123456ASD7890", "BGFIB",
                         "+(359) 2 567789", "BG567889432"),
-                new Client(123456789L, "ABC Ltd.", "Sofia, Ivan Asen 25A",
+                new Client(923456789L, "ABC Ltd.", "Sofia, Ivan Asen 25A",
                         "(+359) 2 896123", "BG123456789", "abc@abv.bg"),
                 new Client(867889432L, "Dimitar Petrov", "Provdiv, ul. Centralna, 56",
                         "(+359) 32 34534", null,"dimitar@gmail.com", true),
@@ -92,7 +97,13 @@ public class Main {
         Repository<Long, Contragent> contragentRepo = new MockRepository<>();
         ContragentService contragentService = new ContragentServiceImpl(contragentRepo);
 
-        contragents.forEach(issuer -> contragentService.addContragent(issuer));
+        contragents.forEach(issuer -> {
+            try {
+                contragentService.addContragent(issuer);
+            } catch (EntityAlreadyExistsException e) {
+                LOG.log(SEVERE, "Error creating contragent:", e);
+            }
+        });
         contragentService.getAllContragents().forEach(issuer -> System.out.println(issuer.toString()));
 
         // print products
@@ -137,7 +148,11 @@ public class Main {
                 new FieldConfig("vatNumber", "VAT Number", true, "^BG[1-9]\\d{8}$"),
                 new FieldConfig("email", "Email", true, "^[A-Za-z0-9+_.-]+@(.+)$")
                 ), client);
-        contragentService.addContragent(client);
+        try {
+            contragentService.addContragent(client);
+        } catch (EntityAlreadyExistsException e) {
+            LOG.log(SEVERE, "Error creating contragent:", e);
+        }
         System.out.println(printTable(contragentDescriptors, contragentService.getAllContragents()));
     }
 }

@@ -1,6 +1,7 @@
 package org.iproduct.invoicing.service;
 
 import org.iproduct.invoicing.dao.Repository;
+import org.iproduct.invoicing.exceptions.EntityAlreadyExistsException;
 import org.iproduct.invoicing.exceptions.NonexistingEntityException;
 import org.iproduct.invoicing.model.Product;
 
@@ -26,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product addProduct(Product product) {
+    public Product addProduct(Product product) throws EntityAlreadyExistsException {
         return productRepo.create(product);
     }
 
