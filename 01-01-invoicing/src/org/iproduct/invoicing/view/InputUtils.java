@@ -1,5 +1,7 @@
 package org.iproduct.invoicing.view;
 
+import org.iproduct.invoicing.model.Unit;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
@@ -46,6 +48,11 @@ public class InputUtils {
                         method = instance.getClass().getMethod(methodName.toString(), LocalDate.class);
                         method.invoke(instance, result);
                         break;
+                    case UNIT:
+                        result = inputUnit(fc);
+                        method = instance.getClass().getMethod(methodName.toString(), Unit.class);
+                        method.invoke(instance, result);
+                        break;
                 }
             } catch (NoSuchMethodException e) {
                 e.printStackTrace();
@@ -87,6 +94,46 @@ public class InputUtils {
             }
         } while (error);
         return answer;
+    }
+
+    public static Unit inputUnit(FieldConfig config) {
+        String answer;
+        boolean error;
+        do {
+            error = false;
+            StringBuilder enumValues = new StringBuilder();
+            for (Unit val : Unit.values()) {
+                enumValues.append(val.ordinal()).append(") ").append(val).append("; ");
+            }
+            System.out.printf("Enter %s in: %s" + (config.defaultValue != null || config.optional ? " [<Enter> for '%s']" : "") + ":",
+                    config.label, enumValues.toString(), config.defaultValue);
+            answer = sc.nextLine(); // read answer from console
+            if (answer.isEmpty()) {
+                if (config.defaultValue != null) {
+                    answer = config.defaultValue;
+                } else if (config.optional) {
+                    return null;
+                } else {
+                    System.out.println("The field is mandatory, please enter a value.");
+                    error = true;
+                }
+            }
+
+            // convert string answer -> int -> enum value
+            try {
+                int intAnswer = Integer.valueOf(answer);
+                if (intAnswer < 0 || intAnswer >= Unit.values().length) {
+                    System.out.printf("Invalid choice - should be a number [0, %d]", Unit.values().length - 1);
+                    error = true;
+                } else {
+                    return Unit.values()[intAnswer];
+                }
+            } catch (NumberFormatException ex) {
+                System.out.printf("The answer should be a valid integer number [0, %d]", Unit.values().length - 1);
+                error = true;
+            }
+        } while (error);
+        return null;
     }
 
     public static Long inputLong(FieldConfig config) {
@@ -170,7 +217,7 @@ public class InputUtils {
 
     public static LocalDate inputDate(FieldConfig config) {
         DateTimeFormatter dtf;
-        if(config.dateFormat != null) {
+        if (config.dateFormat != null) {
             dtf = DateTimeFormatter.ofPattern(config.dateFormat);
         } else {
             dtf = DateTimeFormatter.ISO_DATE;

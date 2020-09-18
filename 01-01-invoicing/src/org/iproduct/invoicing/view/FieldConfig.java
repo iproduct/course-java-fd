@@ -65,6 +65,13 @@ public class FieldConfig {
         this.precision = precision;
     }
 
+    public FieldConfig(String property, String label, String defaultValue, FieldType type) {
+        this.property = property;
+        this.label = label;
+        this.defaultValue = defaultValue;
+        this.type = type;
+    }
+
     public FieldConfig(String property, String label, String defaultValue, FieldType type, int precision) {
         this.property = property;
         this.label = label;

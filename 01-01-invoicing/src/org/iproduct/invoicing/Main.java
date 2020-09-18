@@ -15,8 +15,7 @@ import org.iproduct.invoicing.util.ProductPriceComparator;
 import org.iproduct.invoicing.view.InputUtils;
 
 import static org.iproduct.invoicing.view.Alignment.*;
-import static org.iproduct.invoicing.view.FieldType.DECIMAL;
-import static org.iproduct.invoicing.view.FieldType.LONG;
+import static org.iproduct.invoicing.view.FieldType.*;
 import static org.iproduct.invoicing.view.PrintUtils.ColumnDescriptor;
 
 import java.util.*;
@@ -130,29 +129,34 @@ public class Main {
         System.out.println(printTable(contragentDescriptors, contragentService.getAllContragents()));
 
         // test input utilities
-//        Product product = new Product();
-//        InputUtils.inputInstance(List.of(
-//                new FieldConfig("name", "Product Name"),
-//                new FieldConfig("code", "Product Code", null, "^[A-Z]{2}\\d{3}$" ),
-//                new FieldConfig("price", "Price", null, DECIMAL, 8, 2)
-//        ), product);
-//        productService.addProduct(product);
-//        System.out.println(printTable(productDescriptors, productService.getAllProducts()));
-
-        Contragent client = new Client();
+        Product product = new Product();
         InputUtils.inputInstance(List.of(
-                new FieldConfig("id", "Client ID", null, LONG, 10),
-                new FieldConfig("name", "Client Name"),
-                new FieldConfig("address", "Address"),
-                new FieldConfig("telephone", "Phone", true),
-                new FieldConfig("vatNumber", "VAT Number", true, "^BG[1-9]\\d{8}$"),
-                new FieldConfig("email", "Email", true, "^[A-Za-z0-9+_.-]+@(.+)$")
-                ), client);
+                new FieldConfig("name", "Product Name"),
+                new FieldConfig("code", "Product Code", null, "^[A-Z]{2}\\d{3}$" ),
+                new FieldConfig("price", "Price", null, DECIMAL, 8, 2),
+                new FieldConfig("unit", "Unit", "0", UNIT)
+        ), product);
         try {
-            contragentService.addContragent(client);
+            productService.addProduct(product);
         } catch (EntityAlreadyExistsException e) {
-            LOG.log(SEVERE, "Error creating contragent:", e);
+            LOG.log(SEVERE, "Error creating product:", e);
         }
-        System.out.println(printTable(contragentDescriptors, contragentService.getAllContragents()));
+        System.out.println(printTable(productDescriptors, productService.getAllProducts()));
+
+//        Contragent client = new Client();
+//        InputUtils.inputInstance(List.of(
+//                new FieldConfig("id", "Client ID", null, LONG, 10),
+//                new FieldConfig("name", "Client Name"),
+//                new FieldConfig("address", "Address"),
+//                new FieldConfig("telephone", "Phone", true),
+//                new FieldConfig("vatNumber", "VAT Number", true, "^BG[1-9]\\d{8}$"),
+//                new FieldConfig("email", "Email", true, "^[A-Za-z0-9+_.-]+@(.+)$")
+//                ), client);
+//        try {
+//            contragentService.addContragent(client);
+//        } catch (EntityAlreadyExistsException e) {
+//            LOG.log(SEVERE, "Error creating contragent:", e);
+//        }
+//        System.out.println(printTable(contragentDescriptors, contragentService.getAllContragents()));
     }
 }
