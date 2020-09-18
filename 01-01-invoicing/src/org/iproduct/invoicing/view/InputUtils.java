@@ -259,5 +259,27 @@ public class InputUtils {
         return result;
     }
 
+    public static boolean aswerYesNoQuestion(String question) {
+        System.out.printf("%s [Yes or No, <Enter> for Yes]?", question);
+        String answer = sc.nextLine();
+        if (answer.equalsIgnoreCase("No")) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
+    public static int inputInt(String question, int minVal, int maxVal) {
+        int intAnswer = minVal - 1;
+        do {
+            System.out.printf("%s [%d - %d]: ", question, minVal, maxVal);
+            String answer = sc.nextLine();
+            try {
+                intAnswer = Integer.parseInt(answer);
+            } catch (NumberFormatException ex) {
+                System.out.printf("Invalid choice. Try Again.");
+            }
+        } while (intAnswer < minVal || intAnswer > maxVal);
+        return intAnswer;
+    }
 }

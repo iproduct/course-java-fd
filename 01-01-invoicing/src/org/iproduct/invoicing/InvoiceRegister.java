@@ -4,6 +4,7 @@ import org.iproduct.invoicing.dao.KeyGenerator;
 import org.iproduct.invoicing.dao.LongKeyGenerator;
 import org.iproduct.invoicing.dao.MockRepository;
 import org.iproduct.invoicing.dao.Repository;
+import org.iproduct.invoicing.exceptions.ActionUnsuccessfulException;
 import org.iproduct.invoicing.exceptions.EntityAlreadyExistsException;
 import org.iproduct.invoicing.model.Client;
 import org.iproduct.invoicing.model.Contragent;
@@ -13,10 +14,12 @@ import org.iproduct.invoicing.service.ContragentService;
 import org.iproduct.invoicing.service.ContragentServiceImpl;
 import org.iproduct.invoicing.service.ProductService;
 import org.iproduct.invoicing.service.ProductServiceImpl;
+import org.iproduct.invoicing.view.InputUtils;
 import org.iproduct.invoicing.view.MenuItem;
 import org.iproduct.invoicing.view.commands.AddProductCommand;
 import org.iproduct.invoicing.view.commands.Command;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +27,9 @@ import java.util.logging.Logger;
 
 import static java.util.logging.Level.SEVERE;
 import static org.iproduct.invoicing.view.Alignment.*;
-import static org.iproduct.invoicing.view.MenuItem.ADD_PRODUCT;
-import static org.iproduct.invoicing.view.MenuItem.PRINT_PRODUCTS;
+import static org.iproduct.invoicing.view.InputUtils.aswerYesNoQuestion;
+import static org.iproduct.invoicing.view.InputUtils.inputInt;
+import static org.iproduct.invoicing.view.MenuItem.*;
 import static org.iproduct.invoicing.view.PrintUtils.printTable;
 
 import static org.iproduct.invoicing.view.PrintUtils.ColumnDescriptor;
@@ -45,6 +49,7 @@ public class InvoiceRegister {
     private Repository<Long, Contragent> contragentRepo;
     private ContragentService contragentService;
     private Map<MenuItem, Command> commands;
+    private List<MenuItem> mainMenu = new ArrayList<>();
 
 
     public void init() {
@@ -93,6 +98,33 @@ public class InvoiceRegister {
         // Initialize menus
         commands.put(ADD_PRODUCT, new AddProductCommand(productService));
         commands.put(PRINT_PRODUCTS, () -> printTable(PRODUCT_DESCRIPTORS, productService.getAllProducts()));
+        commands.put(EXIT, () -> {
+            if (aswerYesNoQuestion("Are you shure you want to exit")) {
+                System.exit(0);
+                return "Good bye!";
+            } else {
+                return "";
+            }
+        });
+
+        mainMenu.add(ADD_PRODUCT);
+        mainMenu.add(PRINT_PRODUCTS);
+        mainMenu.add(EXIT);
+    }
+
+    public void showMainMenu() {
+        int choice;
+        do {
+            System.out.println();
+//            printMainMenu();
+            choice = inputInt("Choose an option", 1, mainMenu.size());
+            MenuItem chosenItem = mainMenu.get(choice - 1);
+            try {
+                System.out.println(commands.get(chosenItem).action());
+            } catch (ActionUnsuccessfulException e) {
+                System.out.printf("Error: %s", e.getMessage());
+            }
+        } while(true);
     }
 
     public Repository<Long, Product> getProductRepo() {
