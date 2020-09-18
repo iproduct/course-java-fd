@@ -9,20 +9,39 @@ import org.iproduct.invoicing.model.Client;
 import org.iproduct.invoicing.model.Contragent;
 import org.iproduct.invoicing.model.Issuer;
 import org.iproduct.invoicing.model.Product;
+import org.iproduct.invoicing.view.MenuItem;
+import org.iproduct.invoicing.view.commands.AddProductCommand;
+import org.iproduct.invoicing.view.commands.Command;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import static java.util.logging.Level.SEVERE;
+import static org.iproduct.invoicing.view.Alignment.*;
+import static org.iproduct.invoicing.view.MenuItem.ADD_PRODUCT;
+import static org.iproduct.invoicing.view.MenuItem.PRINT_PRODUCTS;
+import static org.iproduct.invoicing.view.PrintUtils.printTable;
+
+import static org.iproduct.invoicing.view.PrintUtils.ColumnDescriptor;
 
 public class InvoiceRegister {
     private static final Logger LOG = Logger.getLogger("o.i.i.s.InvoiceRegister");
+    private static final List<ColumnDescriptor> PRODUCT_DESCRIPTORS = List.of(
+            new ColumnDescriptor("id", "ID", 4, RIGHT),
+            new ColumnDescriptor("code", "Code", 7, CENTER),
+            new ColumnDescriptor("name", "Name", 30, LEFT),
+            new ColumnDescriptor("price", "Price", 10, RIGHT),
+            new ColumnDescriptor("unit", "Unit", 4, CENTER)
+    );
 
     private Repository<Long, Product> productRepo;
     private ProductService productService;
     private Repository<Long, Contragent> contragentRepo;
     private ContragentService contragentService;
+    private Map<MenuItem, Command> commands;
+
 
     public void init() {
         // Initialize products
@@ -44,7 +63,7 @@ public class InvoiceRegister {
         }
 
         // Initialize contragents
-        List<Contragent> contragents = Arrays.asList(new Contragent[] {
+        List<Contragent> contragents = Arrays.asList(new Contragent[]{
                 new Issuer(123456789L, "IT Bookstore Ltd.", "Sofia, Ivan Asen 25A",
                         "BGUNCR1234567890", "BGUNCR",
                         "+(359) 2 896123", "BG123456789"),
@@ -54,7 +73,7 @@ public class InvoiceRegister {
                 new Client(923456789L, "ABC Ltd.", "Sofia, Ivan Asen 25A",
                         "(+359) 2 896123", "BG123456789", "abc@abv.bg"),
                 new Client(867889432L, "Dimitar Petrov", "Provdiv, ul. Centralna, 56",
-                        "(+359) 32 34534", null,"dimitar@gmail.com", true),
+                        "(+359) 32 34534", null, "dimitar@gmail.com", true),
         });
         contragentRepo = new MockRepository<>();
         contragentService = new ContragentServiceImpl(contragentRepo);
@@ -66,5 +85,25 @@ public class InvoiceRegister {
                 LOG.log(SEVERE, "Error creating contragent:", e);
             }
         });
+
+        // Initialize menus
+        commands.put(ADD_PRODUCT, new AddProductCommand(productService));
+        commands.put(PRINT_PRODUCTS, () -> printTable(PRODUCT_DESCRIPTORS, productService.getAllProducts()));
+    }
+
+    public Repository<Long, Product> getProductRepo() {
+        return productRepo;
+    }
+
+    public ProductService getProductService() {
+        return productService;
+    }
+
+    public Repository<Long, Contragent> getContragentRepo() {
+        return contragentRepo;
+    }
+
+    public ContragentService getContragentService() {
+        return contragentService;
     }
 }
