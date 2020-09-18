@@ -93,17 +93,26 @@ public class Main {
                 new Client(867889432L, "Dimitar Petrov", "Provdiv, ul. Centralna, 56",
                         "(+359) 32 34534", null,"dimitar@gmail.com", true),
         });
-        Repository<Long, Contragent> contragentRepo = new MockRepository<>();
-        ContragentService contragentService = new ContragentServiceImpl(contragentRepo);
-
-        contragents.forEach(issuer -> {
+        ContragentRepository contragentRepo = new MockContragentRepository();
+        contragents.forEach(c -> {
             try {
-                contragentService.addContragent(issuer);
+                contragentRepo.create(c);
             } catch (EntityAlreadyExistsException e) {
-                LOG.log(SEVERE, "Error creating contragent:", e);
+                e.printStackTrace();
             }
         });
-        contragentService.getAllContragents().forEach(issuer -> System.out.println(issuer.toString()));
+        System.out.println(contragentRepo.findByName("ABC Ltd."));
+
+        ContragentService contragentService = new ContragentServiceImpl(contragentRepo);
+//
+//        contragents.forEach(issuer -> {
+//            try {
+//                contragentService.addContragent(issuer);
+//            } catch (EntityAlreadyExistsException e) {
+//                LOG.log(SEVERE, "Error creating contragent:", e);
+//            }
+//        });
+//        contragentService.getAllContragents().forEach(issuer -> System.out.println(issuer.toString()));
 
         // print products
         List<ColumnDescriptor> productDescriptors = List.of(
