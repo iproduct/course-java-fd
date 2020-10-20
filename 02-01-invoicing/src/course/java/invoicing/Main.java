@@ -25,7 +25,7 @@ public class Main {
         Product umlBook = productRepo.findById(2L);
         umlBook.setPrice(42.0);
         productRepo.update(umlBook);
-        productRepo.deleteById(4L);
+        productRepo.deleteById(1L);
 
         productRepo.findAll().forEach(System.out::println);
     }

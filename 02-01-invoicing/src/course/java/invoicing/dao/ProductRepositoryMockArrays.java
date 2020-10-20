@@ -63,10 +63,11 @@ public class ProductRepositoryMockArrays implements ProductRepository {
             return null;
         }
         Product removed = products[index];
-        for(int i = index; i < products.length - 1; i++) {
+        numProducts --;
+        for(int i = index; i < numProducts; i++) {
             products[i] = products[i+1];
         }
-        numProducts --;
+
         return removed;
     }
 
