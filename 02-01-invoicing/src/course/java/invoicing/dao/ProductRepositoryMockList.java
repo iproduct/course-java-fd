@@ -48,7 +48,11 @@ public class ProductRepositoryMockList implements ProductRepository {
 
     @Override
     public Product findById(Long id) {
-        return null;
+        int indexFound = Collections.binarySearch(products, new Product(id));
+        if(indexFound < 0) {
+            return null;
+        }
+        return products.get(indexFound);
     }
 
     @Override
@@ -61,16 +65,26 @@ public class ProductRepositoryMockList implements ProductRepository {
 
     @Override
     public Product update(Product product) {
-        return null;
+        int index = Collections.binarySearch(products, product);
+        if(index < 0) {
+            return null;
+        }
+        products.set(index, product);
+//        products.replaceAll(pr -> pr.equals(product) ? product: pr);
+        return product;
     }
 
     @Override
     public Product deleteById(Long id) {
-        return null;
+        int index = Collections.binarySearch(products, new Product(id));
+        if(index < 0) {
+            return null;
+        }
+        return products.remove(index);
     }
 
     @Override
     public long count() {
-        return 0;
+        return products.size();
     }
 }

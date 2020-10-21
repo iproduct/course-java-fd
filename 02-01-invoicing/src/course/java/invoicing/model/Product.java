@@ -100,7 +100,10 @@ public class Product implements Comparable<Product> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        if (id == null) return 0;
+        long longId = id;
+        return (int)(longId >> 32 ^ longId);
+//        return Objects.hash(id);
     }
 
     @Override
