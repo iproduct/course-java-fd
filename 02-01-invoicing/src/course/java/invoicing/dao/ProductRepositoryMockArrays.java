@@ -5,6 +5,8 @@ import course.java.invoicing.model.Product;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 
 public class ProductRepositoryMockArrays implements ProductRepository {
     public static final int MAX_PRODUCTS = 10;
@@ -22,8 +24,24 @@ public class ProductRepositoryMockArrays implements ProductRepository {
     }
 
     @Override
-    public Collection<Product> findAll() {
+    public List<Product> findAll() {
         return Arrays.asList(Arrays.copyOf(products, numProducts));
+    }
+
+    @Override
+    public List<Product> findAllSorted(Comparator<Product> comparator) {
+        Product[] copy = Arrays.copyOf(products, numProducts);
+        Arrays.sort(copy, comparator);
+        return Arrays.asList(copy);
+    }
+
+    @Override
+    public List<Product> findAllSorted(Comparator<Product> comparator, boolean reverse) {
+        if(reverse) {
+            return findAllSorted(comparator.reversed());
+        } else {
+            return findAllSorted(comparator);
+        }
     }
 
     @Override
