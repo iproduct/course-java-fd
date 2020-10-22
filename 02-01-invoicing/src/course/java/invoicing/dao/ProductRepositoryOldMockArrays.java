@@ -4,23 +4,22 @@ import course.java.invoicing.exception.RepositoryFullException;
 import course.java.invoicing.model.Product;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
-public class ProductRepositoryMockArrays implements ProductRepository {
+public class ProductRepositoryOldMockArrays implements ProductRepositoryOld {
     public static final int MAX_PRODUCTS = 10;
-    private static ProductRepositoryMockArrays instance = new ProductRepositoryMockArrays();
+    private static ProductRepositoryOldMockArrays instance = new ProductRepositoryOldMockArrays();
 
     private long nextId = 0L;
     private Product[] products = new Product[MAX_PRODUCTS];
     private int numProducts = 0;
 
-    public static ProductRepository getInstance() {
+    public static ProductRepositoryOld getInstance() {
         return instance;
     }
 
-    private ProductRepositoryMockArrays() {
+    private ProductRepositoryOldMockArrays() {
     }
 
     @Override

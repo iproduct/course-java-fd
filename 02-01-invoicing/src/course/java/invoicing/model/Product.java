@@ -1,11 +1,13 @@
 package course.java.invoicing.model;
 
+import course.java.invoicing.dao.Identifiable;
+
 import java.util.Objects;
 
 import static course.java.invoicing.model.Unit.M;
 import static course.java.invoicing.model.Unit.PCS;
 
-public class Product implements Comparable<Product> {
+public class Product implements Comparable<Product>, Identifiable<Long> {
     private static long nextId = 0L;
     private Long id = ++nextId;
     private String code;

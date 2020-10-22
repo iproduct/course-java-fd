@@ -6,12 +6,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.atomic.AtomicLong;
 
-public class ProductRepositoryMockList implements ProductRepository {
-    private static ProductRepositoryMockList instance = new ProductRepositoryMockList();
-    public static ProductRepository getInstance() {
+public class ProductRepositoryOldMockList implements ProductRepositoryOld {
+    private static ProductRepositoryOldMockList instance = new ProductRepositoryOldMockList();
+    public static ProductRepositoryOld getInstance() {
         return instance;
     }
 
@@ -21,7 +19,7 @@ public class ProductRepositoryMockList implements ProductRepository {
     private long nextId = 0L;
     private List<Product> products = new ArrayList<>();
 
-    private ProductRepositoryMockList() {
+    private ProductRepositoryOldMockList() {
     }
 
     @Override

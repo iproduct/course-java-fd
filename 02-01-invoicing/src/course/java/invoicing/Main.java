@@ -1,16 +1,15 @@
 package course.java.invoicing;
 
-import course.java.invoicing.dao.ProductRepository;
-import course.java.invoicing.dao.ProductRepositoryMockArrays;
-import course.java.invoicing.dao.ProductRepositoryMockList;
-import course.java.invoicing.dao.ProductRepositoryMockMap;
+import course.java.invoicing.dao.*;
 import course.java.invoicing.model.Product;
 import course.java.invoicing.util.ProductPriceComparator;
 
+import java.security.Key;
 import java.util.Comparator;
 import java.util.function.Function;
 
 import static course.java.invoicing.model.Unit.M;
+import static course.java.invoicing.util.PrintUtils.entitiesToString;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,19 +19,19 @@ public class Main {
         Product p4 = new Product("BK001", "Thinking in Java", 35.5);
 
         Product[] products = {p1, p2, p3, p4};
-        ProductRepository productRepo = ProductRepositoryMockMap.getInstance();
+        KeyGenerator<Long> keyGenerator = new LongKeyGenerator();
+        Repository<Long, Product> productRepo = new MockRepository<>(keyGenerator);
 
         for(Product p: products) {
             productRepo.create(p);
         }
 
-        productRepo.findAll().forEach(System.out::println);
+        System.out.println(entitiesToString(productRepo.findAll()));
         System.out.println();
 
         Comparator<Product> priceComparator = (pr1, pr2) -> (int) Math.signum(pr1.getPrice() - pr2.getPrice());
 
-        productRepo.findAllSortedByPrice(true)
-                .forEach(System.out::println);
+        System.out.println(entitiesToString(productRepo.findAllSorted(priceComparator)));
         System.out.println();
 
         Product umlBook = productRepo.findById(2L); //O(1)
@@ -41,12 +40,12 @@ public class Main {
 
         umlBook.setPrice(42.0);
         productRepo.update(umlBook); //O(1)
-        productRepo.findAllSortedByPrice(true)
-                .forEach(System.out::println);
         System.out.println("---------------------------------");
 
         productRepo.deleteById(1L); //O(1)
 
-        productRepo.findAll().forEach(System.out::println);
+        System.out.println(entitiesToString(productRepo.findAll()));
+
+
     }
 }

@@ -2,13 +2,12 @@ package course.java.invoicing.dao;
 
 import course.java.invoicing.model.Product;
 import course.java.invoicing.util.ProductPriceAndIdComparator;
-import course.java.invoicing.util.ProductPriceComparator;
 
 import java.util.*;
 
-public class ProductRepositoryMockMap implements ProductRepository {
-    private static ProductRepositoryMockMap instance = new ProductRepositoryMockMap();
-    public static ProductRepository getInstance() {
+public class ProductRepositoryOldMockMap implements ProductRepositoryOld {
+    private static ProductRepositoryOldMockMap instance = new ProductRepositoryOldMockMap();
+    public static ProductRepositoryOld getInstance() {
         return instance;
     }
 
@@ -19,7 +18,7 @@ public class ProductRepositoryMockMap implements ProductRepository {
     private Map<Long, Product> products = new HashMap<>();
     private TreeSet<Product> priceSortedProducts = new TreeSet<>(new ProductPriceAndIdComparator());
 
-    private ProductRepositoryMockMap() {
+    private ProductRepositoryOldMockMap() {
     }
 
     @Override
