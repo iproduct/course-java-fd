@@ -97,7 +97,7 @@ public class InvoiceRegister {
     public static void main(String[] args) {
         InvoiceRegister register = new InvoiceRegister();
         register.init();
-        register.printAllContragents();
+//        register.printAllContragents();
         register.printAllProducts();
 
     }

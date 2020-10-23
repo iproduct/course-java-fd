@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static course.java.invoicing.util.Alignment.CENTER;
+
 public class PrintUtils {
 
     public static class ColumnDescriptor {
@@ -24,8 +26,15 @@ public class PrintUtils {
         StringBuilder sb = new StringBuilder();
         int width = columns.stream().mapToInt(c -> c.width).sum() + columns.size() + 1;
         sb.append("-".repeat(width)).append("\n");
+        columns.stream().forEach(cd -> {
+            toStringAligned(sb, cd.width, CENTER, cd.label);
+        });
 
         return sb.toString();
+    }
+
+    private static void toStringAligned(StringBuilder sb, int width, Alignment alignment, String text) {
+
     }
 
     public static <E> String entitiesToString(Collection<E> entities) {
