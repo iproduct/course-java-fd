@@ -43,7 +43,8 @@ public class InvoiceRegister {
             new ColumnDescriptor("name", "Name", 30, LEFT),
             new ColumnDescriptor("address", "Address", 30, RIGHT),
             new ColumnDescriptor("telephone", "Phone", 18, CENTER),
-            new ColumnDescriptor("vatNumber", "VAT #", 12, CENTER)
+            new ColumnDescriptor("vatNumber", "VAT #", 12, CENTER),
+            new ColumnDescriptor("email", "Email", 30, CENTER),
     });
     private ProductService productService;
     private ContragentService contragentService;
@@ -63,7 +64,7 @@ public class InvoiceRegister {
                 new Supplier(123456789L, "Best Widgets", "Sofia 1000", "BG123456789",
                         "RZBB123A1234566677", "RZBB"));
         contragentService.addContragent(
-                new Client(9545678901L, "Ivan Petrov", "Plovdiv", null, true));
+                new Client(9545678901L, "Ivan Petrov", "Plovdiv", "john@abv.bg", true));
 
         // init products
         Arrays.stream(new Product[]{
@@ -87,7 +88,7 @@ public class InvoiceRegister {
     }
 
     public void printAllContragents() {
-        System.out.println(entitiesToString(contragentService.getAllContragents()));
+        System.out.println(formatTable(contragentColumns, contragentService.getAllContragents()));
     }
 
     public void printAllProducts() {
@@ -97,7 +98,7 @@ public class InvoiceRegister {
     public static void main(String[] args) {
         InvoiceRegister register = new InvoiceRegister();
         register.init();
-//        register.printAllContragents();
+        register.printAllContragents();
         register.printAllProducts();
 
     }

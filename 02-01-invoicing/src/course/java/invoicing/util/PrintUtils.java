@@ -1,12 +1,19 @@
 package course.java.invoicing.util;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static course.java.invoicing.util.Alignment.CENTER;
+import static java.lang.Math.min;
+import static java.util.logging.Level.WARNING;
 
 public class PrintUtils {
+    private static final Logger LOG = Logger.getLogger("c.j.i.u.PrintUtils");
 
     public static class ColumnDescriptor {
         public final String property;
@@ -25,16 +32,56 @@ public class PrintUtils {
     public static String formatTable(List<ColumnDescriptor> columns, Collection<?> items) {
         StringBuilder sb = new StringBuilder();
         int width = columns.stream().mapToInt(c -> c.width).sum() + columns.size() + 1;
-        sb.append("-".repeat(width)).append("\n");
+        sb.append("-".repeat(width)).append("\n|");
         columns.stream().forEach(cd -> {
             toStringAligned(sb, cd.width, CENTER, cd.label);
+            sb.append("|");
         });
+        sb.append("\n").append("-".repeat(width)).append("\n");
+        for (Object item : items) {
+            sb.append("|");
+            for (int i = 0; i < columns.size(); i++) {
+                ColumnDescriptor column = columns.get(i);
+                StringBuilder getterName = new StringBuilder(column.property);
+                getterName.setCharAt(0, Character.toUpperCase(getterName.charAt(0)));
+                getterName.insert(0, "get");
+                String strValue = "";
+                try {
+                    Method getter = item.getClass().getMethod(getterName.toString());
+                    Object value = getter.invoke(item);
+                    strValue = value != null ? value.toString() : "-";
+                } catch (NullPointerException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    LOG.log(WARNING,
+                            String.format("Error getting property value for '%s'", column.property),
+                            e);
+                    strValue = "-";
+
+                }
+                toStringAligned(sb, column.width, column.alignment, strValue);
+                sb.append("|");
+            }
+            sb.append("\n");
+        }
+        sb.append("-".repeat(width)).append("\n");
 
         return sb.toString();
     }
 
     private static void toStringAligned(StringBuilder sb, int width, Alignment alignment, String text) {
-
+        text = text.substring(0, min(width, text.length()));
+        int spaces = width - text.length();
+        switch (alignment) {
+            case LEFT:
+                sb.append(text).append(" ".repeat(spaces));
+                break;
+            case RIGHT:
+                sb.append(" ".repeat(spaces)).append(text);
+                break;
+            case CENTER:
+                sb.append(" ".repeat(spaces - spaces / 2))
+                        .append(text).append(" ".repeat(spaces / 2));
+                break;
+        }
     }
 
     public static <E> String entitiesToString(Collection<E> entities) {
