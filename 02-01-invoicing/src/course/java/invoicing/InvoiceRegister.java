@@ -10,22 +10,41 @@ import course.java.invoicing.service.ContragentService;
 import course.java.invoicing.service.ContragentServiceImpl;
 import course.java.invoicing.service.ProductService;
 import course.java.invoicing.service.ProductServiceImpl;
+import course.java.invoicing.util.Alignment;
 import course.java.invoicing.util.PrintUtils;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static course.java.invoicing.model.Unit.M;
 import static course.java.invoicing.model.Unit.PCS;
+import static course.java.invoicing.util.Alignment.*;
 import static course.java.invoicing.util.PrintUtils.entitiesToString;
+import static course.java.invoicing.util.PrintUtils.formatTable;
+import static course.java.invoicing.util.PrintUtils.ColumnDescriptor;
 
 public class InvoiceRegister {
     private static Logger LOG = Logger.getLogger("c.j.i.InvoiceRegister");
-//    static {
+    //    static {
 //        LOG.setLevel(Level.SEVERE);
 //    }
     // or -Djava.util.logging.config.file=logging.properties
+    public static final List<ColumnDescriptor> productColumns = Arrays.asList(new ColumnDescriptor[]{
+            new ColumnDescriptor("id", "ID", 5, RIGHT),
+            new ColumnDescriptor("code", "Code", 7, CENTER),
+            new ColumnDescriptor("name", "Name", 30, LEFT),
+            new ColumnDescriptor("price", "Price", 10, RIGHT),
+            new ColumnDescriptor("unit", "Unit", 4, CENTER)
+    });
+    public static final List<ColumnDescriptor> contragentColumns = Arrays.asList(new ColumnDescriptor[]{
+            new ColumnDescriptor("id", "ID", 10, RIGHT),
+            new ColumnDescriptor("name", "Name", 30, LEFT),
+            new ColumnDescriptor("address", "Address", 30, RIGHT),
+            new ColumnDescriptor("telephone", "Phone", 18, CENTER),
+            new ColumnDescriptor("vatNumber", "VAT #", 12, CENTER)
+    });
     private ProductService productService;
     private ContragentService contragentService;
 
@@ -65,7 +84,6 @@ public class InvoiceRegister {
             LOG.info("Update try finished.");
         }
 
-
     }
 
     public void printAllContragents() {
@@ -73,7 +91,7 @@ public class InvoiceRegister {
     }
 
     public void printAllProducts() {
-        System.out.println(entitiesToString(productService.getAllProducts()));
+        System.out.println(formatTable(productColumns, productService.getAllProducts()));
     }
 
     public static void main(String[] args) {

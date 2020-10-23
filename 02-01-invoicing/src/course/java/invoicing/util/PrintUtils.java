@@ -20,8 +20,12 @@ public class PrintUtils {
         }
     }
 
-    public static String formatTable(List<ColumnDescriptor> columns, List<?> items) {
-        return "";
+    public static String formatTable(List<ColumnDescriptor> columns, Collection<?> items) {
+        StringBuilder sb = new StringBuilder();
+        int width = columns.stream().mapToInt(c -> c.width).sum() + columns.size() + 1;
+        sb.append("-".repeat(width)).append("\n");
+
+        return sb.toString();
     }
 
     public static <E> String entitiesToString(Collection<E> entities) {
