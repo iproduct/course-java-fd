@@ -59,7 +59,7 @@ public class InputUtils {
                     case DATE:
                         LocalDate dateResult = inputDate(fc);
                         result = (dateResult != null) ? dateResult : null;
-                        method = instance.getClass().getMethod(setterName.toString(), Integer.class);
+                        method = instance.getClass().getMethod(setterName.toString(), Unit.class);
                         method.invoke(instance, result);
                         break;
                 }

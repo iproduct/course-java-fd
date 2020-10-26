@@ -10,8 +10,7 @@ import course.java.invoicing.service.ContragentService;
 import course.java.invoicing.service.ContragentServiceImpl;
 import course.java.invoicing.service.ProductService;
 import course.java.invoicing.service.ProductServiceImpl;
-import course.java.invoicing.util.Alignment;
-import course.java.invoicing.util.PrintUtils;
+import course.java.invoicing.util.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,6 +20,8 @@ import java.util.logging.Logger;
 import static course.java.invoicing.model.Unit.M;
 import static course.java.invoicing.model.Unit.PCS;
 import static course.java.invoicing.util.Alignment.*;
+import static course.java.invoicing.util.FieldType.DECIMAL;
+import static course.java.invoicing.util.FieldType.UNIT;
 import static course.java.invoicing.util.PrintUtils.entitiesToString;
 import static course.java.invoicing.util.PrintUtils.formatTable;
 import static course.java.invoicing.util.PrintUtils.ColumnDescriptor;
@@ -84,6 +85,16 @@ public class InvoiceRegister {
         } finally {
             LOG.info("Update try finished.");
         }
+
+        List<FieldConfig> productFields = Arrays.asList(new FieldConfig[]{
+                new FieldConfig("name", "Product Name"),
+                new FieldConfig("code", "Product Code", false, "[A-Z]{2}\\d{3}"),
+                new FieldConfig("price", "Price", DECIMAL, 8, 2),
+                new FieldConfig("unit", "Unit", UNIT, "0"),
+        });
+        Product product = new Product();
+        InputUtils.inputInstance(productFields, product);
+        productService.addProduct(product);
 
     }
 
