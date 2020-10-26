@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import static course.java.invoicing.util.Alignment.CENTER;
 import static java.lang.Math.min;
+import static java.util.logging.Level.FINE;
 import static java.util.logging.Level.WARNING;
 
 public class PrintUtils {
@@ -51,9 +52,7 @@ public class PrintUtils {
                     Object value = getter.invoke(item);
                     strValue = value != null ? value.toString() : "-";
                 } catch (NullPointerException | NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                    LOG.log(WARNING,
-                            String.format("Error getting property value for '%s'", column.property),
-                            e);
+                    LOG.log(FINE, String.format("Error getting property value for '%s'", column.property), e);
                     strValue = "-";
 
                 }
