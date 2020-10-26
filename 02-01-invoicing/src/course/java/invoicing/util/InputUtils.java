@@ -6,6 +6,7 @@ import course.java.invoicing.model.Unit;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
@@ -182,6 +183,34 @@ public class InputUtils {
         return null;
     }
 
+    private static LocalDate inputDate(FieldConfig fc) {
+        DateTimeFormatter dtf;
+        if(fc.dateFormat != null) {
+            dtf = DateTimeFormatter.ofPattern(fc.dateFormat);
+        } else {
+            dtf = DateTimeFormatter.ISO_DATE;
+        }
+        String answer = null;
+        boolean error;
+        do {
+            error = false;
+            try {
+                answer = inputStringOrThrow(fc);
+            } catch (InvalidUserDataException e) {
+                System.out.println(e.getMessage());
+                error = true;
+            }
+            if (answer != null) {
+                try {
+                    return LocalDate.parse(answer, dtf);
+                } catch (NumberFormatException ex) {
+                    System.out.printf("The answer must be a valid integer number.%n");
+                    error = true;
+                }
+            }
+        } while (error);
+        return null;
+    }
 
     private static String inputStringOrThrow(FieldConfig fc) throws InvalidUserDataException {
         String answer;
@@ -209,10 +238,6 @@ public class InputUtils {
             }
         }
         return answer;
-    }
-
-    private static LocalDate inputDate(FieldConfig fc) {
-        return LocalDate.now();
     }
 
 }
