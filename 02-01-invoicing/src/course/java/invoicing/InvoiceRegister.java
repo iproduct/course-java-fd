@@ -11,6 +11,7 @@ import course.java.invoicing.view.MenuItem;
 import course.java.invoicing.view.command.AppProductCommand;
 
 import java.awt.*;
+import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.logging.Level;
@@ -24,6 +25,7 @@ import static course.java.invoicing.view.MenuItem.*;
 
 public class InvoiceRegister {
     private static Logger LOG = Logger.getLogger("c.j.i.InvoiceRegister");
+    public static final String DATABASE_FILENAME = "./invoicing.db";
     //    static {
 //        LOG.setLevel(Level.SEVERE);
 //    }
@@ -43,6 +45,7 @@ public class InvoiceRegister {
             new ColumnDescriptor("vatNumber", "VAT #", 12, CENTER),
             new ColumnDescriptor("email", "Email", 30, CENTER),
     });
+
     private ProductService productService;
     private ContragentService contragentService;
     private UserService userService;
@@ -107,6 +110,33 @@ public class InvoiceRegister {
             Collection<Product> products = productService.getAllProducts();
             return formatTable(productColumns, products)
                 + String.format("Total product count: %s%n", products.size());
+        });
+        commands.put(WRITE_TO_FILE, () -> {
+            File dbFile = new File(DATABASE_FILENAME);
+            try {
+                ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(dbFile));
+                outputStream.writeObject(new AllRepos(productService.getProductRepository(),
+                        contragentService.getContragentRepository(), userService.getUserRepository()));
+            } catch (IOException e) {
+                LOG.log(Level.SEVERE, "Can not write to file: " + dbFile.getAbsolutePath(), e);
+            }
+            return String.format("Data written successfully to file: %s", dbFile.getAbsolutePath() );
+        });
+        commands.put(READ_FROM_FILE, () -> {
+            File dbFile = new File(DATABASE_FILENAME);
+            try {
+                ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(dbFile));
+                Object result = inputStream.readObject();
+                if(result instanceof AllRepos) {
+                    AllRepos allRepos = (AllRepos) result;
+                    productService.setProductRepository(allRepos.getProductRepository());
+                    contragentService.setContragentRepository(allRepos.getContragentRepository());
+                    userService.setUserRepository(allRepos.getUserRepository());
+                }
+            } catch (ClassNotFoundException | IOException e) {
+                LOG.log(Level.SEVERE, "Can not write to file: " + dbFile.getAbsolutePath(), e);
+            }
+            return String.format("Data read successfully from file: %s", dbFile.getAbsolutePath() );
         });
         commands.put(EXIT, () -> {
             System.exit(0);

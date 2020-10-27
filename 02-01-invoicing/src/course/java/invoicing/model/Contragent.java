@@ -2,9 +2,10 @@ package course.java.invoicing.model;
 
 import course.java.invoicing.dao.Identifiable;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Contragent implements Identifiable<Long> {
+public class Contragent implements Identifiable<Long>, Serializable {
     private Long id;
     private String name;
     private String address;

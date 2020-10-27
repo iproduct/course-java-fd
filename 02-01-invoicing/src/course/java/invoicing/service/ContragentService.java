@@ -1,7 +1,10 @@
 package course.java.invoicing.service;
 
+import course.java.invoicing.dao.ContragentRepository;
+import course.java.invoicing.dao.ProductRepository;
 import course.java.invoicing.exception.NonexistingEntityException;
 import course.java.invoicing.model.Contragent;
+import course.java.invoicing.model.Product;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -15,4 +18,7 @@ public interface ContragentService {
     Contragent updateContragent(Contragent contragent) throws NonexistingEntityException;
     Contragent deleteContragent(Long id) throws NonexistingEntityException;
     long getCount();
+    ContragentRepository getContragentRepository();
+    void setContragentRepository(ContragentRepository repo);
+
 }

@@ -1,5 +1,6 @@
 package course.java.invoicing.service;
 
+import course.java.invoicing.dao.UserRepository;
 import course.java.invoicing.exception.NonexistingEntityException;
 import course.java.invoicing.model.User;
 
@@ -16,4 +17,6 @@ public interface UserService {
     User updateUser(User user) throws NonexistingEntityException;
     User deleteUser(Long userId) throws NonexistingEntityException;
     long getCount();
+    UserRepository getUserRepository();
+    void setUserRepository(UserRepository repo);
 }

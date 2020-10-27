@@ -1,5 +1,7 @@
 package course.java.invoicing.model;
 
+import java.io.Serializable;
+
 public class Supplier extends Contragent {
     private String iban;
     private String bic;

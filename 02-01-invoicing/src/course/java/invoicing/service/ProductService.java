@@ -1,5 +1,7 @@
 package course.java.invoicing.service;
 
+import course.java.invoicing.dao.ProductRepository;
+import course.java.invoicing.dao.UserRepository;
 import course.java.invoicing.exception.NonexistingEntityException;
 import course.java.invoicing.model.Product;
 
@@ -15,4 +17,6 @@ public interface ProductService {
     Product updateProduct(Product product) throws NonexistingEntityException;
     Product deleteProduct(Long productId) throws NonexistingEntityException;
     long getCount();
+    ProductRepository getProductRepository();
+    void setProductRepository(ProductRepository repo);
 }

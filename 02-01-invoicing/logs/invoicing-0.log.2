@@ -1,8 +1,14 @@
-окт 26, 2020 1:52:53 СЛ.ОБ. course.java.invoicing.util.InputUtils inputInstance
-SEVERE: Error accessing property 'unit' on instance ID: 5, Code: CC001, Name: Mouse, Price: 24.9, Unit: PCS.
-java.lang.NoSuchMethodException: course.java.invoicing.model.Product.setUnit(java.lang.Integer)
-	at java.base/java.lang.Class.getMethod(Class.java:2113)
-	at course.java.invoicing.util.InputUtils.inputInstance(InputUtils.java:56)
-	at course.java.invoicing.InvoiceRegister.init(InvoiceRegister.java:96)
-	at course.java.invoicing.InvoiceRegister.main(InvoiceRegister.java:111)
+окт 27, 2020 2:20:56 СЛ.ОБ. course.java.invoicing.InvoiceRegister lambda$init$1
+SEVERE: Can not write to file: D:\Course_Java_Web_Development\git\course-java-fd\02-01-invoicing\.\invoicing.db
+java.io.NotSerializableException: course.java.invoicing.dao.ContragentRepositoryMock
+	at java.base/java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1185)
+	at java.base/java.io.ObjectOutputStream.defaultWriteFields(ObjectOutputStream.java:1553)
+	at java.base/java.io.ObjectOutputStream.writeSerialData(ObjectOutputStream.java:1510)
+	at java.base/java.io.ObjectOutputStream.writeOrdinaryObject(ObjectOutputStream.java:1433)
+	at java.base/java.io.ObjectOutputStream.writeObject0(ObjectOutputStream.java:1179)
+	at java.base/java.io.ObjectOutputStream.writeObject(ObjectOutputStream.java:349)
+	at course.java.invoicing.InvoiceRegister.lambda$init$1(InvoiceRegister.java:120)
+	at course.java.invoicing.InvoiceRegister.showMenu(InvoiceRegister.java:169)
+	at course.java.invoicing.InvoiceRegister.init(InvoiceRegister.java:152)
+	at course.java.invoicing.InvoiceRegister.main(InvoiceRegister.java:189)
 

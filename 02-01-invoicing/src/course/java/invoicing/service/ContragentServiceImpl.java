@@ -9,9 +9,17 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ContragentServiceImpl implements ContragentService {
-    private final ContragentRepository contragentRepo;
+    private ContragentRepository contragentRepo;
 
     public ContragentServiceImpl(ContragentRepository contragentRepo){
+        this.contragentRepo = contragentRepo;
+    }
+
+    public ContragentRepository getContragentRepository() {
+        return contragentRepo;
+    }
+
+    public void setContragentRepository(ContragentRepository contragentRepo) {
         this.contragentRepo = contragentRepo;
     }
 

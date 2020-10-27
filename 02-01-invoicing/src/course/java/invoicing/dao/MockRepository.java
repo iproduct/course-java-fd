@@ -1,5 +1,6 @@
 package course.java.invoicing.dao;
 
+import java.io.Serializable;
 import java.util.*;
 
 public class MockRepository<K, T extends Identifiable<K>> implements Repository<K, T> {

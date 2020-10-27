@@ -2,12 +2,13 @@ package course.java.invoicing.model;
 
 import course.java.invoicing.dao.Identifiable;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class User implements Identifiable<Long> {
+public class User implements Identifiable<Long>, Serializable {
     private Long id;
     private String firstName;
     private String lastName;

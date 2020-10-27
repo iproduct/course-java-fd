@@ -15,6 +15,14 @@ public class ProductServiceImpl implements ProductService {
         this.productRepo = productRepo;
     }
 
+    public ProductRepository getProductRepository() {
+        return productRepo;
+    }
+
+    public void setProductRepository(ProductRepository productRepo) {
+        this.productRepo = productRepo;
+    }
+
     @Override
     public Collection<Product> getAllProducts() {
         return productRepo.findAll();
