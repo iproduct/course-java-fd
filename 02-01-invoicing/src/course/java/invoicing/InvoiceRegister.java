@@ -86,15 +86,6 @@ public class InvoiceRegister {
             LOG.info("Update try finished.");
         }
 
-        List<FieldConfig> productFields = Arrays.asList(new FieldConfig[]{
-                new FieldConfig("name", "Product Name"),
-                new FieldConfig("code", "Product Code", false, "[A-Z]{2}\\d{3}"),
-                new FieldConfig("price", "Price", DECIMAL, 8, 2),
-                new FieldConfig("unit", "Unit", UNIT, "0"),
-        });
-        Product product = new Product();
-        InputUtils.inputInstance(productFields, product);
-        productService.addProduct(product);
 
     }
 
