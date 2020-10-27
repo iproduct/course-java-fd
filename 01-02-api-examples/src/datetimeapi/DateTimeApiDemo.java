@@ -14,8 +14,9 @@ public class DateTimeApiDemo {
 //		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 //		LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 		
-		// begin output
-		System.out.println("Current Time");
+//		// begin output
+//		System.out.println("Current Time");
+//		System.out.println(dateTime.format(formatter));
 
 		// create a Pacific Standard Time time zone
 		String[] ids = TimeZone.getAvailableIDs(2 * 60 * 60 * 1000);
@@ -23,7 +24,7 @@ public class DateTimeApiDemo {
 
 		SimpleTimeZone eet = new SimpleTimeZone(2 * 60 * 60 * 1000, "Europe/Sofia");
 		System.out.println(eet);
-//		eet.setEndRule(Calendar.OCTOBER, -1, Calendar.SUNDAY, 2 * 60 * 60 * 1000);
+		eet.setEndRule(Calendar.OCTOBER, -1, Calendar.SUNDAY, 2 * 60 * 60 * 1000);
 //
 //		// create a GregorianCalendar with the Pacific Daylight time zone
 //		// and the current date and time
@@ -35,8 +36,9 @@ public class DateTimeApiDemo {
 //		ZonedDateTime zdt = ZonedDateTime.ofInstant(calendar.toInstant(), eet.toZoneId());
 		ZonedDateTime zdt = calendar.toZonedDateTime();
 //
-		DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm:ss ZZZZ");
-		LocalDateTime dateTime = LocalDateTime.of(1986, Month.APRIL, 8, 12, 30);
+		DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd MMMM yyyy HH:mm:ss ZZZZ zzzz");
+//		LocalDateTime dateTime = LocalDateTime.of(1986, Month.APRIL, 8, 12, 30);
+		LocalDateTime dateTime = LocalDateTime.now();
 		ZonedDateTime dateInPast = ZonedDateTime.of(dateTime, eet.toZoneId());
 		String formattedDateTime = dateInPast.format(formatter2); // "1986-04-08 12:30"
 		System.out.println(formattedDateTime);

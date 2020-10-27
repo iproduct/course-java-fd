@@ -91,7 +91,7 @@ public class StreamDemo {
 		Map<String, Integer> mapResult = 
 			listWithDuplicates.stream().collect(Collectors.toMap(Function.identity(), String::length,
 				(e1, e2) -> e2));
-//		System.out.println(mapResult);
+		System.out.println(mapResult);
 		
 		IntSummaryStatistics stat = listWithDuplicates.stream().collect(
 				Collectors.summarizingInt(s -> s.length()));

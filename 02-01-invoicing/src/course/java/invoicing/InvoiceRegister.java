@@ -136,7 +136,7 @@ public class InvoiceRegister {
             } catch (ClassNotFoundException | IOException e) {
                 LOG.log(Level.SEVERE, "Can not write to file: " + dbFile.getAbsolutePath(), e);
             }
-            return String.format("Data read successfully from file: %s", dbFile.getAbsolutePath() );
+            return String.format("Data read successfully from file: %s", dbFile.toPath().toAbsolutePath().normalize() );
         });
         commands.put(EXIT, () -> {
             System.exit(0);
