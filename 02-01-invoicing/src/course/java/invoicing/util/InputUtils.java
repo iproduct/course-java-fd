@@ -73,7 +73,7 @@ public class InputUtils {
 
 
     // Implementation helper methods
-    private static Long inputLong(FieldConfig fc) {
+    public static Long inputLong(FieldConfig fc) {
         String answer = null;
         boolean error;
         do {
@@ -96,7 +96,7 @@ public class InputUtils {
         return null;
     }
 
-    private static Double inputDouble(FieldConfig fc) {
+    public static Double inputDouble(FieldConfig fc) {
         String answer = null;
         boolean error;
         do {
@@ -124,7 +124,7 @@ public class InputUtils {
         return null;
     }
 
-    private static String inputString(FieldConfig fc) {
+    public static String inputString(FieldConfig fc) {
         String answer = null;
         boolean error;
         do {
@@ -139,7 +139,7 @@ public class InputUtils {
         return answer;
     }
 
-    private static Unit inputUnit(FieldConfig fc) {
+    public static Unit inputUnit(FieldConfig fc) {
         String answer = null;
         boolean error;
         StringBuilder enumValues = new StringBuilder();
@@ -183,7 +183,7 @@ public class InputUtils {
         return null;
     }
 
-    private static LocalDate inputDate(FieldConfig fc) {
+    public static LocalDate inputDate(FieldConfig fc) {
         DateTimeFormatter dtf;
         if(fc.dateFormat != null) {
             dtf = DateTimeFormatter.ofPattern(fc.dateFormat);
@@ -212,7 +212,7 @@ public class InputUtils {
         return null;
     }
 
-    private static String inputStringOrThrow(FieldConfig fc) throws InvalidUserDataException {
+    public static String inputStringOrThrow(FieldConfig fc) throws InvalidUserDataException {
         String answer;
         System.out.printf("Input %s" +
                         (fc.optional || fc.defaultValue != null ? "[<Enter> for %s]" : "") + ":",

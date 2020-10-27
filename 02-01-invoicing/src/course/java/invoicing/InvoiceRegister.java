@@ -1,30 +1,22 @@
 package course.java.invoicing;
 
 import course.java.invoicing.dao.*;
-import course.java.invoicing.exception.NonexistingProductException;
-import course.java.invoicing.model.Client;
-import course.java.invoicing.model.Contragent;
-import course.java.invoicing.model.Product;
-import course.java.invoicing.model.Supplier;
-import course.java.invoicing.service.ContragentService;
-import course.java.invoicing.service.ContragentServiceImpl;
-import course.java.invoicing.service.ProductService;
-import course.java.invoicing.service.ProductServiceImpl;
+import course.java.invoicing.exception.NonexistingEntityException;
+import course.java.invoicing.model.*;
+import course.java.invoicing.service.*;
 import course.java.invoicing.util.*;
+import course.java.invoicing.view.MenuItem;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static course.java.invoicing.model.Unit.M;
-import static course.java.invoicing.model.Unit.PCS;
 import static course.java.invoicing.util.Alignment.*;
-import static course.java.invoicing.util.FieldType.DECIMAL;
-import static course.java.invoicing.util.FieldType.UNIT;
-import static course.java.invoicing.util.PrintUtils.entitiesToString;
-import static course.java.invoicing.util.PrintUtils.formatTable;
-import static course.java.invoicing.util.PrintUtils.ColumnDescriptor;
+import static course.java.invoicing.util.FieldType.*;
+import static course.java.invoicing.util.PrintUtils.*;
 
 public class InvoiceRegister {
     private static Logger LOG = Logger.getLogger("c.j.i.InvoiceRegister");
@@ -49,6 +41,9 @@ public class InvoiceRegister {
     });
     private ProductService productService;
     private ContragentService contragentService;
+    private UserService userService;
+
+    private User loggedUser;
 
     public InvoiceRegister() {
         KeyGenerator<Long> productIdGen = new LongKeyGenerator();
@@ -57,6 +52,17 @@ public class InvoiceRegister {
         KeyGenerator<Long> contragentIdGen = new LongKeyGenerator();
         ContragentRepository contragentRepo = new ContragentRepositoryMock(contragentIdGen);
         contragentService = new ContragentServiceImpl(contragentRepo);
+        KeyGenerator<Long> userIdGen = new LongKeyGenerator();
+        UserRepository userRepo = new UserRepositoryMock(userIdGen);
+        userService = new UserServiceImpl(userRepo);
+    }
+
+    protected User getLoggedUser() {
+        return loggedUser;
+    }
+
+    protected void setLoggedUser(User loggedUser) {
+        this.loggedUser = loggedUser;
     }
 
     public void init() {
@@ -75,19 +81,36 @@ public class InvoiceRegister {
                 new Product("BK001", "Thinking in Java", 35.5)})
                 .forEach(productService::addProduct);
 
-        try {
-            Product tij3 = productService.getProductById(1L);
-            tij3.setPrice(tij3.getPrice() * 1.2);
-            productService.updateProduct(tij3);
-//                    new Product(6L, "BK006", "Thinking in C++", 35.5, PCS));
-        } catch (NonexistingProductException e) {
-            LOG.log(Level.SEVERE, "Error initializing products: ", e);
-        } finally {
-            LOG.info("Update try finished.");
-        }
+        // init users
+        Arrays.stream(new User[]{
+                new User("Default", "Admin", "admin", "admin",
+                        new HashSet<>(Arrays.asList(Role.ADMIN)), true),
+                new User("Default", "User", "user", "user",
+                        new HashSet<>(Arrays.asList(Role.USER)), true)
+        }).forEach(userService::addUser);
 
+        try {
+            loggedUser = userService.getUserByUsername("admin");
+        } catch (NonexistingEntityException e) {
+            LOG.warning("Default user not found.");
+        }
+        MenuItem[] items = MenuItem.values();
+        List<MenuItem> mainMenu = Arrays.asList(Arrays.copyOf(items, items.length - 1));
+        showMenu(mainMenu);
 
     }
+
+    public void showMenu(List<MenuItem> menuItems){
+        int choice;
+        FieldConfig intFieldConfig = new FieldConfig(null, "Choose an option", INTEGER, 2);
+        do {
+            System.out.println();
+            System.out.println(formatMenu(menuItems, getLoggedUser().getRoles()));
+            choice = InputUtils.inputLong(intFieldConfig).intValue();
+        } while(true);
+    }
+
+
 
     public void printAllContragents() {
         System.out.println(formatTable(contragentColumns, contragentService.getAllContragents()));

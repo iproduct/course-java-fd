@@ -1,7 +1,7 @@
 package course.java.invoicing.service;
 
 import course.java.invoicing.dao.ContragentRepository;
-import course.java.invoicing.exception.NonexistingProductException;
+import course.java.invoicing.exception.NonexistingEntityException;
 import course.java.invoicing.model.Contragent;
 
 import java.util.Collection;
@@ -26,10 +26,10 @@ public class ContragentServiceImpl implements ContragentService {
     }
 
     @Override
-    public Contragent getContragentById(Long id) throws NonexistingProductException {
+    public Contragent getContragentById(Long id) throws NonexistingEntityException {
         Contragent found = contragentRepo.findById(id);
         if(found == null) {
-            throw new NonexistingProductException(
+            throw new NonexistingEntityException(
                     String.format("Contragent with ID:%d does not exist", id));
         }
         return found;
@@ -41,10 +41,10 @@ public class ContragentServiceImpl implements ContragentService {
     }
 
     @Override
-    public Contragent updateContragent(Contragent contragent) throws NonexistingProductException {
+    public Contragent updateContragent(Contragent contragent) throws NonexistingEntityException {
         Contragent updated = contragentRepo.update(contragent);
         if(updated == null) {
-            throw new NonexistingProductException(
+            throw new NonexistingEntityException(
                     String.format("Contragent '%d: %s' does not exist",
                             contragent.getId(), contragent.getName()));
         }
@@ -52,10 +52,10 @@ public class ContragentServiceImpl implements ContragentService {
     }
 
     @Override
-    public Contragent deleteContragent(Long id) throws NonexistingProductException {
+    public Contragent deleteContragent(Long id) throws NonexistingEntityException {
         Contragent deleted = contragentRepo.deleteById(id);
         if(deleted == null) {
-            throw new NonexistingProductException(
+            throw new NonexistingEntityException(
                     String.format("Contragent with ID:%d does not exist", id));
         }
         return deleted;

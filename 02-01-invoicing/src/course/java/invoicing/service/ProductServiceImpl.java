@@ -1,7 +1,7 @@
 package course.java.invoicing.service;
 
 import course.java.invoicing.dao.ProductRepository;
-import course.java.invoicing.exception.NonexistingProductException;
+import course.java.invoicing.exception.NonexistingEntityException;
 import course.java.invoicing.model.Product;
 
 import java.util.Collection;
@@ -26,10 +26,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product getProductById(Long id) throws NonexistingProductException {
+    public Product getProductById(Long id) throws NonexistingEntityException {
         Product found = productRepo.findById(id);
         if(found == null) {
-            throw new NonexistingProductException(String.format("Product with ID:%d does not exist", id));
+            throw new NonexistingEntityException(String.format("Product with ID:%d does not exist", id));
         }
         return found;
     }
@@ -40,20 +40,20 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product updateProduct(Product product) throws NonexistingProductException {
+    public Product updateProduct(Product product) throws NonexistingEntityException {
         Product updated = productRepo.update(product);
         if(updated == null) {
-            throw new NonexistingProductException(
+            throw new NonexistingEntityException(
                 String.format("Product '%d: %s' does not exist", product.getId(), product.getName()));
         }
         return updated;
     }
 
     @Override
-    public Product deleteProduct(Long id) throws NonexistingProductException {
+    public Product deleteProduct(Long id) throws NonexistingEntityException {
         Product deleted = productRepo.deleteById(id);
         if(deleted == null) {
-            throw new NonexistingProductException(
+            throw new NonexistingEntityException(
                     String.format("Product with ID:%d does not exist", id));
         }
         return deleted;

@@ -15,10 +15,11 @@ public enum MenuItem {
     PRINT_SUPPLIERS("Print All Suppliers"),
     WRITE_TO_FILE("Write to File"),
     READ_FROM_FILE("Read from File"),
-    EXIT_SUBMENU("Exit Menu"),
-    EXIT("Exit"),
     ADD_USER("Add User", new HashSet<>(Arrays.asList(Role.ADMIN))),
-    PRINT_USERS("List All Users", new HashSet<>(Arrays.asList(Role.ADMIN)));
+    PRINT_USERS("List All Users", new HashSet<>(Arrays.asList(Role.ADMIN))),
+    EXIT("Exit"),
+    EXIT_SUBMENU("Exit Menu");
+
     private String label;
     private Set<Role> rolesAlowed = new HashSet<>(Arrays.asList(Role.USER, Role.ADMIN));
 

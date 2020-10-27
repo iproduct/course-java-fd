@@ -97,6 +97,10 @@ public class User implements Identifiable<Long> {
         this.active = active;
     }
 
+    public String getName() {
+        return getFirstName() + " " + getLastName();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
