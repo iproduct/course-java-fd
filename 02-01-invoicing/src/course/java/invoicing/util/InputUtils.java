@@ -53,13 +53,13 @@ public class InputUtils {
                     case UNIT:
                         Unit unitResult = inputUnit(fc);
                         result = (unitResult != null) ? unitResult : null;
-                        method = instance.getClass().getMethod(setterName.toString(), Integer.class);
+                        method = instance.getClass().getMethod(setterName.toString(), Unit.class);
                         method.invoke(instance, result);
                         break;
                     case DATE:
                         LocalDate dateResult = inputDate(fc);
                         result = (dateResult != null) ? dateResult : null;
-                        method = instance.getClass().getMethod(setterName.toString(), Unit.class);
+                        method = instance.getClass().getMethod(setterName.toString(), LocalDate.class);
                         method.invoke(instance, result);
                         break;
                 }
@@ -144,7 +144,7 @@ public class InputUtils {
         boolean error;
         StringBuilder enumValues = new StringBuilder();
         for (Unit val : Unit.values()) {
-            enumValues.append(val.ordinal()).append(") ").append(val);
+            enumValues.append(val.ordinal()).append(")").append(val).append(", ");
         }
         do {
             error = false;

@@ -5,10 +5,7 @@ import course.java.invoicing.view.MenuItem;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -71,15 +68,14 @@ public class PrintUtils {
         return sb.toString();
     }
 
-    public static String formatMenu(List<MenuItem> menuItems, Set<Role> roles) {
+    public static String formatMenu(Map<Integer, MenuItem> menuItems, Set<Role> roles) {
         StringBuilder sb = new StringBuilder();
         sb.append("-".repeat(50)).append("\n");
-        int n = 0;
-        for(MenuItem item : menuItems) {
-            Set<Role> rolesAllowed = new HashSet<>(item.getRolesAlowed());
+        for(Map.Entry<Integer, MenuItem> item : menuItems.entrySet()) {
+            Set<Role> rolesAllowed = new HashSet<>(item.getValue().getRolesAlowed());
             rolesAllowed.retainAll(roles);
             if(rolesAllowed.size() > 0) {
-                sb.append(++n).append(") ").append(item.getLabel()).append("\n");
+                sb.append(item.getKey()).append(") ").append(item.getValue().getLabel()).append("\n");
             }
         }
         sb.append("-".repeat(50)).append("\n");

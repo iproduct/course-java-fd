@@ -1,8 +1,10 @@
-окт 27, 2020 10:08:09 ПР.ОБ. course.java.invoicing.util.InputUtils inputInstance
-SEVERE: Error accessing property 'unit' on instance ID: 5, Code: AB345, Name: sdfddsf, Price: 12.5, Unit: PCS.
+окт 27, 2020 12:25:37 СЛ.ОБ. course.java.invoicing.util.InputUtils inputInstance
+SEVERE: Error accessing property 'unit' on instance ID: 5, Code: AA123, Name: AAA, Price: 12.6, Unit: PCS.
 java.lang.NoSuchMethodException: course.java.invoicing.model.Product.setUnit(java.lang.Integer)
 	at java.base/java.lang.Class.getMethod(Class.java:2113)
 	at course.java.invoicing.util.InputUtils.inputInstance(InputUtils.java:56)
-	at course.java.invoicing.InvoiceRegister.init(InvoiceRegister.java:96)
-	at course.java.invoicing.InvoiceRegister.main(InvoiceRegister.java:111)
+	at course.java.invoicing.view.command.AppProductCommand.action(AppProductCommand.java:32)
+	at course.java.invoicing.InvoiceRegister.showMenu(InvoiceRegister.java:133)
+	at course.java.invoicing.InvoiceRegister.init(InvoiceRegister.java:117)
+	at course.java.invoicing.InvoiceRegister.main(InvoiceRegister.java:153)
 

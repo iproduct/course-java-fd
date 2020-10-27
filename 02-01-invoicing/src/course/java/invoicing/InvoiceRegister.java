@@ -1,14 +1,17 @@
 package course.java.invoicing;
 
 import course.java.invoicing.dao.*;
+import course.java.invoicing.exception.ActionUnsuccessfulException;
 import course.java.invoicing.exception.NonexistingEntityException;
 import course.java.invoicing.model.*;
 import course.java.invoicing.service.*;
 import course.java.invoicing.util.*;
+import course.java.invoicing.view.Command;
 import course.java.invoicing.view.MenuItem;
+import course.java.invoicing.view.command.AppProductCommand;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import java.awt.*;
+import java.util.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,6 +20,7 @@ import static course.java.invoicing.model.Unit.M;
 import static course.java.invoicing.util.Alignment.*;
 import static course.java.invoicing.util.FieldType.*;
 import static course.java.invoicing.util.PrintUtils.*;
+import static course.java.invoicing.view.MenuItem.*;
 
 public class InvoiceRegister {
     private static Logger LOG = Logger.getLogger("c.j.i.InvoiceRegister");
@@ -42,6 +46,7 @@ public class InvoiceRegister {
     private ProductService productService;
     private ContragentService contragentService;
     private UserService userService;
+    private Map<MenuItem, Command> commands = new HashMap<>();
 
     private User loggedUser;
 
@@ -94,22 +99,50 @@ public class InvoiceRegister {
         } catch (NonexistingEntityException e) {
             LOG.warning("Default user not found.");
         }
+
+        // init menu commands
+
+        commands.put(ADD_PRODUCT, new AppProductCommand(productService));
+        commands.put(PRINT_PRODUCTS, () -> {
+            Collection<Product> products = productService.getAllProducts();
+            return formatTable(productColumns, products)
+                + String.format("Total product count: %s%n", products.size());
+        });
+        commands.put(EXIT, () -> {
+            System.exit(0);
+            return "Good Bye.";
+        });
+        Map<Integer, MenuItem> mainMenu = new LinkedHashMap<>();
+        int index = 0;
         MenuItem[] items = MenuItem.values();
-        List<MenuItem> mainMenu = Arrays.asList(Arrays.copyOf(items, items.length - 1));
+        for(MenuItem item : Arrays.copyOf(items, items.length - 1)) {
+            mainMenu.put(++index, item);
+        }
         showMenu(mainMenu);
 
     }
 
-    public void showMenu(List<MenuItem> menuItems){
+    public void showMenu(Map<Integer, MenuItem> menuItems) {
         int choice;
         FieldConfig intFieldConfig = new FieldConfig(null, "Choose an option", INTEGER, 2);
         do {
             System.out.println();
             System.out.println(formatMenu(menuItems, getLoggedUser().getRoles()));
             choice = InputUtils.inputLong(intFieldConfig).intValue();
-        } while(true);
+            MenuItem chosenItem = menuItems.get(choice);
+            if(chosenItem != null) {
+                Command command = commands.get(chosenItem);
+                if(command != null) {
+                    try {
+                        System.out.println("\n");
+                        System.out.println(command.action());
+                    } catch (ActionUnsuccessfulException e) {
+                        System.err.println(e.getMessage());
+                    }
+                }
+            }
+        } while (true);
     }
-
 
 
     public void printAllContragents() {
