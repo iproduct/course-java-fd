@@ -1,5 +1,6 @@
 package invoicing;
 
+import invoicing.dao.ProductRepositoryArray;
 import invoicing.model.Product;
 import invoicing.model.Unit;
 import invoicing.model.User;
@@ -55,6 +56,20 @@ public class Main {
         User john = new User("John", "Smith", "john", "john123");
 //        User mike = new User();
         System.out.println(john);
+
+        // Create products using repository
+        ProductRepositoryArray repo = new ProductRepositoryArray();
+        repo.addProduct(new Product("BK001", "Thinking in Java",
+                "Classical introduction to Java by Bruce Eckel", 52));
+        repo.addProduct(new Product("BK002", "UML Distilled",
+                "UML introduction by Martin Fowler", 32.5));
+        repo.addProduct(new Product("AC001", "Whiteboard Markers",
+                "High-quality whiteboard markers in 3 colors set", 5.75));
+        repo.addProduct(new Product("SV001", "Mobile Internet",
+                "On demand mobile internet package", 10.99, Unit.GB));
+        repo.addProduct(new Product("SV002", "Mobile Internet 2",
+                "On demand mobile internet package", 12.99, Unit.GB));
+
 
     }
 }
