@@ -1,20 +1,60 @@
 package invoicing;
 
-import java.util.Arrays;
+import invoicing.model.Product;
+import invoicing.model.Unit;
+import invoicing.model.User;
 
 public class Main {
+    public static int MAX_PRODUCTS = 10;
+
     public static void main(String[] args) {
-        Product[] products = {
-                new Product("BK001", "Thinking in Java",
-                        "Classical introduction to Java by Bruce Eckel", 52),
-                new Product("BK002", "UML Distilled",
-                        "UML introduction by Martin Fowler", 32.5),
-                new Product("AC001", "Whiteboard Markers",
-                        "High-quality whiteboard markers in 3 colors set", 5.75),
-        };
-        for(Product p : products){
+        Product[] products = new Product[MAX_PRODUCTS];
+        products[0] = new Product("BK001", "Thinking in Java",
+                "Classical introduction to Java by Bruce Eckel", 52);
+        products[1] = new Product("BK002", "UML Distilled",
+                "UML introduction by Martin Fowler", 32.5);
+        products[2] = new Product("AC001", "Whiteboard Markers",
+                "High-quality whiteboard markers in 3 colors set", 5.75);
+        products[3] = new Product("SV001", "Mobile Internet",
+                "On demand mobile internet package", 10.99, Unit.GB);
+        products[4] = new Product("SV002", "Mobile Internet 2",
+                "On demand mobile internet package", 12.99, Unit.GB);
+
+        for (Product p : products) {
+            p.setPrice(1.2 * p.getPrice());
             System.out.println(p);
         }
+        for (int i = 0; i < products.length; i++) {
+            Product p = products[i];
+            p.setPrice(p.getPrice() / 1.2);
+            System.out.printf("%d -> %s\n", i + 1, products[i]);
+        }
+
+        //        String[] usernames = {"john", "george", "anna"};
+        String[] usernames = new String[4];
+        usernames[0] = "john";
+        usernames[1] = "mike";
+        usernames[2] = "peter";
+        usernames[3] = "ane";
+
+        for (
+                String u : usernames) {
+            u = u + "_123";
+        }
+        for (
+                int i = 0;
+                i < usernames.length; i++) {
+            usernames[i] = usernames[i] + "_123";
+        }
+        for (
+                String u : usernames) {
+            System.out.println(u);
+        }
+
+        // Construct a user
+        User john = new User("John", "Smith", "john", "john123");
+//        User mike = new User();
+        System.out.println(john);
 
     }
 }

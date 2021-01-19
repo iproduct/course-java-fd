@@ -1,19 +1,19 @@
-package invoicing;
+package invoicing.model;
 
 import java.util.Objects;
 
-import static invoicing.Unit.PCS;
+import static invoicing.model.Unit.PCS;
 
 public class Product {
-    private static long nextId = 0L;
-    private Long id = ++nextId; // default initialization
+//    private static long nextId = 0L; // static initialization
+    private Long id; // = ++nextId; // default initialization
     private String code;
     private String name;
     private String description;
     private double price;
-    private Unit unit = PCS;
+    private Unit unit = PCS; // default initialization
 
-    // 1. Constructors
+    // 1. Constructors - overloaded
     public Product() {
     }
 
@@ -29,7 +29,7 @@ public class Product {
         this.name = name;
         this.description = description;
         this.price = price;
-        this.unit = unit;
+        this.unit = unit; // initialization in constructor
     }
 
     // 2. Getters and setters = properties
