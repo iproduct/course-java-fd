@@ -2,6 +2,8 @@ package invoicing.dao;
 
 import invoicing.model.Product;
 
+import java.util.Arrays;
+
 public class ProductRepositoryArray {
     private static long nextId = 0L;
     public static int MAX_PRODUCTS = 4;
@@ -15,7 +17,7 @@ public class ProductRepositoryArray {
         products = new Product[maxProducts];
     }
 
-    public Product addProduct(Product product) {
+    public Product add(Product product) {
         product.setId(++nextId);
         if(len == products.length) {
             Product[] newProducts = new Product[2 * products.length];
@@ -27,6 +29,10 @@ public class ProductRepositoryArray {
         products[len] = product;
         len++;
         return product;
+    }
+
+    public Product[] findAll() {
+        return Arrays.copyOf(products, len);
     }
 
 }

@@ -5,7 +5,7 @@ import java.util.Objects;
 import static invoicing.model.Unit.PCS;
 
 public class Product {
-//    private static long nextId = 0L; // static initialization
+//  0. private static long nextId = 0L; // static initialization
     private Long id; // = ++nextId; // default initialization
     private String code;
     private String name;
@@ -30,6 +30,15 @@ public class Product {
         this.description = description;
         this.price = price;
         this.unit = unit; // initialization in constructor
+    }
+
+    public Product(Long id, String code, String name, String description, double price, Unit unit) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.unit = unit;
     }
 
     // 2. Getters and setters = properties
