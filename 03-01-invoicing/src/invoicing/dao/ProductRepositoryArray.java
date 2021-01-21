@@ -3,6 +3,7 @@ package invoicing.dao;
 import invoicing.model.Product;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class ProductRepositoryArray {
     private static long nextId = 0L;
@@ -33,6 +34,18 @@ public class ProductRepositoryArray {
 
     public Product[] findAll() {
         return Arrays.copyOf(products, len);
+    }
+
+    public Product[] findAllSorted() {
+        Product[] result = Arrays.copyOf(products, len);
+        Arrays.sort(result);
+        return result;
+    }
+
+    public Product[] findAllSorted(Comparator<Product> productComparator) {
+        Product[] result = Arrays.copyOf(products, len);
+        Arrays.sort(result, productComparator);
+        return result;
     }
 
 }

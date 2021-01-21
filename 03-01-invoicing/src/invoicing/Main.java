@@ -4,6 +4,11 @@ import invoicing.dao.ProductRepositoryArray;
 import invoicing.model.Product;
 import invoicing.model.Unit;
 import invoicing.model.User;
+import invoicing.util.ProductCodeComarator;
+import invoicing.util.ProductPriceComarator;
+import invoicing.util.ProductPriceComaratorDesc;
+
+import java.util.Comparator;
 
 public class Main {
     public static int MAX_PRODUCTS = 10;
@@ -83,6 +88,26 @@ public class Main {
         System.out.println(p1);
         System.out.println(p2);
         System.out.printf("Equal equals() : %b\n", p1.equals(p2));
+
+        // Try sorting
+        System.out.println("\nProducts sorted by ID (default Comparable):");
+        Product[] productsSorted = repo.findAllSorted();
+        for(Product p: productsSorted){
+            System.out.println(p);
+        }
+
+        System.out.println("\nProducts sorted by Code (custom Comparator):");
+        Product[] productsSortedByCode = repo.findAllSorted(new ProductCodeComarator());
+        for(Product p: productsSortedByCode){
+            System.out.println(p);
+        }
+
+        System.out.println("\nProducts sorted by Price (custom Comparator):");
+        Product[] productsSortedByPrice = repo.findAllSorted(new ProductPriceComarator().reversed());
+        for(Product p: productsSortedByPrice){
+            System.out.println(p);
+        }
+
 
     }
 }

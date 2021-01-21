@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import static invoicing.model.Unit.PCS;
 
-public class Product {
+public class Product implements Comparable<Product> {
 //  0. private static long nextId = 0L; // static initialization
     private Long id; // = ++nextId; // default initialization
     private String code;
@@ -15,6 +15,10 @@ public class Product {
 
     // 1. Constructors - overloaded
     public Product() {
+    }
+
+    public Product(Long id) {
+        this.id = id;
     }
 
     public Product(String code, String name, String description, double price) {
@@ -40,6 +44,7 @@ public class Product {
         this.price = price;
         this.unit = unit;
     }
+
 
     // 2. Getters and setters = properties
     public Long getId() {
@@ -117,5 +122,10 @@ public class Product {
         sb.append(", unit=").append(unit);
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public int compareTo(Product other) {
+        return this.getId().compareTo(other.getId());
     }
 }
