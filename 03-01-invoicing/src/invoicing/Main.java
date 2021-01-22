@@ -1,9 +1,7 @@
 package invoicing;
 
 import invoicing.dao.*;
-import invoicing.model.Product;
-import invoicing.model.Unit;
-import invoicing.model.User;
+import invoicing.model.*;
 import invoicing.util.ProductCodeComarator;
 import invoicing.util.ProductPriceComarator;
 
@@ -128,5 +126,12 @@ public class Main {
             System.out.println(p);
         }
 
+        // Contragents demo
+        Supplier s1 = new Supplier("Software AD", "Bucharest, Victory 23",
+                "123456789", "RO47BCAX", "RO47BCAX1234567890");
+        System.out.printf("Supplier 1: %s\n", s1);
+        Contragent c1 = new Client("ABC Ltd.", "Sofia, 1000",
+                "789123456", "office@abc.com");
+        System.out.printf("Client 1: %s\n", c1);
     }
 }
