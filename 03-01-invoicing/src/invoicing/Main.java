@@ -1,14 +1,14 @@
 package invoicing;
 
-import invoicing.dao.ProductRepositoryArray;
+import invoicing.dao.ProductRepository;
+import invoicing.dao.ProductRepositoryListImpl;
 import invoicing.model.Product;
 import invoicing.model.Unit;
 import invoicing.model.User;
 import invoicing.util.ProductCodeComarator;
 import invoicing.util.ProductPriceComarator;
-import invoicing.util.ProductPriceComaratorDesc;
 
-import java.util.Comparator;
+import java.util.List;
 
 public class Main {
     public static int MAX_PRODUCTS = 10;
@@ -63,19 +63,19 @@ public class Main {
         System.out.println(john);
 
         // Create products using repository
-        ProductRepositoryArray repo = new ProductRepositoryArray();
-        repo.add(new Product("BK001", "Thinking in Java",
+        ProductRepository repo = new ProductRepositoryListImpl();
+        repo.create(new Product("BK001", "Thinking in Java",
                 "Classical introduction to Java by Bruce Eckel", 52));
-        repo.add(new Product("BK002", "UML Distilled",
+        repo.create(new Product("BK002", "UML Distilled",
                 "UML introduction by Martin Fowler", 32.5));
-        repo.add(new Product("AC001", "Whiteboard Markers",
+        repo.create(new Product("AC001", "Whiteboard Markers",
                 "High-quality whiteboard markers in 3 colors set", 5.75));
-        repo.add(new Product("SV001", "Mobile Internet",
+        repo.create(new Product("SV001", "Mobile Internet",
                 "On demand mobile internet package", 10.99, Unit.GB));
-        repo.add(new Product("SV002", "Mobile Internet 2",
+        repo.create(new Product("SV002", "Mobile Internet 2",
                 "On demand mobile internet package", 12.99, Unit.GB));
 
-        Product[] allProducts = repo.findAll();
+        List<Product> allProducts = repo.findAll();
         for(Product p: allProducts){
             System.out.println(p);
         }
@@ -91,23 +91,43 @@ public class Main {
 
         // Try sorting
         System.out.println("\nProducts sorted by ID (default Comparable):");
-        Product[] productsSorted = repo.findAllSorted();
+        List<Product> productsSorted = repo.findAll();
         for(Product p: productsSorted){
             System.out.println(p);
         }
 
         System.out.println("\nProducts sorted by Code (custom Comparator):");
-        Product[] productsSortedByCode = repo.findAllSorted(new ProductCodeComarator());
+        List<Product> productsSortedByCode = repo.findAllSorted(new ProductCodeComarator());
         for(Product p: productsSortedByCode){
             System.out.println(p);
         }
 
         System.out.println("\nProducts sorted by Price (custom Comparator):");
-        Product[] productsSortedByPrice = repo.findAllSorted(new ProductPriceComarator().reversed());
+        List<Product> productsSortedByPrice = repo.findAllSorted(new ProductPriceComarator().reversed());
         for(Product p: productsSortedByPrice){
             System.out.println(p);
         }
 
+        // CRUD operation
+        System.out.println("\nCRUD demos:");
+        repo.create(new Product("AC002", "Cleaning Sponge",
+                "High-quality cleaning sponge", 2.75));
+        for(Product p : repo.findAll()) {
+            System.out.println(p);
+        }
+        System.out.printf("Before: %d -> %s", 1, repo.findById(1L));
+
+        Product p3 = repo.findById(1L);
+        p3.setName("PROMOTION 50%: " + p3.getName());
+        p3.setPrice(0.5 * p3.getPrice());
+        repo.update(p3);
+        System.out.printf("After update: %d -> %s", 1, repo.findById(1L));
+
+        System.out.println("\nAfter Delete:");
+        repo.deleteById(1L);
+        for(Product p : repo.findAll()) {
+            System.out.println(p);
+        }
 
     }
 }

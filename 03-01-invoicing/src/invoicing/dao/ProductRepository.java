@@ -18,7 +18,7 @@ public interface ProductRepository {
      * @param id product id
      * @return the found product if exists otherwise null
      */
-    Product findByIds(Long id); // return null - special value strategy
+    Product findById(Long id); // return null - special value strategy
     Product create(Product product);
     Product update(Product product);
     Product deleteById(Long id);

@@ -30,7 +30,7 @@ public class ProductRepositoryListImpl implements ProductRepository{
     }
 
     @Override
-    public Product findByIds(Long id) {
+    public Product findById(Long id) {
         //1)
 //        for(int i = 0; i < products.size(); i++){
 //            Product p = products.get(i);
@@ -44,14 +44,14 @@ public class ProductRepositoryListImpl implements ProductRepository{
 //                return p;
 //            }
 //        }
-        // 3)
-        Iterator<Product> it = products.iterator(); // O(N) complexity
-        while(it.hasNext()){
-            Product p = it.next();
-            if(p.getId().equals(id)) {
-                return p;
-            }
-        }
+//        // 3)
+//        Iterator<Product> it = products.iterator(); // O(N) complexity
+//        while(it.hasNext()){
+//            Product p = it.next();
+//            if(p.getId().equals(id)) {
+//                return p;
+//            }
+//        }
 
         // 4) - better performance
         int index = Collections.binarySearch(products, new Product(id)); // O(log(N))
