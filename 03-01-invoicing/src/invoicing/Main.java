@@ -1,7 +1,6 @@
 package invoicing;
 
-import invoicing.dao.ProductRepository;
-import invoicing.dao.ProductRepositoryListImpl;
+import invoicing.dao.*;
 import invoicing.model.Product;
 import invoicing.model.Unit;
 import invoicing.model.User;
@@ -63,7 +62,7 @@ public class Main {
         System.out.println(john);
 
         // Create products using repository
-        ProductRepository repo = new ProductRepositoryListImpl();
+        ProductRepository repo = new ProductRepositoryImpl(new LongKeyGenerator());
         repo.create(new Product("BK001", "Thinking in Java",
                 "Classical introduction to Java by Bruce Eckel", 52));
         repo.create(new Product("BK002", "UML Distilled",

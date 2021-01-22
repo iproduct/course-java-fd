@@ -1,10 +1,12 @@
 package invoicing.model;
 
+import invoicing.dao.Identifiable;
+
 import java.util.Objects;
 
 import static invoicing.model.Unit.PCS;
 
-public class Product implements Comparable<Product> {
+public class Product implements Comparable<Product>, Identifiable<Long> {
 //  0. private static long nextId = 0L; // static initialization
     private Long id; // = ++nextId; // default initialization
     private String code;

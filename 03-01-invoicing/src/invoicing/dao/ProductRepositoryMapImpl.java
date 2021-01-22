@@ -4,7 +4,7 @@ import invoicing.model.Product;
 
 import java.util.*;
 
-public class ProductRepositoryMapImpl implements ProductRepository{
+public class ProductRepositoryMapImpl implements ProductRepositoryOld{
     private static long nextId = 0L;
     private Map<Long, Product> products = new HashMap<>();
     @Override
@@ -46,7 +46,7 @@ public class ProductRepositoryMapImpl implements ProductRepository{
 
     @Override
     public Product deleteById(Long id) {
-        return null;
+        return products.remove(id);
     }
 
     @Override

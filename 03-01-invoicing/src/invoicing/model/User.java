@@ -1,10 +1,11 @@
 package invoicing.model;
 
+import invoicing.dao.Identifiable;
+
 import java.util.Objects;
 
-public class User {
-    private static long nextId = 0;
-    private Long id = ++nextId;
+public class User implements Identifiable<Long> {
+    private Long id;
     private String firstName;
     private String lastName;
     private String username;

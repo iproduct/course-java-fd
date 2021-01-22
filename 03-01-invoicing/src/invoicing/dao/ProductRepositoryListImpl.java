@@ -4,7 +4,7 @@ import invoicing.model.Product;
 
 import java.util.*;
 
-public class ProductRepositoryListImpl implements ProductRepository{
+public class ProductRepositoryListImpl implements ProductRepositoryOld{
     private static long nextId = 0L;
     private List<Product> products = new ArrayList<>();
 
