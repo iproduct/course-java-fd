@@ -164,7 +164,7 @@ public class Main {
 //            }
 //        }
 
-        InvoiceController invoiceController = InvoiceController.createInstance();
+        InvoiceController invoiceController = InvoiceController.getInstance();
         invoiceController.addContragent(s1);
         invoiceController.addContragent(c1);
         invoiceController.addContragent(c2);
