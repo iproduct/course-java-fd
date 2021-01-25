@@ -130,7 +130,7 @@ public class Main {
         Supplier s1 = new Supplier("Software AD", "Bucharest, Victory 23",
                 "123456789", "RO47BCAX", "RO47BCAX1234567890");
         System.out.printf("Supplier 1: %s\n", s1);
-        Contragent c1 = new Client("ABC Ltd.", "Sofia, 1000",
+        Client c1 = new Client("ABC Ltd.", "Sofia, 1000",
                 "789123456", "office@abc.com");
         System.out.printf("Client 1: %s\n", c1);
 
@@ -139,13 +139,24 @@ public class Main {
                 "111111111", "(+359)32 1234566");
         Contragent c3 = new Client("John Smith", "Plovdiv, 25A",
                 "1234567890", "john@gmail.com", false);
+
         KeyGenerator<Long> keyGenerator = new LongKeyGenerator();
         ContragentRepository contragentRepo = new ContragentRepositoryImpl(keyGenerator);
-        Contragent result = contragentRepo.create(c2);
+
+        contragentRepo.create(s1);
+        contragentRepo.create(c1);
+        contragentRepo.create(c2);
         contragentRepo.create(c3);
+
         List<Contragent> contragents = contragentRepo.findAll();
         for(Contragent c : contragents) {
             System.out.println(c.format());
         }
+
+        // Polymorphism demo
+        for(Contragent c : contragents) {
+            System.out.println(c.toString()); // polymorphism = dynamic binding = runtime binding
+        }
     }
+
 }

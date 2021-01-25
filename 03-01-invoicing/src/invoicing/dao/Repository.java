@@ -19,8 +19,8 @@ public interface Repository<K, V extends Identifiable<K>> {
      * @return the found product if exists otherwise null
      */
     V findById(K id); // return null - special value strategy
-    V create(V product);
-    V update(V product);
+    V create(V entity);
+    V update(V entity);
     V deleteById(K id);
     long count();
 }

@@ -6,15 +6,17 @@ import java.util.Objects;
 
 public class Contragent implements Identifiable<Long>, Comparable<Contragent> {
    private Long id;
-   private String name;
+   private final String name;
    private String address;
    private String idNumber;
    private String phone;
 
     public Contragent() {
+        this.name = "Anonimous";
     }
 
     public Contragent(Long id) {
+        this.name = "Anonimous";
         this.id = id;
     }
 
@@ -45,9 +47,9 @@ public class Contragent implements Identifiable<Long>, Comparable<Contragent> {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+//    public void setName(String name) {
+//        this.name = name;
+//    }
 
     public String getAddress() {
         return address;
@@ -102,7 +104,7 @@ public class Contragent implements Identifiable<Long>, Comparable<Contragent> {
         return getId().compareTo(o.getId());
     }
 
-    String format(){
+    public String format(){
         return String.format("| %5d | %-20.20s | %-20.20s | %10.10s | %-15.15s | ",
                 id, name, address, idNumber, phone);
     }
