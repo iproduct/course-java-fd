@@ -4,7 +4,7 @@ import invoicing.dao.Identifiable;
 
 import java.util.Objects;
 
-public class User implements Identifiable<Long> {
+public class User implements Identifiable<Long>, Comparable<User> {
     private Long id;
     private String firstName;
     private String lastName;
@@ -81,5 +81,10 @@ public class User implements Identifiable<Long> {
         sb.append(", picture='").append(getPicture()).append('\'');
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public int compareTo(User o) {
+        return getId().compareTo(o.getId());
     }
 }

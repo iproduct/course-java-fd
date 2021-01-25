@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>invoicing.dao.UserRepositoryImpl</OriginalElement>
+  <nodes>
+    <node x="0.0" y="585.0">invoicing.dao.LongKeyGenerator</node>
+    <node x="72.17708333333337" y="255.0">invoicing.dao.ProductRepositoryImpl</node>
+    <node x="0.0" y="170.0">invoicing.dao.ProductRepository</node>
+    <node x="230.25" y="85.0">invoicing.dao.Repository</node>
+    <node x="164.5" y="335.0">invoicing.dao.ProductRepositoryOld</node>
+    <node x="229.0" y="170.0">invoicing.dao.RepositoryMemoryImpl</node>
+    <node x="379.6770833333333" y="255.0">invoicing.dao.UserRepositoryImpl</node>
+    <node x="17.5" y="500.0">invoicing.dao.KeyGenerator</node>
+    <node x="0.0" y="420.0">invoicing.dao.ProductRepositoryMapImpl</node>
+    <node x="264.0" y="0.0">invoicing.dao.Identifiable</node>
+    <node x="484.0" y="170.0">invoicing.dao.UserRepository</node>
+    <node x="290.0" y="420.0">invoicing.dao.ProductRepositoryListImpl</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="invoicing.dao.UserRepositoryImpl" target="invoicing.dao.UserRepository">
+      <point x="54.25" y="-17.5" />
+      <point x="542.4270833333333" y="230.0" />
+      <point x="575.5" y="230.0" />
+      <point x="0.0" y="17.5" />
+    </edge>
+    <edge source="invoicing.dao.UserRepositoryImpl" target="invoicing.dao.RepositoryMemoryImpl">
+      <point x="-54.25" y="-17.5" />
+      <point x="433.9270833333333" y="230.0" />
+      <point x="405.25" y="230.0" />
+      <point x="58.75" y="17.5" />
+    </edge>
+    <edge source="invoicing.dao.ProductRepositoryImpl" target="invoicing.dao.ProductRepository">
+      <point x="-61.0" y="-17.5" />
+      <point x="133.17708333333337" y="230.0" />
+      <point x="104.5" y="230.0" />
+      <point x="0.0" y="17.5" />
+    </edge>
+    <edge source="invoicing.dao.LongKeyGenerator" target="invoicing.dao.KeyGenerator">
+      <point x="0.0" y="-17.5" />
+      <point x="0.0" y="17.5" />
+    </edge>
+    <edge source="invoicing.dao.RepositoryMemoryImpl" target="invoicing.dao.Repository">
+      <point x="-58.75" y="-17.5" />
+      <point x="287.75" y="150.0" />
+      <point x="304.25" y="150.0" />
+      <point x="0.0" y="17.5" />
+    </edge>
+    <edge source="invoicing.dao.RepositoryMemoryImpl" target="invoicing.dao.Identifiable">
+      <point x="58.75" y="-17.5" />
+      <point x="405.25" y="150.0" />
+      <point x="419.92708333333337" y="150.0" />
+      <point x="419.92708333333337" y="60.0" />
+      <point x="387.75" y="60.0" />
+      <point x="41.25" y="17.5" />
+    </edge>
+    <edge source="invoicing.dao.UserRepository" target="invoicing.dao.Repository">
+      <point x="0.0" y="-17.5" />
+      <point x="575.5" y="140.0" />
+      <point x="353.58333333333337" y="140.0" />
+      <point x="49.33333333333337" y="17.5" />
+    </edge>
+    <edge source="invoicing.dao.ProductRepositoryImpl" target="invoicing.dao.RepositoryMemoryImpl">
+      <point x="61.0" y="-17.5" />
+      <point x="255.17708333333337" y="230.0" />
+      <point x="287.75" y="230.0" />
+      <point x="-58.75" y="17.5" />
+    </edge>
+    <edge source="invoicing.dao.Repository" target="invoicing.dao.Identifiable">
+      <point x="0.0" y="-17.5" />
+      <point x="-41.25" y="17.5" />
+    </edge>
+    <edge source="invoicing.dao.ProductRepositoryListImpl" target="invoicing.dao.ProductRepositoryOld">
+      <point x="0.0" y="-17.5" />
+      <point x="429.0" y="395.0" />
+      <point x="340.75" y="395.0" />
+      <point x="58.75" y="17.5" />
+    </edge>
+    <edge source="invoicing.dao.ProductRepository" target="invoicing.dao.Repository">
+      <point x="0.0" y="-17.5" />
+      <point x="104.5" y="150.0" />
+      <point x="254.91666666666666" y="150.0" />
+      <point x="-49.33333333333334" y="17.5" />
+    </edge>
+    <edge source="invoicing.dao.ProductRepositoryMapImpl" target="invoicing.dao.ProductRepositoryOld">
+      <point x="0.0" y="-17.5" />
+      <point x="135.0" y="395.0" />
+      <point x="223.25" y="395.0" />
+      <point x="-58.75" y="17.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="333.5" y="310.0" />
+  <SelectedNodes>
+    <node>invoicing.dao.UserRepositoryImpl</node>
+  </SelectedNodes>
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

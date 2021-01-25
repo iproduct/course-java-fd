@@ -4,7 +4,7 @@ import invoicing.dao.Identifiable;
 
 import java.util.Objects;
 
-public class Contragent implements Identifiable<Long> {
+public class Contragent implements Identifiable<Long>, Comparable<Contragent> {
    private Long id;
    private String name;
    private String address;
@@ -95,5 +95,15 @@ public class Contragent implements Identifiable<Long> {
         sb.append(", idNumber='").append(idNumber).append('\'');
         sb.append(", phone='").append(phone).append('\'');
         return sb.toString();
+    }
+
+    @Override
+    public int compareTo(Contragent o) {
+        return getId().compareTo(o.getId());
+    }
+
+    String format(){
+        return String.format("| %5d | %-20.20s | %-20.20s | %10.10s | %-15.15s | ",
+                id, name, address, idNumber, phone);
     }
 }
