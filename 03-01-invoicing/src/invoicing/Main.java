@@ -1,5 +1,6 @@
 package invoicing;
 
+import invoicing.control.InvoiceController;
 import invoicing.dao.*;
 import invoicing.model.*;
 import invoicing.util.ProductCodeComarator;
@@ -143,22 +144,35 @@ public class Main {
         KeyGenerator<Long> keyGenerator = new LongKeyGenerator();
         ContragentRepository contragentRepo = new ContragentRepositoryImpl(keyGenerator);
 
-        contragentRepo.create(s1);
-        contragentRepo.create(c1);
-        contragentRepo.create(c2);
-        contragentRepo.create(c3);
-        contragentRepo.create(new Person("Ana Nikolova", "Sofia, Graf Ignatiev 12",
+//        contragentRepo.create(s1);
+//        contragentRepo.create(c1);
+//        contragentRepo.create(c2);
+//        contragentRepo.create(c3);
+//        contragentRepo.create(new Person("Ana Nikolova", "Sofia, Graf Ignatiev 12",
+//                "72121234567", "ana@mail.com"));
+
+//        List<Contragent> contragents = contragentRepo.findAll();
+//        for(Contragent c : contragents) {
+//            System.out.println(c.format());
+//        }
+//
+//        // Polymorphism demo
+//        for(Contragent c : contragents) {
+//            System.out.println(c.toString()); // polymorphism = dynamic binding = runtime binding
+//            if(c instanceof Supplier) {
+//                ((Supplier) c).login();
+//            }
+//        }
+
+        InvoiceController invoiceController = InvoiceController.createInstance();
+        invoiceController.addContragent(s1);
+        invoiceController.addContragent(c1);
+        invoiceController.addContragent(c2);
+        invoiceController.addContragent(c3);
+        invoiceController.addContragent(new Person("Ana Nikolova",
+                "Sofia, Graf Ignatiev 12",
                 "72121234567", "ana@mail.com"));
-
-        List<Contragent> contragents = contragentRepo.findAll();
-        for(Contragent c : contragents) {
-            System.out.println(c.format());
-        }
-
-        // Polymorphism demo
-        for(Contragent c : contragents) {
-            System.out.println(c.toString()); // polymorphism = dynamic binding = runtime binding
-        }
+        System.out.println(invoiceController.reportContragents());
     }
 
 }

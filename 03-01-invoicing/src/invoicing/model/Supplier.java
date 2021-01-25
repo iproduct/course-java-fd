@@ -50,17 +50,7 @@ public class Supplier extends Contragent {
         return sb.toString();
     }
 
-    //    @Override
-//    public String toString() {
-//        final StringBuilder sb = new StringBuilder("Supplier{");
-//        sb.append("id=").append(getId());
-//        sb.append(", name='").append(getName()).append('\'');
-//        sb.append(", address='").append(getAddress()).append('\'');
-//        sb.append(", idNumber='").append(getIdNumber()).append('\'');
-//        sb.append(", phone='").append(getPhone()).append('\'');
-//        sb.append(", iban='").append(iban).append('\'');
-//        sb.append(", bic='").append(bic).append('\'');
-//        sb.append('}');
-//        return sb.toString();
-//    }
+    public void login() {
+        System.out.printf("!!!!!!!!!!!!!!  %s has successgully logged in.\n", getName());
+    }
 }
