@@ -147,6 +147,8 @@ public class Main {
         contragentRepo.create(c1);
         contragentRepo.create(c2);
         contragentRepo.create(c3);
+        contragentRepo.create(new Person("Ana Nikolova", "Sofia, Graf Ignatiev 12",
+                "72121234567", "ana@mail.com"));
 
         List<Contragent> contragents = contragentRepo.findAll();
         for(Contragent c : contragents) {
