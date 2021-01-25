@@ -25,8 +25,8 @@ public class InvoiceController {
         List<Contragent> contragents = contragentRepo.findAll();
         for(Contragent c: contragents){
             sb.append(c.format()).append(" ")
-                    .append(String.format("%-10.10s", c.getClass().getSimpleName()))
-                    .append(" |\n");
+                .append(String.format("%-10.10s", c.getClass().getSimpleName()))
+                .append(" |\n");
         }
         return sb.toString();
     }
