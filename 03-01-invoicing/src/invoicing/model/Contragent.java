@@ -31,20 +31,32 @@ public class Contragent implements Identifiable<Long>, Comparable<Contragent> {
      * @param vatOrIdNumber VAT numner for companies, ID number for persons
      */
     public Contragent(String name, String address, String vatOrIdNumber) {
-        Pattern vatPattern = Pattern.compile("[A-Z]{2}\\d{9,13}");
+        Pattern vatPattern = Pattern.compile("([A-Z]{2})(\\d{9,13})");
         Matcher vatMatcher = vatPattern.matcher(vatOrIdNumber);
-//        if(vatMatcher.matches()) {
-//            co
-//        }
+        if(vatMatcher.matches()) {
+            corporate = true;
+            if(vatMatcher.groupCount() >= 2) {
+                countryCode = vatMatcher.group(1);
+                idNumber = vatMatcher.group(2);
+            }
+        } else {
+            corporate = false;
+            idNumber = vatOrIdNumber;
+        }
         this.name = name;
         this.address = address;
         this.idNumber = idNumber;
     }
 
+    /**
+     * Create Contraget using VAT or ID number.
+     * @param name name of company or person
+     * @param address address of company or person
+     * @param vatOrIdNumber VAT numner for companies, ID number for persons
+     * @param phone telephone number
+     */
     public Contragent(String name, String address, String vatOrIdNumber, String phone) {
-        this.name = name;
-        this.address = address;
-        this.idNumber = idNumber;
+        this(name, address, vatOrIdNumber);
         this.countryCode = countryCode;
         this.phone = phone;
     }
@@ -57,9 +69,7 @@ public class Contragent implements Identifiable<Long>, Comparable<Contragent> {
      * @param phone phone of company or person
      */
     public Contragent(String name, String address, String vatOrIdNumber, String phone, boolean corporate) {
-        this.name = name;
-        this.address = address;
-        this.idNumber = idNumber;
+        this(name, address, vatOrIdNumber, phone);
         this.phone = phone;
         this.corporate = corporate;
     }
@@ -157,7 +167,7 @@ public class Contragent implements Identifiable<Long>, Comparable<Contragent> {
     }
 
     public String format(){
-        return String.format("| %5d | %-20.20s | %-20.20s | %10.10s | %-15.15s | ",
-                id, name, address, idNumber, phone);
+        return String.format("| %5d | %-20.20s | %-20.20s | %12.12s | %-15.15s | ",
+                id, name, address, ((countryCode != null)?countryCode:"") + idNumber, phone);
     }
 }

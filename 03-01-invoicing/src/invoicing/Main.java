@@ -133,15 +133,15 @@ public class Main {
 
         // Contragents demo
         Supplier s1 = new Supplier("Software AD", "Bucharest, Victory 23",
-                "123456789", "RO47BCAX", "RO47BCAX1234567890");
+                "RO123456789", "RO47BCAX", "RO47BCAX1234567890");
         System.out.printf("Supplier 1: %s\n", s1);
         Client c1 = new Client("ABC Ltd.", "Sofia, 1000",
-                "789123456", "office@abc.com");
+                "BG789123456", "office@abc.com");
         System.out.printf("Client 1: %s\n", c1);
 
         // Formatting demo + visibility
         Contragent c2 = new Contragent("Best Widgets Ltd.", "Plovdiv, 25A",
-                "111111111", "(+359)32 1234566");
+                "BG111111111", "(+359)32 1234566");
         Contragent c3 = new Client("John Smith", "Plovdiv, 25A",
                 "1234567890", "john@gmail.com");
 
