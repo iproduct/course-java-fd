@@ -13,7 +13,7 @@ public class Temp {
         Contragent c2 = new Contragent("Best Widgets Ltd.", "Plovdiv, 25A",
                 "111111111", "(+359)32 1234566");
         Contragent c3 = new Client("John Smith", "Plovdiv, 25A",
-                "1234567890", "john@gmail.com", false);
+                "1234567890", "john@gmail.com");
         KeyGenerator<Long> keyGenerator = new LongKeyGenerator();
         ContragentRepository contragentRepo = new ContragentRepositoryImpl(keyGenerator);
         Contragent result = contragentRepo.create(c2);
