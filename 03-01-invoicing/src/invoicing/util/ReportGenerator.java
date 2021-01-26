@@ -28,10 +28,11 @@ public class ReportGenerator {
 
     // Example: propertyName: "price" -> "getPrice"
     private static String getAccessorMethodName(String propertyName) {
-        StringBuilder sb = new StringBuilder(propertyName);
-        sb.replace(0,1, "" + Character.toUpperCase(sb.charAt(0)));
-        sb.insert(0, "get");
-        return sb.toString();
+//        StringBuilder sb = new StringBuilder(propertyName);
+//        sb.replace(0,1, "" + Character.toUpperCase(sb.charAt(0)));
+//        sb.insert(0, "get");
+//        return sb.toString();
+        return "get" + Character.toUpperCase(propertyName.charAt(0)) + propertyName.substring(1);
     }
 
     public static void main(String[] args) {

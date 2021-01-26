@@ -3,6 +3,7 @@ package invoicing.control;
 import invoicing.dao.ContragentRepository;
 import invoicing.dao.ContragentRepositoryImpl;
 import invoicing.dao.LongKeyGenerator;
+import invoicing.exception.InvalidClientDataException;
 import invoicing.model.Contragent;
 
 import java.util.List;
@@ -31,7 +32,12 @@ public class InvoiceController {
         return sb.toString();
     }
 
-    public Contragent addContragent(Contragent contragent){
+    public Contragent addContragent(Contragent contragent) throws InvalidClientDataException{
+        if(contragent.getName().length() < 2) {
+            throw new InvalidClientDataException(
+                String.format("Name should be at least 2 charactes long for contragent '%s'", contragent.getName()),
+                contragent);
+        }
         return contragentRepo.create(contragent);
     }
 

@@ -2,14 +2,18 @@ package invoicing;
 
 import invoicing.control.InvoiceController;
 import invoicing.dao.*;
+import invoicing.exception.InvalidClientDataException;
 import invoicing.model.*;
 import invoicing.util.ProductCodeComarator;
 import invoicing.util.ProductPriceComarator;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main {
     public static int MAX_PRODUCTS = 10;
+    private static final Logger LOG = Logger.getLogger("invoicing.Main");
 
     public static void main(String[] args) {
 //        Product[] products = new Product[MAX_PRODUCTS];
@@ -141,6 +145,9 @@ public class Main {
         Contragent c3 = new Client("John Smith", "Plovdiv, 25A",
                 "1234567890", "john@gmail.com", false);
 
+        Contragent c4 = new Client("M", "Plovdiv, 25A",
+                "2222222222", "mary@gmail.com", false);
+
         KeyGenerator<Long> keyGenerator = new LongKeyGenerator();
         ContragentRepository contragentRepo = new ContragentRepositoryImpl(keyGenerator);
 
@@ -165,13 +172,21 @@ public class Main {
 //        }
 
         InvoiceController invoiceController = InvoiceController.getInstance();
-        invoiceController.addContragent(s1);
-        invoiceController.addContragent(c1);
-        invoiceController.addContragent(c2);
-        invoiceController.addContragent(c3);
-        invoiceController.addContragent(new Person("Ana Nikolova",
-                "Sofia, Graf Ignatiev 12",
-                "72121234567", "ana@mail.com"));
+        try {
+            invoiceController.addContragent(s1);
+            invoiceController.addContragent(c1);
+            invoiceController.addContragent(c2);
+            invoiceController.addContragent(c3);
+            invoiceController.addContragent(new Person("Ana Nikolova",
+                    "Sofia, Graf Ignatiev 12",
+                    "72121234567", "ana@mail.com"));
+            invoiceController.addContragent(c4);
+        } catch (InvalidClientDataException ex) {
+            LOG.log(Level.WARNING,
+                    String.format("Error adding contragent %s: ", ex.getInvalidEntity()),
+                    ex);
+            System.out.printf("User error: %s\n\n", ex.getMessage());
+        }
         System.out.println(invoiceController.reportContragents());
     }
 

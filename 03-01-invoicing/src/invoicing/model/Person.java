@@ -2,17 +2,17 @@ package invoicing.model;
 
 public class Person extends Client {
     public Person() {
-        setCorporation(false);
+        setCorporate(false);
     }
 
     public Person(Long id) {
         super(id);
-        setCorporation(false);
+        setCorporate(false);
     }
 
     public Person(String name, String address, String idNumber, String email) {
         super(name, address, idNumber, email);
-        setCorporation(false);
+        setCorporate(false);
     }
 
     public Person(String name, String address, String idNumber, String phone, String email) {
