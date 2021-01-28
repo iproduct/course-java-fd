@@ -242,9 +242,33 @@ public class Main {
             props.setProperty("password", DB_PASSWORD);
         }
         ProductRepository productsRepo = new ProductRepositoryJdbcImpl(props);
-        productsRepo.create(new Product("BK-NEW","New Book", "Novelties in Java ...", 35.99));
+
+        // demonstrate product create and findAll
+        Product created = productsRepo.create(new Product("BK-NEW","New Book", "Novelties in Java ...", 35.99));
         List<Product> results = productsRepo.findAll();
         results.forEach(System.out::println);
+        System.out.println();
+
+        // demonstrate product findById
+        System.out.printf("findById(%d) -> %s%n%n", created.getId(), productsRepo.findById(created.getId()));
+
+        // demonstrate product update
+        created.setName("MODIFIED JAVA BOOK");
+        created.setPrice(29.99);
+        productsRepo.update(created);
+        results = productsRepo.findAll();
+        results.forEach(System.out::println);
+        System.out.println();
+
+        // demonstrate product delete
+        Product deleted = productsRepo.deleteById(created.getId());
+        System.out.printf("Successfully deleted: %s\n\n", deleted);
+        results = productsRepo.findAll();
+        results.forEach(System.out::println);
+        System.out.println();
+
+        // demonstrate count
+        System.out.printf("count() -> %d%n%n", productsRepo.count());
 
     }
 }

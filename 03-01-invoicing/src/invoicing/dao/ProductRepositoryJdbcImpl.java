@@ -17,8 +17,6 @@ public class ProductRepositoryJdbcImpl implements ProductRepository {
     private static final Logger LOG = Logger.getLogger("i.d.RepositoryJdbcImpl");
     private Properties dbProperties;
     private Connection connection;
-//    private Map<K, Product> products = new HashMap<>();
-//    private KeyGenerator<K> keyGenerator; // has_a = composition
 
     public ProductRepositoryJdbcImpl(Properties properties){
         this.dbProperties = properties;
@@ -58,30 +56,17 @@ public class ProductRepositoryJdbcImpl implements ProductRepository {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM " + TABLE_NAME);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                Product p = new Product();
-                p.setId(rs.getLong("id"));
-                p.setCode(rs.getString("code"));
-                p.setName(rs.getString("name"));
-                p.setDescription(rs.getString("description"));
-                p.setPrice(rs.getDouble("price"));
-                int unitOrdinal = rs.getInt("unit");
-                for(Unit u : Unit.values()) {
-                    if(u.ordinal() == unitOrdinal) {
-                        p.setUnit(u);
-                        break;
-                    }
-                }
-                products.add(p);
+                products.add(parseProduct(rs));
             }
         } catch (SQLException e) {
-            LOG.log(Level.SEVERE, "findAll: can not prepared statement.", e);
+            LOG.log(Level.SEVERE, "findAll: can not execute prepared statement.", e);
         }
         return products;
     }
 
     @Override
     public List<Product> findAllSorted(Comparator<Product> productComparator) {
-        List<Product> list = new ArrayList<>();
+        List<Product> list = new ArrayList<>(findAll());
         list.sort(productComparator);
         return list;
     }
@@ -93,7 +78,18 @@ public class ProductRepositoryJdbcImpl implements ProductRepository {
 
     @Override
     public Product findById(Long id) {
-        return null; // O(1)
+        Product p = null;
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM " + TABLE_NAME + " WHERE id = ? ;");
+            ps.setLong(1, id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                p = parseProduct(rs);
+            }
+        } catch (SQLException e) {
+            LOG.log(Level.SEVERE, "findById: can not execute prepared statement.", e);
+        }
+        return p;
     }
 
     @Override
@@ -129,20 +125,79 @@ public class ProductRepositoryJdbcImpl implements ProductRepository {
     }
 
     @Override
-    public Product update(Product product) {
-//        if(products.replace(product.getId(), product) == null) {
-//            return null;
-//        }
-        return product;
-    }
+    public Product update(Product p) {
+        if(p.getId() == null) { // product Id should be present
+            return null;
+        }
+        try {
+            PreparedStatement ps = connection.prepareStatement(
+                "UPDATE " + TABLE_NAME + " SET code = ?, name = ?, description = ?, price = ?, unit = ? " +
+                        " WHERE id = ?;",
+                Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, p.getCode());
+            ps.setString(2, p.getName());
+            ps.setString(3, p.getDescription());
+            ps.setDouble(4, p.getPrice());
+            ps.setInt(5, p.getUnit().ordinal());
+            ps.setLong(6, p.getId());
+            int numExecutedStatements = ps.executeUpdate();
+            if(numExecutedStatements > 0) {
+                LOG.info(String.format(
+                        "Product %d: %s updated successfully.", p.getId(), p.getName()));
+                return p;
+            }
+        } catch (SQLException e) {
+            LOG.log(Level.SEVERE, "Error creating product: " + p.toString(), e);
 
-    @Override
-    public Product deleteById(Long id) {
+        }
         return null;
     }
 
     @Override
+    public Product deleteById(Long id) {
+        Product p = findById(id);
+        try {
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM " + TABLE_NAME + " WHERE id = ? ;");
+            ps.setLong(1, id);
+            int numExecutedStatements = ps.executeUpdate();
+            if(numExecutedStatements == 0){
+                p = null;
+            }
+        } catch (SQLException e) {
+            LOG.log(Level.SEVERE, "deleteById: can not execute prepared statement.", e);
+        }
+        return p;
+    }
+
+    @Override
     public long count() {
-        return 0;
+        Product p = null;
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) FROM " + TABLE_NAME + ";");
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                return rs.getLong(1);
+            }
+        } catch (SQLException e) {
+            LOG.log(Level.SEVERE, "count: can not execute prepared statement.", e);
+        }
+        return -1;
+    }
+
+    private Product parseProduct(ResultSet rs) throws SQLException {
+        Product p = new Product();
+        p.setId(rs.getLong("id"));
+        p.setCode(rs.getString("code"));
+        p.setName(rs.getString("name"));
+        p.setDescription(rs.getString("description"));
+        p.setPrice(rs.getDouble("price"));
+        int unitOrdinal = rs.getInt("unit");
+        for (Unit u : Unit.values()) {
+            if (u.ordinal() == unitOrdinal) {
+                p.setUnit(u);
+                break;
+            }
+        }
+        return p;
     }
 }
