@@ -6,17 +6,25 @@ import invoicing.exception.InvalidClientDataException;
 import invoicing.model.*;
 import invoicing.util.ProductCodeComarator;
 import invoicing.util.ProductPriceComarator;
+import jdbcsimple.JdbcSimpleDemo;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.DoubleSummaryStatistics;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main {
     public static final String DATABASE_FILE = "invoices.db";
     private static final Logger LOG = Logger.getLogger("invoicing.Main");
+    public static final String DB_DRIVER = "org.postgresql.Driver";
+    public static final String DB_URL = "jdbc:postgresql://localhost:5432/invoicing";
+    public static final String DB_USER = "postgres";
+    public static final String DB_PASSWORD = "root";
+    public static final String DB_CONFIG_PATH = "db.properties";
 
     public static void main(String[] args) {
 //        Product[] products = new Product[MAX_PRODUCTS];
@@ -181,11 +189,11 @@ public class Main {
 //        }
 
         InvoiceController invoiceController = InvoiceController.getInstance();
-        try {
-            invoiceController.load(DATABASE_FILE);
-        } catch (IOException e) {
-            LOG.log(Level.SEVERE, "Problem loading invoices from database file: " + DATABASE_FILE, e);
-        }
+//        try {
+//            invoiceController.load(DATABASE_FILE);
+//        } catch (IOException e) {
+//            LOG.log(Level.SEVERE, "Problem loading invoices from database file: " + DATABASE_FILE, e);
+//        }
         try {
 //            invoiceController.addContragent(s1);
 //            invoiceController.addContragent(c1);
@@ -214,10 +222,28 @@ public class Main {
         System.out.printf("Product Statistics:\n%s\n", stat);
 
         // FIleIO serialization and deserialization demo
+//        try {
+//            invoiceController.save(DATABASE_FILE);
+//        } catch (IOException e) {
+//            LOG.log(Level.SEVERE, "Problem saving invoices to database file: " + DATABASE_FILE, e);
+//        }
+
+        // JDBC demo
+        Properties props = new Properties();
         try {
-            invoiceController.save(DATABASE_FILE);
-        } catch (IOException e) {
-            LOG.log(Level.SEVERE, "Problem saving invoices to database file: " + DATABASE_FILE, e);
+            String dbConfigPath =
+                    JdbcSimpleDemo.class.getClassLoader().getResource(DB_CONFIG_PATH).getPath();
+            props.load(new FileInputStream(dbConfigPath));
+        } catch (IOException ioException) {
+            LOG.warning("Can not load DB properties from db.properties file.");
+            props.setProperty("driver", DB_DRIVER);
+            props.setProperty("url", DB_URL);
+            props.setProperty("user", DB_USER);
+            props.setProperty("password", DB_PASSWORD);
         }
+        ProductRepository productsRepo = new ProductRepositoryJdbcImpl(props);
+        List<Product> results = productsRepo.findAll();
+        results.forEach(System.out::println);
+
     }
 }
