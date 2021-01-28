@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 import static invoicing.model.Unit.PCS;
 
+@SuppressWarnings("ALL")
 public class ProductRepositoryJdbcImpl implements ProductRepository {
     static final String TABLE_NAME = "products";
     private static final Logger LOG = Logger.getLogger("i.d.RepositoryJdbcImpl");
@@ -44,8 +45,8 @@ public class ProductRepositoryJdbcImpl implements ProductRepository {
                 " unit integer NOT NULL DEFAULT '0'" +
 //                " PRIMARY KEY (username)\n" +
                 ")");
-        int numExecutesStat = ps.executeUpdate();
-        if(numExecutesStat > 0) {
+        int numExecutedStatements = ps.executeUpdate();
+        if(numExecutedStatements > 0) {
             LOG.warning("Table 'products' was successfully created.");
         }
     }
@@ -96,10 +97,35 @@ public class ProductRepositoryJdbcImpl implements ProductRepository {
     }
 
     @Override
-    public Product create(Product product) {
-//        product.setId(keyGenerator.getNextId());
-//        products.put(product.getId(), product);
-        return product;
+    public Product create(Product p) {
+        try {
+            PreparedStatement ps = connection.prepareStatement(
+                    "INSERT INTO " + TABLE_NAME +
+                    " (code, name, description, price, unit)" +
+                    " VALUES (?, ?, ?, ?, ?); ", Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, p.getCode());
+            ps.setString(2, p.getName());
+            ps.setString(3, p.getDescription());
+            ps.setDouble(4, p.getPrice());
+            ps.setInt(5, p.getUnit().ordinal());
+            int numExecutedStatements = ps.executeUpdate();
+            if(numExecutedStatements > 0) {
+                ResultSet keys = ps.getGeneratedKeys();
+                try {
+                    keys.next();
+                    p.setId(keys.getLong(1));
+                } catch(Exception e) {
+                    LOG.log(Level.WARNING,
+                        "Error extracting auto-generated key when creating product '" + p.getName() + "'", e);
+                }
+                LOG.info(String.format(
+                        "New product %d: %s added successfully.", p.getId(), p.getName()));
+            }
+            return p;
+        } catch (SQLException e) {
+            LOG.log(Level.SEVERE, "Error creating product: " + p.toString(), e);
+            return null;
+        }
     }
 
     @Override

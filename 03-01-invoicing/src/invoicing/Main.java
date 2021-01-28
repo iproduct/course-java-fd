@@ -242,6 +242,7 @@ public class Main {
             props.setProperty("password", DB_PASSWORD);
         }
         ProductRepository productsRepo = new ProductRepositoryJdbcImpl(props);
+        productsRepo.create(new Product("BK-NEW","New Book", "Novelties in Java ...", 35.99));
         List<Product> results = productsRepo.findAll();
         results.forEach(System.out::println);
 
