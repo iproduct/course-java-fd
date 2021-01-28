@@ -7,6 +7,8 @@ import invoicing.model.*;
 import invoicing.util.ProductCodeComarator;
 import invoicing.util.ProductPriceComarator;
 
+import java.util.Comparator;
+import java.util.DoubleSummaryStatistics;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -99,13 +101,19 @@ public class Main {
         }
 
         System.out.println("\nProducts sorted by Code (custom Comparator):");
-        List<Product> productsSortedByCode = repo.findAllSorted(new ProductCodeComarator());
+//        List<Product> productsSortedByCode = repo.findAllSorted(new ProductCodeComarator());
+        List<Product> productsSortedByCode = repo.findAllSorted(
+                (Product prod1, Product prod2)-> prod1.getCode().compareTo(prod2.getCode())
+        );
         for(Product p: productsSortedByCode){
             System.out.println(p);
         }
 
         System.out.println("\nProducts sorted by Price (custom Comparator):");
-        List<Product> productsSortedByPrice = repo.findAllSorted(new ProductPriceComarator().reversed());
+//        List<Product> productsSortedByPrice = repo.findAllSorted(new ProductPriceComarator().reversed());
+        List<Product> productsSortedByPrice = repo.findAllSorted(
+                (prod1, prod2) -> -Double.compare(prod1.getPrice(), prod2.getPrice())
+        );
         for(Product p: productsSortedByPrice){
             System.out.println(p);
         }
@@ -145,7 +153,7 @@ public class Main {
         Contragent c3 = new Client("John Smith", "Plovdiv, 25A",
                 "1234567890", "john@gmail.com");
 
-        Contragent c4 = new Client("M", "Plovdiv, 25A",
+        Contragent c4 = new Client("Mary", "Plovdiv, 25A",
                 "2222222222", "mary@gmail.com");
 
         KeyGenerator<Long> keyGenerator = new LongKeyGenerator();
@@ -188,6 +196,15 @@ public class Main {
             System.out.printf("User error: %s\n\n", ex.getMessage());
         }
         System.out.println(invoiceController.reportContragents());
-    }
 
+        // Streaming API
+        allProducts.stream()
+                .sorted(Comparator.comparingDouble(p -> - p.getPrice()))
+                .forEach(System.out::println);
+
+        DoubleSummaryStatistics stat = allProducts.stream()
+                .mapToDouble(Product::getPrice)
+                .summaryStatistics();
+        System.out.printf("Product Statistics:\n%s\n", stat);
+    }
 }

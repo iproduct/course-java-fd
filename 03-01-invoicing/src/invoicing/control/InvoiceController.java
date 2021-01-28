@@ -6,9 +6,13 @@ import invoicing.dao.LongKeyGenerator;
 import invoicing.exception.InvalidClientDataException;
 import invoicing.model.Contragent;
 
+import java.io.*;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 public class InvoiceController {
+    private static final Logger LOG = Logger.getLogger("i.c.InvoiceController");
     private ContragentRepository contragentRepo = new ContragentRepositoryImpl(new LongKeyGenerator());
     private static InvoiceController theInstance;
     private InvoiceController() {
@@ -39,6 +43,25 @@ public class InvoiceController {
                 contragent);
         }
         return contragentRepo.create(contragent);
+    }
+
+    public void save(String databaseFile) throws IOException {
+        try(ObjectOutputStream out = new ObjectOutputStream(
+                new FileOutputStream(databaseFile));
+        ) {
+            out.writeObject(contragentRepo);
+        }
+    }
+
+    public void load(String databaseFile) throws IOException {
+        try(ObjectInputStream out = new ObjectInputStream(
+                new FileInputStream(databaseFile));
+        ) {
+           Object obj = out.readObject();
+           contragentRepo = (ContragentRepository) obj;
+        } catch (ClassNotFoundException ex) {
+            LOG.warning("The invoicing database file '" + databaseFile + "' has invalid data serialization format");
+        }
     }
 
 }
