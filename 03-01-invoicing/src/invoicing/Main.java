@@ -182,13 +182,18 @@ public class Main {
 
         InvoiceController invoiceController = InvoiceController.getInstance();
         try {
-            invoiceController.addContragent(s1);
-            invoiceController.addContragent(c1);
-            invoiceController.addContragent(c2);
-            invoiceController.addContragent(c3);
-            invoiceController.addContragent(new Person("Ana Nikolova",
-                    "Sofia, Graf Ignatiev 12",
-                    "72121234567", "ana@mail.com"));
+            invoiceController.load(DATABASE_FILE);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, "Problem loading invoices from database file: " + DATABASE_FILE, e);
+        }
+        try {
+//            invoiceController.addContragent(s1);
+//            invoiceController.addContragent(c1);
+//            invoiceController.addContragent(c2);
+//            invoiceController.addContragent(c3);
+//            invoiceController.addContragent(new Person("Ana Nikolova",
+//                    "Sofia, Graf Ignatiev 12",
+//                    "72121234567", "ana@mail.com"));
             invoiceController.addContragent(c4);
         } catch (InvalidClientDataException ex) {
             LOG.log(Level.WARNING,
