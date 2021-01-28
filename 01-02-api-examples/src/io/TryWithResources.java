@@ -7,8 +7,8 @@ public class TryWithResources {
         try(BufferedReader br = new BufferedReader(
                 new FileReader("src/io/TryWithResources.java"));
             PrintWriter pw = new PrintWriter(
-                    new BufferedWriter(
-                            new FileWriter("TryWithResources.out")))
+                new BufferedWriter(
+                        new FileWriter("TryWithResources.out")))
         ) {
             String s;
             int i = 0;

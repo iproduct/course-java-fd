@@ -25,7 +25,7 @@ public class RandomAccessFileDemo {
         rf.close();
         display();
         rf = new RandomAccessFile(file, "rw");
-        rf.skipBytes(3*8);
+        rf.seek(3*8);
         System.out.printf("Position: %d%n", rf.getChannel().position());
         rf.writeDouble( 42);
         rf.close();
