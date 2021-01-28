@@ -2,9 +2,11 @@ package invoicing.dao;
 
 import invoicing.model.Product;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class RepositoryMemoryImpl<K, V extends Identifiable<K>> implements Repository<K,V>{
+public class RepositoryMemoryImpl<K, V extends Identifiable<K>> implements Repository<K,V>, Serializable {
+    static final long serialVersionUID = 1L;
     private Map<K, V> products = new HashMap<>();
     private KeyGenerator<K> keyGenerator; // has_a = composition
 

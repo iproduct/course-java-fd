@@ -2,18 +2,20 @@ package invoicing.model;
 
 import invoicing.dao.Identifiable;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Contragent implements Identifiable<Long>, Comparable<Contragent> {
-   private Long id;
-   private final String name;
-   private String address;
-   private String idNumber;
-   private String countryCode;
-   private String phone;
-   private boolean corporate = true;
+public class Contragent implements Identifiable<Long>, Comparable<Contragent>, Serializable {
+    static final long serialVersionUID = 1L;
+    private Long id;
+    private final String name;
+    private String address;
+    private String idNumber;
+    private String countryCode;
+    private String phone;
+    private boolean corporate = true;
 
     public Contragent() {
         this.name = "Anonimous";
@@ -26,16 +28,17 @@ public class Contragent implements Identifiable<Long>, Comparable<Contragent> {
 
     /**
      * Create Contraget using VAT or ID number.
-     * @param name name of company or person
-     * @param address address of company or person
+     *
+     * @param name          name of company or person
+     * @param address       address of company or person
      * @param vatOrIdNumber VAT numner for companies, ID number for persons
      */
     public Contragent(String name, String address, String vatOrIdNumber) {
         Pattern vatPattern = Pattern.compile("([A-Z]{2})(\\d{9,13})");
         Matcher vatMatcher = vatPattern.matcher(vatOrIdNumber);
-        if(vatMatcher.matches()) {
+        if (vatMatcher.matches()) {
             corporate = true;
-            if(vatMatcher.groupCount() >= 2) {
+            if (vatMatcher.groupCount() >= 2) {
                 countryCode = vatMatcher.group(1);
                 idNumber = vatMatcher.group(2);
             }
@@ -50,10 +53,11 @@ public class Contragent implements Identifiable<Long>, Comparable<Contragent> {
 
     /**
      * Create Contraget using VAT or ID number.
-     * @param name name of company or person
-     * @param address address of company or person
+     *
+     * @param name          name of company or person
+     * @param address       address of company or person
      * @param vatOrIdNumber VAT numner for companies, ID number for persons
-     * @param phone telephone number
+     * @param phone         telephone number
      */
     public Contragent(String name, String address, String vatOrIdNumber, String phone) {
         this(name, address, vatOrIdNumber);
@@ -63,10 +67,11 @@ public class Contragent implements Identifiable<Long>, Comparable<Contragent> {
 
     /**
      * Create Contraget using VAT or ID number.
-     * @param name name of company or person
-     * @param address address of company or person
+     *
+     * @param name          name of company or person
+     * @param address       address of company or person
      * @param vatOrIdNumber VAT numner for companies, ID number for persons
-     * @param phone phone of company or person
+     * @param phone         phone of company or person
      */
     public Contragent(String name, String address, String vatOrIdNumber, String phone, boolean corporate) {
         this(name, address, vatOrIdNumber, phone);
@@ -152,7 +157,7 @@ public class Contragent implements Identifiable<Long>, Comparable<Contragent> {
         sb.append("id=").append(id);
         sb.append(", name='").append(name).append('\'');
         sb.append(", address='").append(address).append('\'');
-        if(countryCode != null) {
+        if (countryCode != null) {
             sb.append(", country='").append(countryCode).append('\'');
         }
         sb.append(", idNumber='").append(idNumber).append('\'');
@@ -166,8 +171,8 @@ public class Contragent implements Identifiable<Long>, Comparable<Contragent> {
         return getId().compareTo(o.getId());
     }
 
-    public String format(){
+    public String format() {
         return String.format("| %5d | %-20.20s | %-20.20s | %12.12s | %-15.15s | ",
-                id, name, address, ((countryCode != null)?countryCode:"") + idNumber, phone);
+                id, name, address, ((countryCode != null) ? countryCode : "") + idNumber, phone);
     }
 }

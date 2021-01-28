@@ -57,8 +57,7 @@ public class InvoiceController {
         try(ObjectInputStream out = new ObjectInputStream(
                 new FileInputStream(databaseFile));
         ) {
-           Object obj = out.readObject();
-           contragentRepo = (ContragentRepository) obj;
+           contragentRepo = (ContragentRepository) out.readObject();
         } catch (ClassNotFoundException ex) {
             LOG.warning("The invoicing database file '" + databaseFile + "' has invalid data serialization format");
         }

@@ -2,9 +2,11 @@ package invoicing.model;
 
 import invoicing.dao.Identifiable;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class User implements Identifiable<Long>, Comparable<User> {
+public class User implements Identifiable<Long>, Comparable<User>, Serializable {
+    static final long serialVersionUID = 1L;
     private Long id;
     private String firstName;
     private String lastName;

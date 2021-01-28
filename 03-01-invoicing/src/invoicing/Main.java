@@ -7,6 +7,7 @@ import invoicing.model.*;
 import invoicing.util.ProductCodeComarator;
 import invoicing.util.ProductPriceComarator;
 
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.DoubleSummaryStatistics;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main {
-    public static int MAX_PRODUCTS = 10;
+    public static final String DATABASE_FILE = "invoices.db";
     private static final Logger LOG = Logger.getLogger("invoicing.Main");
 
     public static void main(String[] args) {
@@ -206,5 +207,12 @@ public class Main {
                 .mapToDouble(Product::getPrice)
                 .summaryStatistics();
         System.out.printf("Product Statistics:\n%s\n", stat);
+
+        // FIleIO serialization and deserialization demo
+        try {
+            invoiceController.save(DATABASE_FILE);
+        } catch (IOException e) {
+            LOG.log(Level.SEVERE, "Problem saving invoices to database file: " + DATABASE_FILE, e);
+        }
     }
 }
