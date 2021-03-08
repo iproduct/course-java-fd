@@ -9,6 +9,15 @@ public class Person {
         this.name = name;
     }
 
+    // name property - part of Java Bean convention
+    public String getName() { // accessor method
+        return name;
+    }
+
+    public void setName(String newName) { // mutator method
+        this.name = newName;
+    }
+
     public String sayHello() {
         return new Date() + ": Hello " + name;
     }
@@ -25,6 +34,10 @@ public class Person {
         System.out.println(message);
 
         Person person2 = new Person("Georgi");
+        System.out.println(person2);
+        System.out.println(person2.sayHello());
+
+        person2.setName(person2.getName() +" Hristov Petrov");
         System.out.println(person2);
         System.out.println(person2.sayHello());
     }
