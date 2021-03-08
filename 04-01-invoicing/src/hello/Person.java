@@ -2,10 +2,10 @@ package hello;
 
 import java.util.Date;
 
-public class Hello {
+public class Person {
     private String name = "Anonymous"; //default initialization in declaration
 
-    public Hello(String name){ //class constructor
+    public Person(String name){ //class constructor
         this.name = name;
     }
 
@@ -15,17 +15,17 @@ public class Hello {
 
     @Override
     public String toString() {
-        return "Hello( name: " + name + " )";
+        return "Person( name: " + name + " )";
     }
 
     public static void main(String[] args) {
-        Hello hello;
-        hello = new Hello("Trayan");
-        String message = hello.sayHello();
+        Person person1;
+        person1 = new Person("Trayan");
+        String message = person1.sayHello();
         System.out.println(message);
 
-        Hello hello2 = new Hello("Georgi");
-        System.out.println(hello2);
-        System.out.println(hello2.sayHello());
+        Person person2 = new Person("Georgi");
+        System.out.println(person2);
+        System.out.println(person2.sayHello());
     }
 }
