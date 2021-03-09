@@ -5,13 +5,14 @@ import java.util.Objects;
 import static invoicing.model.Unit.PCS;
 
 public class Product {
-    private static long nextId = 0L;
-    private Long id = ++ nextId;
+    public static long nextId = 0L;
+    private Long id = ++ nextId; //default initialization when declaring attribute
     private String code;
     private String name;
-    private String description;
-    private double price;
-    private Unit unit = PCS;
+    private String description = "No description";
+    private String comments; // null, readonly
+    private double price; // 0.0
+    private Unit unit = PCS; //default initialization when declaring attribute
 
     // Constructors overloading
     // no-args constructor
@@ -87,6 +88,13 @@ public class Product {
         this.unit = unit;
     }
 
+    public String getComments() {
+        if(comments == null){ // lazy initialization
+            comments = "A lot of comments here ...";
+        }
+        return comments;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -109,7 +117,13 @@ public class Product {
         sb.append(", description='").append(description).append('\'');
         sb.append(", price=").append(price);
         sb.append(", unit=").append(unit);
+        sb.append(", comments='").append(getComments()).append('\'');
         sb.append('}');
         return sb.toString();
+    }
+
+    public static String formatAsTableRow(Product p) {
+        return String.format("| %5d | %5.5s | %-30.30s | %-30.30s | %8.2f | %3.3s |",
+            p.getId(), p.getCode(), p.getName(), p.getDescription(), p. getPrice(), p.getUnit());
     }
 }
