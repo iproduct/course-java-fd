@@ -4,9 +4,9 @@ import java.util.Objects;
 
 import static invoicing.model.Unit.PCS;
 
-public class Product {
-    public static long nextId = 0L;
-    private Long id = ++ nextId; //default initialization when declaring attribute
+public class Product implements Comparable<Product> {
+//    public static long nextId = 0L;
+    private Long id; // = ++ nextId; //default initialization when declaring attribute
     private String code;
     private String name;
     private String description = "No description";
@@ -36,6 +36,10 @@ public class Product {
     // all args constructor
     public Product(Long id, String code, String name, String description, double price, Unit unit) {
         this(code, name, description, price, unit);
+        this.id = id;
+    }
+
+    public Product(Long id) {
         this.id = id;
     }
 
@@ -125,5 +129,10 @@ public class Product {
     public static String formatAsTableRow(Product p) {
         return String.format("| %5d | %5.5s | %-30.30s | %-30.30s | %8.2f | %3.3s |",
             p.getId(), p.getCode(), p.getName(), p.getDescription(), p. getPrice(), p.getUnit());
+    }
+
+    @Override
+    public int compareTo(Product other) {
+        return getId().compareTo(other.getId());
     }
 }
