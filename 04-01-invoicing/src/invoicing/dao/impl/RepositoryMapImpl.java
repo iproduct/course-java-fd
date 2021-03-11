@@ -22,9 +22,9 @@ public class RepositoryMapImpl<K, V extends Identifiable<K>> implements Reposito
 
     @Override
     public List<V> findAllSorted(Comparator comparator) {
-        List<V> productsList = findAll();
-        productsList.sort(comparator);
-        return productsList;
+        List<V> entityList = findAll();
+        entityList.sort(comparator);
+        return entityList;
     }
 
     @Override
@@ -33,18 +33,18 @@ public class RepositoryMapImpl<K, V extends Identifiable<K>> implements Reposito
     }
 
     @Override
-    public V create(V product) {
-        product.setId(idGenerator.getNextId());
-        return entities.put(product.getId(), product);
+    public V create(V entity) {
+        entity.setId(idGenerator.getNextId());
+        return entities.put(entity.getId(), entity);
     }
 
     @Override
-    public V update(V product) {
-        V old = entities.replace(product.getId(), product);
+    public V update(V entity) {
+        V old = entities.replace(entity.getId(), entity);
         if(old == null) {
             // TODO throw exception
         }
-        return product;
+        return entity;
     }
 
     @Override
