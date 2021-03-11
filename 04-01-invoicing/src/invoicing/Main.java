@@ -1,6 +1,8 @@
 package invoicing;
 
+import invoicing.dao.ProductRepository;
 import invoicing.dao.impl.ProductRepositoryArray;
+import invoicing.dao.impl.ProductRepositoryList;
 import invoicing.model.Product;
 import invoicing.model.Unit;
 import invoicing.util.ProductByPriceComparator;
@@ -24,15 +26,22 @@ public class Main {
         };
 
         // create product repository and add products
-        ProductRepositoryArray productRepo = new ProductRepositoryArray(2);
+        ProductRepository productRepo = new ProductRepositoryList();
         for(Product p: products) {
-            productRepo.add(p);
+            productRepo.create(p);
         }
         // print all products in repo
         for (Product p: productRepo.findAll()) {
             System.out.println(formatAsTableRow(p));
         }
-        System.out.printf("Serching by ID=%d: %s\n", 6, productRepo.findById(6L));
+        Product p6 = productRepo.findById(6L).get();
+        System.out.printf("Serching by ID=%d: %s\n", p6.getId(), p6);
+        // update product
+        p6.setPrice(12.8);
+        productRepo.update(p6);
+        // delete product
+        productRepo.deleteById(1L);
+        // print products sorted by price descending
         for (Product p: productRepo.findAllSorted(new ProductByPriceComparator().reversed())) {
             System.out.println(formatAsTableRow(p));
         }
