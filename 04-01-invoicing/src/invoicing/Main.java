@@ -3,6 +3,7 @@ package invoicing;
 import invoicing.dao.ProductRepository;
 import invoicing.dao.impl.ProductRepositoryArray;
 import invoicing.dao.impl.ProductRepositoryList;
+import invoicing.dao.impl.ProductRepositoryMapImpl;
 import invoicing.model.Product;
 import invoicing.model.Unit;
 import invoicing.util.ProductByPriceComparator;
@@ -26,7 +27,7 @@ public class Main {
         };
 
         // create product repository and add products
-        ProductRepository productRepo = new ProductRepositoryList();
+        ProductRepository productRepo = new ProductRepositoryMapImpl();
         for(Product p: products) {
             productRepo.create(p);
         }
