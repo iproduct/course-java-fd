@@ -1,12 +1,9 @@
 package invoicing;
 
-import invoicing.dao.ProductRepositoryArray;
+import invoicing.dao.impl.ProductRepositoryArray;
 import invoicing.model.Product;
 import invoicing.model.Unit;
-import invoicing.util.ProductByNameComparator;
 import invoicing.util.ProductByPriceComparator;
-
-import java.util.Arrays;
 
 import static invoicing.model.Product.formatAsTableRow;
 

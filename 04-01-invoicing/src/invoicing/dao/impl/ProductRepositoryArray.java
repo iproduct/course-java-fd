@@ -1,4 +1,4 @@
-package invoicing.dao;
+package invoicing.dao.impl;
 
 import invoicing.model.Product;
 
