@@ -11,10 +11,7 @@ import invoicing.util.Alignment;
 import invoicing.util.PrintUtil;
 import invoicing.util.ProductByPriceComparator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 import static invoicing.model.Product.formatAsTableRow;
 import static invoicing.util.Alignment.*;
@@ -132,6 +129,7 @@ public class Main {
 //            p.setPrice(p.getPrice() / 1.1); // promotion 10%
 //
 //        }
-
+        Scanner sc = new Scanner(System.in);
+        String str = sc.nextLine();
     }
 }
