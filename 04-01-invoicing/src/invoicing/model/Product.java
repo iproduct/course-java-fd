@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import static invoicing.model.Unit.PCS;
 
-public class Product implements Comparable<Product> {
+public class Product implements Comparable<Product>, Identifiable<Long> {
 //    public static long nextId = 0L;
     private Long id; // = ++ nextId; //default initialization when declaring attribute
     private String code;
