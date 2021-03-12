@@ -1,5 +1,7 @@
 package invoicing.util;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -26,15 +28,32 @@ public class PrintUtil {
         StringBuilder sb = new StringBuilder();
         int width = 1;
         for(ColumnDescriptor c : columns){
-            width += c.width + 1;
+            width += c.width + 3;
         }
-        sb.append("\n").append(repeat("-", width)).append("\n|");
+        // print heading with labels
+        sb.append("\n").append(repeat("-", width)).append("\n| ");
         for(ColumnDescriptor c : columns){
-            toStringAligned(sb, c.label, c.width, CENTER);
-            sb.append("|");
+            appendStringAligned(sb, c.label, c.width, CENTER);
+            sb.append(" | ");
         }
-        sb.append("\n").append(repeat("-", width)).append("\n|");
-
+        sb.append("\n").append(repeat("-", width)).append("\n");
+        // print table data
+        for(Object item: items) {
+            sb.append("| ");
+            for(ColumnDescriptor c : columns){
+                try {
+                    Method accessor = item.getClass().getMethod(getAccessorMethodForProperty(c.property));
+                    Object value = accessor.invoke(item); // invoke get method using reflection
+                    appendStringAligned(sb, value.toString(), c.width, c.alignment);
+                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    e.printStackTrace();
+                    appendStringAligned(sb, "-", c.width, CENTER);
+                }
+                sb.append(" | ");
+            }
+            sb.append("\n");
+        }
+        sb.append(repeat("-", width)).append("\n");
 
         return sb.toString();
     }
@@ -47,7 +66,7 @@ public class PrintUtil {
         return sb.toString();
     }
 
-    public static void toStringAligned(StringBuilder sb, String str, int width, Alignment alignment){
+    public static void appendStringAligned(StringBuilder sb, String str, int width, Alignment alignment){
         str = str.substring(0, min(width, str.length()));
         int spaces = width - str.length();
         switch (alignment) {
@@ -61,5 +80,12 @@ public class PrintUtil {
                 sb.append(repeat(" ", spaces - spaces/2)).append(str).append(repeat(" ", spaces/2));
                 break;
         }
+    }
+
+    public static String getAccessorMethodForProperty(String property) {
+        StringBuilder sb = new StringBuilder(property);
+        sb.setCharAt(0, Character.toUpperCase(sb.charAt(0)));
+        sb.insert(0, "get");
+        return sb.toString();
     }
 }
