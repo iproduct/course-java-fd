@@ -4,8 +4,15 @@ import invoicing.dao.ProductRepository;
 import invoicing.dao.Repository;
 import invoicing.dao.impl.*;
 import invoicing.model.Product;
+import invoicing.model.Role;
 import invoicing.model.Unit;
+import invoicing.model.User;
 import invoicing.util.ProductByPriceComparator;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 import static invoicing.model.Product.formatAsTableRow;
 
@@ -45,6 +52,26 @@ public class Main {
         for (Product p: productRepo.findAllSorted(new ProductByPriceComparator().reversed())) {
             System.out.println(formatAsTableRow(p));
         }
+
+        // Test users
+        List<User> users = List.of(
+                new User("Default", "Admin", "admin", "admin", Role.ADMIN),
+                new User("Ivan", "Petrov", "ivan", "ivan"),
+                new User("Hristina", "Dimitrova", "hrisi", "hrisi", Role.ADMIN),
+                new User("Nadia", "Nikolova", "nadia", "nadia")
+        );
+        Repository<Long, User> userRepo = new RepositoryMapImpl<>(new LongIdGenerator());
+        Iterator<User> iter = users.iterator();
+        while(iter.hasNext()) {
+            userRepo.create(iter.next());
+        }
+        ListIterator<User> listIter = userRepo.findAll().listIterator();
+        while(listIter.hasNext()){
+            System.out.println(listIter.next());
+        }
+//        while(listIter.hasPrevious()){
+//            System.out.println(listIter.previous());
+//        }
 
 
         // array iteration by index
