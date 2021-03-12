@@ -7,6 +7,8 @@ import invoicing.model.Product;
 import invoicing.model.Role;
 import invoicing.model.Unit;
 import invoicing.model.User;
+import invoicing.util.Alignment;
+import invoicing.util.PrintUtil;
 import invoicing.util.ProductByPriceComparator;
 
 import java.util.ArrayList;
@@ -15,6 +17,8 @@ import java.util.List;
 import java.util.ListIterator;
 
 import static invoicing.model.Product.formatAsTableRow;
+import static invoicing.util.Alignment.LEFT;
+import static invoicing.util.Alignment.RIGHT;
 
 public class Main {
     public static void main(String[] args) {
@@ -69,6 +73,19 @@ public class Main {
         while(listIter.hasNext()){
             System.out.println(listIter.next());
         }
+
+        // Print formatted report as table
+        List<PrintUtil.ColumnDescriptor> userColumns = List.of(
+                new PrintUtil.ColumnDescriptor("id", "ID", 5, RIGHT),
+                new PrintUtil.ColumnDescriptor("firstName", "First Name", 12, LEFT),
+                new PrintUtil.ColumnDescriptor("lastName", "Last Name", 12, LEFT),
+                new PrintUtil.ColumnDescriptor("username", "Username", 12, LEFT),
+                new PrintUtil.ColumnDescriptor("password", "Password", 12, LEFT),
+                new PrintUtil.ColumnDescriptor("role", "Role", 5, LEFT)
+        );
+        String report = PrintUtil.formatTable(userColumns, userRepo.findAll());
+        System.out.println(report);
+
 //        while(listIter.hasPrevious()){
 //            System.out.println(listIter.previous());
 //        }
