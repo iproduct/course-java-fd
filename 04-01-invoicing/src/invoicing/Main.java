@@ -17,8 +17,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import static invoicing.model.Product.formatAsTableRow;
-import static invoicing.util.Alignment.LEFT;
-import static invoicing.util.Alignment.RIGHT;
+import static invoicing.util.Alignment.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -53,9 +52,21 @@ public class Main {
         // delete product
         productRepo.deleteById(1L);
         // print products sorted by price descending
-        for (Product p: productRepo.findAllSorted(new ProductByPriceComparator().reversed())) {
-            System.out.println(formatAsTableRow(p));
-        }
+//        for (Product p: productRepo.findAllSorted(new ProductByPriceComparator().reversed())) {
+//            System.out.println(formatAsTableRow(p));
+//        }
+
+        // Print formatted report as table
+        List<PrintUtil.ColumnDescriptor> productColumns = List.of(
+                new PrintUtil.ColumnDescriptor("id", "ID", 5, RIGHT),
+                new PrintUtil.ColumnDescriptor("code", "Code", 5, LEFT),
+                new PrintUtil.ColumnDescriptor("name", "Name", 12, LEFT),
+                new PrintUtil.ColumnDescriptor("description", "Description", 12, LEFT),
+                new PrintUtil.ColumnDescriptor("price", "Price", 8, RIGHT, 2),
+                new PrintUtil.ColumnDescriptor("unit", "Unit", 5, CENTER)
+        );
+        String productReport = PrintUtil.formatTable(productColumns, productRepo.findAll());
+        System.out.println(productReport);
 
         // Test users
         List<User> users = List.of(
@@ -83,8 +94,8 @@ public class Main {
                 new PrintUtil.ColumnDescriptor("password", "Password", 12, LEFT),
                 new PrintUtil.ColumnDescriptor("role", "Role", 5, LEFT)
         );
-        String report = PrintUtil.formatTable(userColumns, userRepo.findAll());
-        System.out.println(report);
+        String userReport = PrintUtil.formatTable(userColumns, userRepo.findAll());
+        System.out.println(userReport);
 
 //        while(listIter.hasPrevious()){
 //            System.out.println(listIter.previous());

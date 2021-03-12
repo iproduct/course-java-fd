@@ -15,12 +15,21 @@ public class PrintUtil {
         public final String label;
         public final int width;
         public final Alignment alignment;
+        public final int precision;
 
         public ColumnDescriptor(String property, String label, int width, Alignment alignment) {
             this.property = property;
             this.label = label;
             this.width = width;
             this.alignment = alignment;
+            this.precision = 0;
+        }
+        public ColumnDescriptor(String property, String label, int width, Alignment alignment, int precision) {
+            this.property = property;
+            this.label = label;
+            this.width = width;
+            this.alignment = alignment;
+            this.precision = precision;
         }
     }
 
@@ -44,6 +53,9 @@ public class PrintUtil {
                 try {
                     Method accessor = item.getClass().getMethod(getAccessorMethodForProperty(c.property));
                     Object value = accessor.invoke(item); // invoke get method using reflection
+                    if(value instanceof Float || value instanceof Double){
+                        value = String.format("%" + c.width + "." + c.precision + "f", value);
+                    }
                     appendStringAligned(sb, value.toString(), c.width, c.alignment);
                 } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
 //                    e.printStackTrace();
