@@ -3,22 +3,23 @@ package invoicing.util;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static invoicing.util.Alignment.*;
 import static java.lang.Integer.min;
 
 public class PrintUtil {
+    List<ColumnDescriptor> columns = new ArrayList<>();
+    String caption = "";
+
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+
     public static class ColumnDescriptor{
         public final String property;
         public final String label;
         public final int width;
         public final Alignment alignment;
-        public final int precision;
+        public final int precision; //bank final
 
         public ColumnDescriptor(String property, String label, int width, Alignment alignment) {
             this.property = property;
@@ -36,14 +37,15 @@ public class PrintUtil {
         }
     }
 
-    public static String formatTable(List<ColumnDescriptor> columns, Collection<?> items) {
+    public static String formatTable(final List<ColumnDescriptor> columns, Collection<?> items, final String caption) {
         StringBuilder sb = new StringBuilder();
+        sb.append("\n").append(caption).append("\n");
         int width = 1;
         for(ColumnDescriptor c : columns){
             width += c.width + 3;
         }
         // print heading with labels
-        sb.append("\n").append(repeat("-", width)).append("\n| ");
+        sb.append(repeat("-", width)).append("\n| ");
         for(ColumnDescriptor c : columns){
             appendStringAligned(sb, c.label, c.width, CENTER);
             sb.append(" | ");

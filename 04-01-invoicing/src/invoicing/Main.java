@@ -69,7 +69,7 @@ public class Main {
                 new PrintUtil.ColumnDescriptor("unit", "Unit", 5, CENTER)
         ));
         productColumns.addAll(metadataColumns);
-        String productReport = PrintUtil.formatTable(productColumns, productRepo.findAll());
+        String productReport = PrintUtil.formatTable(productColumns, productRepo.findAll(), "Products List:");
         System.out.println(productReport);
 
         // Test users
@@ -99,7 +99,7 @@ public class Main {
                 new PrintUtil.ColumnDescriptor("role", "Role", 5, LEFT)
         ));
         userColumns.addAll(metadataColumns);
-        String userReport = PrintUtil.formatTable(userColumns, userRepo.findAll());
+        String userReport = PrintUtil.formatTable(userColumns, userRepo.findAll(), "Users List:");
         System.out.println(userReport);
 
         // Contragents demo
