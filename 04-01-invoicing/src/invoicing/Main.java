@@ -54,15 +54,24 @@ public class Main {
 //            System.out.println(formatAsTableRow(p));
 //        }
 
+        // Common entity metadata column descriptors
+        List<PrintUtil.ColumnDescriptor> metadataColumns = List.of(
+                new PrintUtil.ColumnDescriptor("created", "Ctreated", 19, CENTER),
+                new PrintUtil.ColumnDescriptor("updated", "Updated", 19, CENTER),
+                new PrintUtil.ColumnDescriptor("createdById", "Created By", 8, CENTER),
+                new PrintUtil.ColumnDescriptor("updatedById", "Updated By", 8, CENTER)
+        );
+
         // Print formatted report as table
-        List<PrintUtil.ColumnDescriptor> productColumns = List.of(
+        List<PrintUtil.ColumnDescriptor> productColumns = new ArrayList<>(List.of(
                 new PrintUtil.ColumnDescriptor("id", "ID", 5, RIGHT),
                 new PrintUtil.ColumnDescriptor("code", "Code", 5, LEFT),
                 new PrintUtil.ColumnDescriptor("name", "Name", 12, LEFT),
                 new PrintUtil.ColumnDescriptor("description", "Description", 12, LEFT),
                 new PrintUtil.ColumnDescriptor("price", "Price", 8, RIGHT, 2),
                 new PrintUtil.ColumnDescriptor("unit", "Unit", 5, CENTER)
-        );
+        ));
+        productColumns.addAll(metadataColumns);
         String productReport = PrintUtil.formatTable(productColumns, productRepo.findAll());
         System.out.println(productReport);
 
@@ -84,14 +93,15 @@ public class Main {
         }
 
         // Print formatted report as table
-        List<PrintUtil.ColumnDescriptor> userColumns = List.of(
+        List<PrintUtil.ColumnDescriptor> userColumns = new ArrayList<>(List.of(
                 new PrintUtil.ColumnDescriptor("id", "ID", 5, RIGHT),
                 new PrintUtil.ColumnDescriptor("firstName", "First Name", 12, LEFT),
                 new PrintUtil.ColumnDescriptor("lastName", "Last Name", 12, LEFT),
                 new PrintUtil.ColumnDescriptor("username", "Username", 12, LEFT),
                 new PrintUtil.ColumnDescriptor("password", "Password", 12, LEFT),
                 new PrintUtil.ColumnDescriptor("role", "Role", 5, LEFT)
-        );
+        ));
+        userColumns.addAll(metadataColumns);
         String userReport = PrintUtil.formatTable(userColumns, userRepo.findAll());
         System.out.println(userReport);
 

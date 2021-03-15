@@ -52,7 +52,6 @@ public class User extends AbstractEntity<Long> implements Comparable<User>{
         this.role = role;
     }
 
-
     public String getFirstName() {
         return firstName;
     }

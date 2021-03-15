@@ -2,14 +2,17 @@ package invoicing.util;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import static invoicing.util.Alignment.*;
 import static java.lang.Integer.min;
 
 public class PrintUtil {
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
     public static class ColumnDescriptor{
         public final String property;
         public final String label;
@@ -55,9 +58,11 @@ public class PrintUtil {
                     Object value = accessor.invoke(item); // invoke get method using reflection
                     if(value instanceof Float || value instanceof Double){
                         value = String.format("%" + c.width + "." + c.precision + "f", value);
+                    } else if(value instanceof Date){
+                        value = sdf.format(value);
                     }
                     appendStringAligned(sb, value.toString(), c.width, c.alignment);
-                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | NullPointerException e) {
 //                    e.printStackTrace();
                     appendStringAligned(sb, "-", c.width, CENTER);
                 }
