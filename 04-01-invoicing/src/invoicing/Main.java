@@ -58,8 +58,8 @@ public class Main {
         List<PrintUtil.ColumnDescriptor> metadataColumns = List.of(
                 new PrintUtil.ColumnDescriptor("created", "Ctreated", 19, CENTER),
                 new PrintUtil.ColumnDescriptor("updated", "Updated", 19, CENTER),
-                new PrintUtil.ColumnDescriptor("createdById", "Created By", 8, CENTER),
-                new PrintUtil.ColumnDescriptor("updatedById", "Updated By", 8, CENTER)
+                new PrintUtil.ColumnDescriptor("createdById", "Created By", 11, CENTER),
+                new PrintUtil.ColumnDescriptor("updatedById", "Updated By", 11, CENTER)
         );
 
         // Print formatted report as table
