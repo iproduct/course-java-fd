@@ -3,12 +3,15 @@ package invoicing.model;
 import java.util.Date;
 import java.util.Objects;
 
-public abstract class AbstractEntity<K> implements Identifiable<K>, Comparable<AbstractEntity<K>> {
+public abstract class AbstractEntity<K> implements Identifiable<K> {
     private K id;
-    private Date created;
-    private Date updated;
+    private Date created = new Date();
+    private Date updated = new Date();
     private Long createdById;
     private Long updatedById;
+
+    public AbstractEntity() {
+    }
 
     public AbstractEntity(K id) {
         this.id = id;

@@ -1,12 +1,13 @@
 package invoicing.model;
 
+import java.util.Date;
 import java.util.Objects;
 
 import static invoicing.model.Unit.PCS;
 
-public class Product implements Comparable<Product>, Identifiable<Long> {
+public class Product extends AbstractEntity<Long> implements Comparable<Product> {
 //    public static long nextId = 0L;
-    private Long id; // = ++ nextId; //default initialization when declaring attribute
+//    private Long id; // = ++ nextId; //default initialization when declaring attribute
     private String code;
     private String name;
     private String description = "No description";
@@ -17,10 +18,21 @@ public class Product implements Comparable<Product>, Identifiable<Long> {
     // Constructors overloading
     // no-args constructor
     public Product(){
+//        super(); // called by default
     }
 
     // required args constructor
     public Product(String code, String name, String description, double price) {
+        super();
+        this.code = code;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+
+    public Product(String code, String name, String description, double price,
+                   Date created, Date updated, Long createdById, Long updatedById) {
+        super(null, created, updated, createdById, updatedById);
         this.code = code;
         this.name = name;
         this.description = description;
@@ -36,22 +48,14 @@ public class Product implements Comparable<Product>, Identifiable<Long> {
     // all args constructor
     public Product(Long id, String code, String name, String description, double price, Unit unit) {
         this(code, name, description, price, unit);
-        this.id = id;
+        setId(id);
     }
 
     public Product(Long id) {
-        this.id = id;
+        super(id);
     }
 
     // getters and setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getCode() {
         return code;
     }
@@ -100,28 +104,19 @@ public class Product implements Comparable<Product>, Identifiable<Long> {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Product)) return false;
-        Product product = (Product) o;
-        return Objects.equals(id, product.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Product{");
-        sb.append("id=").append(id);
+        sb.append("id=").append(getId());
         sb.append(", code='").append(code).append('\'');
         sb.append(", name='").append(name).append('\'');
         sb.append(", description='").append(description).append('\'');
+        sb.append(", comments='").append(comments).append('\'');
         sb.append(", price=").append(price);
         sb.append(", unit=").append(unit);
-        sb.append(", comments='").append(getComments()).append('\'');
+        sb.append(", created=").append(getCreated());
+        sb.append(", updated=").append(getUpdated());
+        sb.append(", createdById=").append(getCreatedById());
+        sb.append(", updatedById=").append(getUpdatedById());
         sb.append('}');
         return sb.toString();
     }

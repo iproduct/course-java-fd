@@ -39,7 +39,8 @@ public class Main {
         }
         // print all products in repo
         for (Product p: productRepo.findAll()) {
-            System.out.println(formatAsTableRow(p));
+//            System.out.println(formatAsTableRow(p));
+            System.out.println(p);
         }
         Product p6 = productRepo.findById(6L).get();
         System.out.printf("Serching by ID=%d: %s\n", p6.getId(), p6);
