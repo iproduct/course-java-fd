@@ -15,7 +15,7 @@ public class ProductRepositoryList implements ProductRepository {
     }
 
     @Override
-    public List<Product> findAllSorted(Comparator comparator) {
+    public List<Product> findAllSorted(Comparator<Product> comparator) {
         List<Product> toSort = new ArrayList<>(products);
         toSort.sort(comparator);
         return toSort;
@@ -49,7 +49,7 @@ public class ProductRepositoryList implements ProductRepository {
 
     @Override
     public Optional<Product> deleteById(Long id) {
-        int index = Collections.binarySearch(products,  new Product(id));
+        int index = Collections.binarySearch(products, new Product(id));
         if(index < 0) {
             return Optional.empty();
         }

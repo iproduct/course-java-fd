@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import static invoicing.model.Unit.PCS;
 
-public class Product extends AbstractEntity<Long> implements Comparable<Product> {
+public class Product extends AbstractEntity<Long, Product> {
 //    public static long nextId = 0L;
 //    private Long id; // = ++ nextId; //default initialization when declaring attribute
     private String code;
@@ -38,7 +38,6 @@ public class Product extends AbstractEntity<Long> implements Comparable<Product>
         this.description = description;
         this.price = price;
     }
-
     // more constructors
     public Product(String code, String name, String description, double price, Unit unit) {
         this(code, name, description, price);

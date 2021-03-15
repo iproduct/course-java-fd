@@ -4,7 +4,7 @@ package invoicing.model;
 import java.util.Date;
 import java.util.Objects;
 
-public class User extends AbstractEntity<Long> implements Comparable<User>{
+public class User extends AbstractEntity<Long, User> {
     private String firstName;
     private String lastName;
     private String username;

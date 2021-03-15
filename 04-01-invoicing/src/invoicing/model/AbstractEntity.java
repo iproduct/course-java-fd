@@ -3,7 +3,8 @@ package invoicing.model;
 import java.util.Date;
 import java.util.Objects;
 
-public abstract class AbstractEntity<K> implements Identifiable<K> {
+public abstract class AbstractEntity<K extends Comparable<K>, V extends Identifiable<K>>
+        implements Identifiable<K>, Comparable<V> {
     private K id;
     private Date created = new Date();
     private Date updated = new Date();
@@ -71,7 +72,7 @@ public abstract class AbstractEntity<K> implements Identifiable<K> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof AbstractEntity)) return false;
-        AbstractEntity<?> that = (AbstractEntity<?>) o;
+        AbstractEntity<?, ?> that = (AbstractEntity<?, ?>) o;
         return Objects.equals(id, that.id);
     }
 
@@ -90,5 +91,10 @@ public abstract class AbstractEntity<K> implements Identifiable<K> {
         sb.append(", updatedById=").append(updatedById);
         sb.append('}');
         return sb.toString();
+    }
+
+    @Override
+    public int compareTo(V other) {
+        return getId().compareTo(other.getId());
     }
 }
