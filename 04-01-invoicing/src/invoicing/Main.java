@@ -3,10 +3,7 @@ package invoicing;
 import invoicing.dao.ProductRepository;
 import invoicing.dao.Repository;
 import invoicing.dao.impl.*;
-import invoicing.model.Product;
-import invoicing.model.Role;
-import invoicing.model.Unit;
-import invoicing.model.User;
+import invoicing.model.*;
 import invoicing.util.Alignment;
 import invoicing.util.PrintUtil;
 import invoicing.util.ProductByPriceComparator;
@@ -105,6 +102,22 @@ public class Main {
         String userReport = PrintUtil.formatTable(userColumns, userRepo.findAll());
         System.out.println(userReport);
 
+        // Contragents demo
+        Repository<Long, Contragent> contragentRepo = new RepositoryMapImpl<>(new LongIdGenerator());
+        contragentRepo.create(new Supplier("Software AD", "Sofia 1000",
+                "123456789", "BG", "+(3592) 887123",
+                "UNCR1234556789012", "UNCR"));
+        contragentRepo.create(new Client("ABC Ltd.", "Sofia, Ivan Asen 32", "222333445",
+                "BG", "office@abc.com"));
+        contragentRepo.create(new Client("Krum Petrov", "Plovdiv, Hristo Botev 12",
+                "7811034569", "office@abc.com"));
+
+        for(Contragent c: contragentRepo.findAll()){
+            System.out.println(c.toString()); // polymorphism
+            if(c instanceof Supplier) {
+                System.out.printf("IBAN: %s\n", ((Supplier) c).getIban());
+            }
+        }
 //        while(listIter.hasPrevious()){
 //            System.out.println(listIter.previous());
 //        }

@@ -2,7 +2,7 @@ package invoicing.model;
 
 import java.util.Date;
 
-public class Contragent extends AbstractEntity<Long, Contragent> {
+public abstract class Contragent extends AbstractEntity<Long, Contragent> {
     private String name;
     private String address;
     private String idNumber;
