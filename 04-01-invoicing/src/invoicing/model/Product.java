@@ -51,6 +51,16 @@ public class Product extends AbstractEntity<Long> implements Comparable<Product>
         setId(id);
     }
 
+    public Product(Long id, String code, String name, String description, double price, Unit unit,
+                   Date created, Date updated, Long createdById, Long updatedById) {
+        super(id, created, updated, createdById, updatedById);
+        this.code = code;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.unit = unit;
+    }
+
     public Product(Long id) {
         super(id);
     }
