@@ -9,6 +9,8 @@ import invoicing.domain.impl.ProductServiceImpl;
 import invoicing.model.Product;
 import invoicing.model.Unit;
 import invoicing.util.PrintUtil;
+import invoicing.view.Command;
+import invoicing.view.command.InputProductCommand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,6 +78,7 @@ public class InvoicingApp {
     }
 
     private void run() {
+        System.out.println(new InputProductCommand(productService).execute());
         System.out.println(
                 formatTable(PRODUCT_COLUMNS, productService.findProducts(), "Products List:"));
     }
