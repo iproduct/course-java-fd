@@ -1,6 +1,7 @@
 package invoicing;
 
 import invoicing.dao.Repository;
+import invoicing.dao.exception.InvalidEntityDataException;
 import invoicing.dao.impl.LongIdGenerator;
 import invoicing.dao.impl.RepositoryMapImpl;
 import invoicing.domain.ProductService;
@@ -11,12 +12,16 @@ import invoicing.util.PrintUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static invoicing.util.Alignment.*;
 import static invoicing.util.Alignment.CENTER;
 import static invoicing.util.PrintUtil.formatTable;
+import static java.util.logging.Level.WARNING;
 
 public class InvoicingApp {
+    private static final Logger LOG = Logger.getLogger(InvoicingApp.class.getName());
     public static final List<PrintUtil.ColumnDescriptor> METADATA_COLUMNS = List.of(
             new PrintUtil.ColumnDescriptor("created", "Ctreated", 19, CENTER),
             new PrintUtil.ColumnDescriptor("updated", "Updated", 19, CENTER),
@@ -62,7 +67,11 @@ public class InvoicingApp {
                         0.72, Unit.M)
         );
         for(Product p: products) {
-            productService.addProduct(p);
+            try {
+                productService.addProduct(p);
+            } catch (InvalidEntityDataException e) {
+                LOG.log(WARNING, "Error creating product:", e);
+            }
         }
     }
 
