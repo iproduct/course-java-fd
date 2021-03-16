@@ -40,10 +40,12 @@ public class PrintUtil {
     public static String formatTable(final List<ColumnDescriptor> columns, Collection<?> items, final String caption) {
         StringBuilder sb = new StringBuilder();
         sb.append("\n").append(caption).append("\n");
-        int width = 1;
-        for(ColumnDescriptor c : columns){
-            width += c.width + 3;
-        }
+//        int width = 1;
+//        for(ColumnDescriptor c : columns){
+//            width += c.width + 3;
+//        }
+        int width = columns.stream().mapToInt(descr -> descr.width + 3).sum() + 1;
+
         // print heading with labels
         sb.append(repeat("-", width)).append("\n| ");
         for(ColumnDescriptor c : columns){

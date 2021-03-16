@@ -20,9 +20,11 @@ import static java.util.logging.Level.SEVERE;
 
 public class Main {
     private static final Logger LOG = Logger.getLogger(Main.class.getName());
+
     static {
         LOG.setLevel(Level.FINEST);
     }
+
     // or -Djava.util.logging.config.file=logging.properties
     public static void main(String[] args) {
         Product p1 = new Product("BK001", "Thinking in Java",
@@ -41,11 +43,11 @@ public class Main {
 
         // create product repository and add products
         Repository<Long, Product> productRepo = new RepositoryMapImpl<>(new LongIdGenerator());
-        for(Product p: products) {
+        for (Product p : products) {
             productRepo.create(p);
         }
         // print all products in repo
-        for (Product p: productRepo.findAll()) {
+        for (Product p : productRepo.findAll()) {
 //            System.out.println(formatAsTableRow(p));
             System.out.println(p);
         }
@@ -64,9 +66,11 @@ public class Main {
         // delete product
         productRepo.deleteById(1L);
         // print products sorted by price descending
-//        for (Product p: productRepo.findAllSorted(new ProductByPriceComparator().reversed())) {
-//            System.out.println(formatAsTableRow(p));
-//        }
+        for (Product p : productRepo.findAllSorted(
+                (Product o1, Product o2) -> (int) Math.signum(o2.getPrice() - o1.getPrice())
+        )) {
+            System.out.println(formatAsTableRow(p));
+        }
 
         // Common entity metadata column descriptors
         List<PrintUtil.ColumnDescriptor> metadataColumns = List.of(
@@ -98,11 +102,11 @@ public class Main {
         );
         Repository<Long, User> userRepo = new RepositoryMapImpl<>(new LongIdGenerator());
         Iterator<User> iter = users.iterator();
-        while(iter.hasNext()) {
+        while (iter.hasNext()) {
             userRepo.create(iter.next());
         }
         ListIterator<User> listIter = userRepo.findAll().listIterator();
-        while(listIter.hasNext()){
+        while (listIter.hasNext()) {
             System.out.println(listIter.next());
         }
 
@@ -129,9 +133,9 @@ public class Main {
         contragentRepo.create(new Client("Krum Petrov", "Plovdiv, Hristo Botev 12",
                 "7811034569", "office@abc.com"));
 
-        for(Contragent c: contragentRepo.findAll()){
+        for (Contragent c : contragentRepo.findAll()) {
             System.out.println(c.toString()); // polymorphism
-            if(c instanceof Supplier) {
+            if (c instanceof Supplier) {
                 System.out.printf("IBAN: %s\n", ((Supplier) c).getIban());
             }
         }
@@ -170,7 +174,6 @@ public class Main {
 //            p.setPrice(p.getPrice() / 1.1); // promotion 10%
 //
 //        }
-        Scanner sc = new Scanner(System.in);
-        String str = sc.nextLine();
+
     }
 }
