@@ -1,6 +1,7 @@
 package invoicing.dao.impl;
 
 import invoicing.dao.ProductRepository;
+import invoicing.dao.exception.EntityNotFoundException;
 import invoicing.model.Product;
 
 import java.util.*;
@@ -33,10 +34,12 @@ public class ProductRepositoryMapImpl implements ProductRepository {
     }
 
     @Override
-    public Product update(Product product) {
+    public Product update(Product product) throws EntityNotFoundException {
         Product oldProduct = products.replace(product.getId(), product);
         if(oldProduct == null) {
-            // TODO throw exception
+            throw new EntityNotFoundException(
+                    String.format("Product %s: '%s' not found", product.getId(), product.getName())
+            );
         }
         return product;
     }

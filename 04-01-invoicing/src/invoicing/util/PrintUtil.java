@@ -64,7 +64,7 @@ public class PrintUtil {
                         value = sdf.format(value);
                     }
                     appendStringAligned(sb, value.toString(), c.width, c.alignment);
-                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | NullPointerException e) {
+                } catch (NoSuchMethodException| IllegalAccessException | InvocationTargetException | NullPointerException  e) {
 //                    e.printStackTrace();
                     appendStringAligned(sb, "-", c.width, CENTER);
                 }

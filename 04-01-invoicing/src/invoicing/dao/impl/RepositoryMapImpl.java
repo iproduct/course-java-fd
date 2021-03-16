@@ -2,11 +2,12 @@ package invoicing.dao.impl;
 
 import invoicing.dao.IdGenerator;
 import invoicing.dao.Repository;
+import invoicing.dao.exception.EntityNotFoundException;
 import invoicing.model.Identifiable;
 
 import java.util.*;
 
-public class RepositoryMapImpl<K, V extends Identifiable<K>> implements Repository<K,V> {
+public class RepositoryMapImpl<K, V extends Identifiable<K>> implements Repository<K, V> {
     private static long nextId = 0L;
     private Map<K, V> entities = new HashMap<>();
     private IdGenerator<K> idGenerator;
@@ -39,10 +40,14 @@ public class RepositoryMapImpl<K, V extends Identifiable<K>> implements Reposito
     }
 
     @Override
-    public V update(V entity) {
+    public V update(V entity) throws EntityNotFoundException {
         V old = entities.replace(entity.getId(), entity);
-        if(old == null) {
-            // TODO throw exception
+        if (old == null) {
+            throw new EntityNotFoundException(
+                    String.format("%s with ID='%s' not found",
+                            entity.getClass().getSimpleName(),
+                            entity.getId().toString())
+            );
         }
         return entity;
     }

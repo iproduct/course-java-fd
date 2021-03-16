@@ -1,5 +1,6 @@
 package invoicing.dao;
 
+import invoicing.dao.exception.EntityNotFoundException;
 import invoicing.model.Product;
 
 import java.util.Comparator;
@@ -11,7 +12,7 @@ public interface ProductRepository {
     List<Product> findAllSorted(Comparator<Product> comparator);
     Optional<Product> findById(Long id);
     Product create(Product product);
-    Product update(Product product);
+    Product update(Product product) throws EntityNotFoundException;
     Optional<Product> deleteById(Long id);
     long count();
 }
