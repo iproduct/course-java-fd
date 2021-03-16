@@ -1,7 +1,9 @@
 package invoicing.domain.impl;
 
+import invoicing.InvoicingApp;
 import invoicing.dao.Repository;
 import invoicing.dao.exception.EntityNotFoundException;
+import invoicing.dao.exception.InvalidEntityDataException;
 import invoicing.dao.impl.LongIdGenerator;
 import invoicing.dao.impl.RepositoryMapImpl;
 import invoicing.domain.ProductService;
@@ -9,8 +11,13 @@ import invoicing.model.Product;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ProductServiceImpl implements ProductService {
+    private static final Logger LOG = Logger.getLogger(ProductServiceImpl.class.getName());
+
     private Repository<Long, Product> productRepo;
 
     public ProductServiceImpl(Repository<Long, Product> productRepo) { // Dependency Injection - DI
@@ -28,7 +35,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product addProduct(Product product) {
+    public Product addProduct(Product product) throws InvalidEntityDataException {
+        // validate product code
+        Pattern codePattern = Pattern.compile("([A-Z]{2})(\\d{3})");
+        Matcher codeMatcher = codePattern.matcher(product.getCode());
+        if (codeMatcher.matches()) {
+            LOG.fine(String.format("Product Category: %s, Product Number: %s",
+                    codeMatcher.group(1), codeMatcher.group(2)));
+        } else {
+            throw new InvalidEntityDataException(
+                    String.format("Invalid product code: '%s' for product '%s'",
+                            product.getCode(), product.getName())
+            );
+        }
         return productRepo.create(product);
     }
 
