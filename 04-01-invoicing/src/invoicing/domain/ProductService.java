@@ -1,5 +1,6 @@
 package invoicing.domain;
 
+import invoicing.dao.exception.EntityNotFoundException;
 import invoicing.model.Product;
 
 import java.util.List;
@@ -9,7 +10,7 @@ public interface ProductService {
     List<Product> findProducts();
     Optional<Product> findProductById(Long id);
     Product addProduct(Product product);
-    Product updateProduct(Product product);
-    Product deleteProductById(Long id);
+    Product updateProduct(Product product) throws EntityNotFoundException;
+    Product deleteProductById(Long id) throws EntityNotFoundException ;
     long getProductsCount();
 }
