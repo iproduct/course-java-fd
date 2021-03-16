@@ -2,6 +2,7 @@ package invoicing;
 
 import invoicing.dao.ProductRepository;
 import invoicing.dao.Repository;
+import invoicing.dao.exception.EntityNotFoundException;
 import invoicing.dao.impl.*;
 import invoicing.model.*;
 import invoicing.util.Alignment;
@@ -9,11 +10,20 @@ import invoicing.util.PrintUtil;
 import invoicing.util.ProductByPriceComparator;
 
 import java.util.*;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static invoicing.model.Product.formatAsTableRow;
 import static invoicing.util.Alignment.*;
+import static java.util.logging.Level.SEVERE;
 
 public class Main {
+    private static final Logger LOG = Logger.getLogger(Main.class.getName());
+    static {
+        LOG.setLevel(Level.FINEST);
+    }
+    // or -Djava.util.logging.config.file=logging.properties
     public static void main(String[] args) {
         Product p1 = new Product("BK001", "Thinking in Java",
                 "Good introduction to Java ...", 35.99);
@@ -43,7 +53,14 @@ public class Main {
         System.out.printf("Serching by ID=%d: %s\n", p6.getId(), p6);
         // update product
         p6.setPrice(12.8);
-        productRepo.update(p6);
+        p6.setId(8L);
+        try {
+            productRepo.update(p6);
+        } catch (EntityNotFoundException e) {
+            LOG.log(SEVERE, "Error updating product:", e);
+        } finally {
+            LOG.fine("Finally executed.");
+        }
         // delete product
         productRepo.deleteById(1L);
         // print products sorted by price descending
