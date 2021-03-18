@@ -22,7 +22,7 @@ public class Product extends AbstractEntity<Long, Product> {
     }
 
     // required args constructor
-    public Product(String code, String name, String description, double price) {
+    public Product(String code, String name, String description, Double price) {
         super();
         this.code = code;
         this.name = name;
@@ -30,7 +30,7 @@ public class Product extends AbstractEntity<Long, Product> {
         this.price = price;
     }
 
-    public Product(String code, String name, String description, double price,
+    public Product(String code, String name, String description, Double price,
                    Date created, Date updated, Long createdById, Long updatedById) {
         super(null, created, updated, createdById, updatedById);
         this.code = code;
@@ -39,18 +39,18 @@ public class Product extends AbstractEntity<Long, Product> {
         this.price = price;
     }
     // more constructors
-    public Product(String code, String name, String description, double price, Unit unit) {
+    public Product(String code, String name, String description, Double price, Unit unit) {
         this(code, name, description, price);
         this.unit = unit;
     }
 
     // all args constructor
-    public Product(Long id, String code, String name, String description, double price, Unit unit) {
+    public Product(Long id, String code, String name, String description, Double price, Unit unit) {
         this(code, name, description, price, unit);
         setId(id);
     }
 
-    public Product(Long id, String code, String name, String description, double price, Unit unit,
+    public Product(Long id, String code, String name, String description, Double price, Unit unit,
                    Date created, Date updated, Long createdById, Long updatedById) {
         super(id, created, updated, createdById, updatedById);
         this.code = code;
