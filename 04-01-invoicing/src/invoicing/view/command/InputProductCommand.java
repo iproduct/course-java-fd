@@ -1,5 +1,5 @@
 package invoicing.view.command;
-import invoicing.dao.exception.InvalidEntityDataException;
+import exception.InvalidEntityDataException;
 import invoicing.domain.ProductService;
 import invoicing.model.Product;
 import invoicing.util.InputUtil;

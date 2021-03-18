@@ -1,7 +1,6 @@
 package invoicing;
 
-import invoicing.dao.Repository;
-import invoicing.dao.exception.InvalidEntityDataException;
+import exception.InvalidEntityDataException;
 import invoicing.dao.impl.LongIdGenerator;
 import invoicing.dao.impl.RepositoryMapImpl;
 import invoicing.domain.ProductService;
@@ -9,12 +8,10 @@ import invoicing.domain.impl.ProductServiceImpl;
 import invoicing.model.Product;
 import invoicing.model.Unit;
 import invoicing.util.PrintUtil;
-import invoicing.view.Command;
 import invoicing.view.command.InputProductCommand;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static invoicing.util.Alignment.*;

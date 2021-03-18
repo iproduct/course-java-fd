@@ -1,7 +1,7 @@
 package invoicing.domain;
 
-import invoicing.dao.exception.EntityNotFoundException;
-import invoicing.dao.exception.InvalidEntityDataException;
+import exception.EntityNotFoundException;
+import exception.InvalidEntityDataException;
 import invoicing.model.Product;
 
 import java.util.List;

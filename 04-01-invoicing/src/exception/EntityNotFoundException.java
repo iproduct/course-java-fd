@@ -1,4 +1,4 @@
-package invoicing.dao.exception;
+package exception;
 
 public class EntityNotFoundException extends Exception {
     public EntityNotFoundException() {

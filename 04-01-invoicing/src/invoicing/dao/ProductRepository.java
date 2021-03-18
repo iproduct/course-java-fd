@@ -1,6 +1,6 @@
 package invoicing.dao;
 
-import invoicing.dao.exception.EntityNotFoundException;
+import exception.EntityNotFoundException;
 import invoicing.model.Product;
 
 import java.util.Comparator;

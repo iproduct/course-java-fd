@@ -1,16 +1,12 @@
 package invoicing;
 
-import invoicing.dao.ProductRepository;
 import invoicing.dao.Repository;
-import invoicing.dao.exception.EntityNotFoundException;
+import exception.EntityNotFoundException;
 import invoicing.dao.impl.*;
 import invoicing.model.*;
-import invoicing.util.Alignment;
 import invoicing.util.PrintUtil;
-import invoicing.util.ProductByPriceComparator;
 
 import java.util.*;
-import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

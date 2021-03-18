@@ -1,11 +1,8 @@
 package invoicing.domain.impl;
 
-import invoicing.InvoicingApp;
 import invoicing.dao.Repository;
-import invoicing.dao.exception.EntityNotFoundException;
-import invoicing.dao.exception.InvalidEntityDataException;
-import invoicing.dao.impl.LongIdGenerator;
-import invoicing.dao.impl.RepositoryMapImpl;
+import exception.EntityNotFoundException;
+import exception.InvalidEntityDataException;
 import invoicing.domain.ProductService;
 import invoicing.model.Product;
 

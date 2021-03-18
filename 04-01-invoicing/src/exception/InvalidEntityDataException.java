@@ -1,6 +1,6 @@
-package invoicing.dao.exception;
+package exception;
 
-public class InvalidEntityDataException extends Exception{
+public class InvalidEntityDataException extends Exception {
     public InvalidEntityDataException() {
     }
 
