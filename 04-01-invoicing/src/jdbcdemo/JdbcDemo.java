@@ -50,18 +50,25 @@ public class JdbcDemo {
 
             // 3. Create and execute db statements
             int numInserts;
-//            try (PreparedStatement ps = con.prepareStatement(INSERT_PRODUCT_SQL)) {
-//                numInserts = 0;
-//                for (Product p : products) {
-//                    ps.setString(1, p.getCode());
-//                    ps.setString(2, p.getName());
-//                    ps.setString(3, p.getDescription());
-//                    ps.setDouble(4, p.getPrice());
-//                    ps.setInt(5, p.getUnit().ordinal());
-//                    numInserts += ps.executeUpdate();
-//                }
-//            }
-//            System.out.printf("%d records inserted successfully.", numInserts);
+            try (PreparedStatement ps = con.prepareStatement(INSERT_PRODUCT_SQL)) {
+                con.setAutoCommit(false);
+                numInserts = 0;
+                for (Product p : products) {
+                    ps.setString(1, p.getCode());
+                    ps.setString(2, p.getName());
+                    ps.setString(3, p.getDescription());
+                    ps.setDouble(4, p.getPrice());
+                    ps.setInt(5, p.getUnit().ordinal());
+                    numInserts += ps.executeUpdate();
+                }
+                con.commit();
+            } catch (SQLException ex){
+                con.rollback();
+                throw ex;
+            } finally {
+                con.setAutoCommit(true);
+            }
+            System.out.printf("%d records inserted successfully.", numInserts);
 
             try (Statement s = con.createStatement()) {
                 ResultSet rs = s.executeQuery(SELECT_ALL_PRODUCTS_SQL);
