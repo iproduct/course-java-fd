@@ -11,7 +11,7 @@ public class Product extends AbstractEntity<Long, Product> {
     private String code;
     private String name;
     private String description = "No description";
-    private String comments; // null, readonly
+//    private String comments; // null, readonly
     private Double price; // 0.0
     private Unit unit = PCS; //default initialization when declaring attribute
 
@@ -105,12 +105,12 @@ public class Product extends AbstractEntity<Long, Product> {
         this.unit = unit;
     }
 
-    public String getComments() {
-        if(comments == null){ // lazy initialization
-            comments = "A lot of comments here ...";
-        }
-        return comments;
-    }
+//    public String getComments() {
+//        if(comments == null){ // lazy initialization
+//            comments = "A lot of comments here ...";
+//        }
+//        return comments;
+//    }
 
     @Override
     public String toString() {
@@ -119,7 +119,7 @@ public class Product extends AbstractEntity<Long, Product> {
         sb.append(", code='").append(code).append('\'');
         sb.append(", name='").append(name).append('\'');
         sb.append(", description='").append(description).append('\'');
-        sb.append(", comments='").append(comments).append('\'');
+//        sb.append(", comments='").append(comments).append('\'');
         sb.append(", price=").append(price);
         sb.append(", unit=").append(unit);
         sb.append(", created=").append(getCreated());

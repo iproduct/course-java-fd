@@ -49,7 +49,7 @@ public class InvoicingApp {
 
 
     private ProductService productService;
-    private Map<MenuItem, Command> commands = new HashMap<>();
+    private Map<MenuItem, Command> commands = new LinkedHashMap<>();
 
     public InvoicingApp() {
         productService = new ProductServiceImpl(
