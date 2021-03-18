@@ -1,4 +1,4 @@
-package exception;
+package invoicing.exception;
 
 public class EntityNotFoundException extends Exception {
     public EntityNotFoundException() {

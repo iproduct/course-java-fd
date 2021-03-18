@@ -5,7 +5,7 @@
 -- Dumped from database version 12.4
 -- Dumped by pg_dump version 13.2
 
--- Started on 2021-03-18 11:48:45
+-- Started on 2021-03-18 11:51:39
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -58,7 +58,7 @@ ALTER TABLE ONLY public.products
     ADD CONSTRAINT products_pkey PRIMARY KEY (id);
 
 
--- Completed on 2021-03-18 11:48:46
+-- Completed on 2021-03-18 11:51:39
 
 --
 -- PostgreSQL database dump complete

@@ -1,6 +1,6 @@
 package invoicing.util;
 
-import exception.InvalidEntityDataException;
+import invoicing.exception.InvalidEntityDataException;
 import invoicing.model.Product;
 import invoicing.model.Unit;
 

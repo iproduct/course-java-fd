@@ -2,7 +2,7 @@ package invoicing.dao.impl;
 
 import invoicing.dao.IdGenerator;
 import invoicing.dao.Repository;
-import exception.EntityNotFoundException;
+import invoicing.exception.EntityNotFoundException;
 import invoicing.model.Identifiable;
 
 import java.util.*;

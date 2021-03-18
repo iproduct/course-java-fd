@@ -1,4 +1,4 @@
-package exception;
+package invoicing.exception;
 
 public class InvalidEntityDataException extends Exception {
     public InvalidEntityDataException() {

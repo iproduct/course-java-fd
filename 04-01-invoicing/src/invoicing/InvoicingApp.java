@@ -1,6 +1,6 @@
 package invoicing;
 
-import exception.InvalidEntityDataException;
+import invoicing.exception.InvalidEntityDataException;
 import invoicing.dao.impl.LongIdGenerator;
 import invoicing.dao.impl.RepositoryMapImpl;
 import invoicing.domain.ProductService;

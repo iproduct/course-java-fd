@@ -1,5 +1,5 @@
 package invoicing.view.command;
-import exception.InvalidEntityDataException;
+import invoicing.exception.InvalidEntityDataException;
 import invoicing.domain.ProductService;
 import invoicing.model.Product;
 import invoicing.util.FieldConfig;

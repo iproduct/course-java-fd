@@ -1,7 +1,7 @@
 package invoicing;
 
 import invoicing.dao.Repository;
-import exception.EntityNotFoundException;
+import invoicing.exception.EntityNotFoundException;
 import invoicing.dao.impl.*;
 import invoicing.model.*;
 import invoicing.util.PrintUtil;

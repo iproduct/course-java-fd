@@ -1,8 +1,8 @@
 package invoicing.domain.impl;
 
 import invoicing.dao.Repository;
-import exception.EntityNotFoundException;
-import exception.InvalidEntityDataException;
+import invoicing.exception.EntityNotFoundException;
+import invoicing.exception.InvalidEntityDataException;
 import invoicing.domain.ProductService;
 import invoicing.model.Product;
 

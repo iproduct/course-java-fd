@@ -1,7 +1,7 @@
 package invoicing.domain;
 
-import exception.EntityNotFoundException;
-import exception.InvalidEntityDataException;
+import invoicing.exception.EntityNotFoundException;
+import invoicing.exception.InvalidEntityDataException;
 import invoicing.model.Product;
 
 import java.util.List;
