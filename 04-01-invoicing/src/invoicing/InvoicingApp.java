@@ -7,15 +7,13 @@ import invoicing.domain.ProductService;
 import invoicing.domain.impl.ProductServiceImpl;
 import invoicing.model.Product;
 import invoicing.model.Unit;
+import invoicing.util.MenuUtil;
 import invoicing.util.PrintUtil;
 import invoicing.view.Command;
 import invoicing.view.MenuItem;
 import invoicing.view.command.InputProductCommand;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 import static invoicing.util.Alignment.*;
@@ -91,9 +89,15 @@ public class InvoicingApp {
     }
 
     private void run() {
-        System.out.println(new InputProductCommand(productService).execute());
-        System.out.println(
-                formatTable(PRODUCT_COLUMNS, productService.findProducts(), "Products List:"));
+        Map<Integer, MenuItem> mainMenu = new LinkedHashMap<>();
+        int index = 0;
+        for(MenuItem item : commands.keySet()) {
+            mainMenu.put(++index, item);
+        }
+        MenuUtil.showMenu(mainMenu, commands);
+//        System.out.println(new InputProductCommand(productService).execute());
+//        System.out.println(
+//                formatTable(PRODUCT_COLUMNS, productService.findProducts(), "Products List:"));
     }
 
     public static void main(String[] args) {
