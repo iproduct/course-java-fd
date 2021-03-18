@@ -22,7 +22,7 @@ public class InputUtil {
     private static Logger LOG = Logger.getLogger(InputUtil.class.getName());
     private static final Scanner sc = new Scanner(System.in);
 
-    public static void inputInstance(List<FieldConfig> fieldConfigs, Object instance) {
+    public static boolean inputInstance(List<FieldConfig> fieldConfigs, Object instance) {
         for (FieldConfig fc : fieldConfigs) {
             StringBuilder setterName = new StringBuilder(fc.property);
             setterName.setCharAt(0, Character.toUpperCase(setterName.charAt(0)));
@@ -71,8 +71,8 @@ public class InputUtil {
                 LOG.log(SEVERE,
                         String.format("Error accessing property '%s' on instance %s.", fc.property, instance.toString()), ex);
             }
-
         }
+        return true;
     }
 
 
@@ -276,7 +276,7 @@ public class InputUtil {
         do {
             System.out.print("Product price:");
             String ans = sc.nextLine();
-            p.setPrice(-1);
+            p.setPrice(-1D);
             try {
                 p.setPrice(Double.parseDouble(ans));
             } catch (NumberFormatException e) {

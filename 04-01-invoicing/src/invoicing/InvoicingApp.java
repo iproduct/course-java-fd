@@ -31,7 +31,7 @@ public class InvoicingApp {
             new PrintUtil.ColumnDescriptor("id", "ID", 5, RIGHT),
             new PrintUtil.ColumnDescriptor("code", "Code", 5, LEFT),
             new PrintUtil.ColumnDescriptor("name", "Name", 12, LEFT),
-            new PrintUtil.ColumnDescriptor("description", "Description", 12, LEFT),
+            new PrintUtil.ColumnDescriptor("description", "Description", 25, LEFT),
             new PrintUtil.ColumnDescriptor("price", "Price", 8, RIGHT, 2),
             new PrintUtil.ColumnDescriptor("unit", "Unit", 5, CENTER)
     ));

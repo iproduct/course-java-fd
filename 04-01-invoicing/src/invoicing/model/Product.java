@@ -12,7 +12,7 @@ public class Product extends AbstractEntity<Long, Product> {
     private String name;
     private String description = "No description";
     private String comments; // null, readonly
-    private double price; // 0.0
+    private Double price; // 0.0
     private Unit unit = PCS; //default initialization when declaring attribute
 
     // Constructors overloading
@@ -89,11 +89,11 @@ public class Product extends AbstractEntity<Long, Product> {
         this.description = description;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
