@@ -15,7 +15,7 @@ public class SimpleDemo {
         DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("dd MMMM yyyyг.");
         System.out.printf("Report due: %s%n", reportDay.format(dtf1));
         LocalDate paymentDay = reportDay.plus(5, ChronoUnit.DAYS);
-        System.out.printf("Report due: %s%n", paymentDay.format(dtf1));
+        System.out.printf("Payment due: %s%n", paymentDay.format(dtf1));
 
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
