@@ -63,8 +63,8 @@ public class JdbcDemo {
 //            }
 //            System.out.printf("%d records inserted successfully.", numInserts);
 
-            try (Statement ps = con.createStatement()) {
-                ResultSet rs = ps.executeQuery(SELECT_ALL_PRODUCTS_SQL);
+            try (Statement s = con.createStatement()) {
+                ResultSet rs = s.executeQuery(SELECT_ALL_PRODUCTS_SQL);
                 List<Product> products = new ArrayList<>();
                 while(rs.next()) {
                     Product p = new Product(

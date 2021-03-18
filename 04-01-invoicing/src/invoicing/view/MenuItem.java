@@ -9,6 +9,7 @@ import java.util.Set;
 public enum MenuItem {
     ADD_PRODUCT("Add Product"),
     PRINT_PRODUCTS("Print All Products"),
+    DELETE_PRODUCT("Delete Product By ID", new HashSet<>(Arrays.asList(Role.ADMIN))),
     ADD_CLIENT("Add Client"),
     ADD_SUPPLIER("Add Supplier"),
     PRINT_CLIENTS("Print All Clients"),
