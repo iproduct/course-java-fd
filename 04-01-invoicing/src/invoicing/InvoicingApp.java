@@ -8,15 +8,20 @@ import invoicing.domain.impl.ProductServiceImpl;
 import invoicing.model.Product;
 import invoicing.model.Unit;
 import invoicing.util.PrintUtil;
+import invoicing.view.Command;
+import invoicing.view.MenuItem;
 import invoicing.view.command.InputProductCommand;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import static invoicing.util.Alignment.*;
 import static invoicing.util.Alignment.CENTER;
 import static invoicing.util.PrintUtil.formatTable;
+import static invoicing.view.MenuItem.*;
 import static java.util.logging.Level.WARNING;
 
 public class InvoicingApp {
@@ -46,6 +51,7 @@ public class InvoicingApp {
 
 
     private ProductService productService;
+    private Map<MenuItem, Command> commands = new HashMap<>();
 
     public InvoicingApp() {
         productService = new ProductServiceImpl(
@@ -72,6 +78,16 @@ public class InvoicingApp {
                 LOG.log(WARNING, "Error creating product:", e);
             }
         }
+
+        // init menu commands
+        commands.put(ADD_PRODUCT, new InputProductCommand(productService));
+        commands.put(PRINT_PRODUCTS, () ->
+                formatTable(PRODUCT_COLUMNS, productService.findProducts(), "Products List") +
+                "\nTotal product count: " + productService.getProductsCount());
+        commands.put(EXIT, () -> {
+            System.exit(0);
+            return "Good Bye.";
+        });
     }
 
     private void run() {
