@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="course-java-fd04@localhost">
-  <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.20">
+  <database-model serializer="dbm" dbms="POSTGRES" family-id="POSTGRES" format-version="4.39">
     <root id="1">
-      <ServerVersion>12.4</ServerVersion>
       <DateStyle>mdy</DateStyle>
+      <ServerVersion>12.4</ServerVersion>
+      <StartupTime>1616050543</StartupTime>
       <TimeZones>true ACDT
 true ACSST
 false ACST
@@ -785,34 +786,32 @@ false Z
 false Zulu
 true posixrules
 </TimeZones>
-      <StartupTime>1616050543</StartupTime>
     </root>
     <database id="2" parent="1" name="course-java-fd01">
       <ObjectId>16393</ObjectId>
-      <Owner>postgres</Owner>
+      <OwnerName>postgres</OwnerName>
     </database>
     <database id="3" parent="1" name="course-java-fd04">
-      <ObjectId>49286</ObjectId>
-      <Owner>postgres</Owner>
-      <IntrospectionStateNumber>2269</IntrospectionStateNumber>
       <Current>1</Current>
+      <ObjectId>49286</ObjectId>
+      <OwnerName>postgres</OwnerName>
     </database>
     <database id="4" parent="1" name="invoicing">
       <ObjectId>41094</ObjectId>
-      <Owner>postgres</Owner>
+      <OwnerName>postgres</OwnerName>
     </database>
     <database id="5" parent="1" name="myblogs">
       <ObjectId>16394</ObjectId>
-      <Owner>postgres</Owner>
+      <OwnerName>postgres</OwnerName>
     </database>
     <database id="6" parent="1" name="myblogs2">
       <ObjectId>24750</ObjectId>
-      <Owner>postgres</Owner>
+      <OwnerName>postgres</OwnerName>
     </database>
     <database id="7" parent="1" name="postgres">
-      <ObjectId>13318</ObjectId>
       <Comment>default administrative connection database</Comment>
-      <Owner>postgres</Owner>
+      <ObjectId>13318</ObjectId>
+      <OwnerName>postgres</OwnerName>
     </database>
     <role id="8" parent="1" name="pg_execute_server_program">
       <ObjectId>4571</ObjectId>
@@ -839,211 +838,210 @@ true posixrules
       <ObjectId>4570</ObjectId>
     </role>
     <role id="16" parent="1" name="postgres">
-      <ObjectId>10</ObjectId>
-      <SuperRole>1</SuperRole>
+      <BypassRls>1</BypassRls>
+      <CanLogin>1</CanLogin>
       <CreateDb>1</CreateDb>
       <CreateRole>1</CreateRole>
-      <CanLogin>1</CanLogin>
+      <ObjectId>10</ObjectId>
       <Replication>1</Replication>
-      <BypassRls>1</BypassRls>
+      <SuperRole>1</SuperRole>
     </role>
     <tablespace id="17" parent="1" name="pg_default">
       <ObjectId>1663</ObjectId>
-      <Owner>postgres</Owner>
       <StateNumber>1</StateNumber>
+      <OwnerName>postgres</OwnerName>
     </tablespace>
     <tablespace id="18" parent="1" name="pg_global">
       <ObjectId>1664</ObjectId>
-      <Owner>postgres</Owner>
       <StateNumber>1</StateNumber>
+      <OwnerName>postgres</OwnerName>
     </tablespace>
-    <schema id="19" parent="3" name="information_schema">
-      <ObjectId>13018</ObjectId>
-      <Acl>10=UC/10
-U/10
-</Acl>
-      <StateNumber>282</StateNumber>
-      <Owner>postgres</Owner>
-    </schema>
-    <schema id="20" parent="3" name="pg_catalog">
-      <ObjectId>11</ObjectId>
-      <Comment>system catalog schema</Comment>
-      <Acl>10=UC/10
-U/10
-</Acl>
-      <StateNumber>275</StateNumber>
-      <Owner>postgres</Owner>
-    </schema>
-    <schema id="21" parent="3" name="public">
-      <ObjectId>2200</ObjectId>
-      <Comment>standard public schema</Comment>
-      <Acl>10=UC/10
-UC/10
-</Acl>
-      <StateNumber>276</StateNumber>
-      <Owner>postgres</Owner>
-      <IntrospectionStateNumber>2270</IntrospectionStateNumber>
-      <Current>1</Current>
-    </schema>
-    <extension id="22" parent="3" name="plpgsql">
-      <ObjectId>13304</ObjectId>
+    <access-method id="19" parent="3" name="heap">
+      <Comment>heap table access method</Comment>
+      <ObjectId>2</ObjectId>
+      <StateNumber>1</StateNumber>
+      <HandlerId>3</HandlerId>
+      <HandlerName>heap_tableam_handler</HandlerName>
+      <HandlerParentName>pg_catalog</HandlerParentName>
+    </access-method>
+    <access-method id="20" parent="3" name="btree">
+      <Comment>b-tree index access method</Comment>
+      <ObjectId>403</ObjectId>
+      <StateNumber>1</StateNumber>
+      <Type>index</Type>
+      <HandlerId>330</HandlerId>
+      <HandlerName>bthandler</HandlerName>
+      <HandlerParentName>pg_catalog</HandlerParentName>
+    </access-method>
+    <access-method id="21" parent="3" name="hash">
+      <Comment>hash index access method</Comment>
+      <ObjectId>405</ObjectId>
+      <StateNumber>1</StateNumber>
+      <Type>index</Type>
+      <HandlerId>331</HandlerId>
+      <HandlerName>hashhandler</HandlerName>
+      <HandlerParentName>pg_catalog</HandlerParentName>
+    </access-method>
+    <access-method id="22" parent="3" name="gist">
+      <Comment>GiST index access method</Comment>
+      <ObjectId>783</ObjectId>
+      <StateNumber>1</StateNumber>
+      <Type>index</Type>
+      <HandlerId>332</HandlerId>
+      <HandlerName>gisthandler</HandlerName>
+      <HandlerParentName>pg_catalog</HandlerParentName>
+    </access-method>
+    <access-method id="23" parent="3" name="gin">
+      <Comment>GIN index access method</Comment>
+      <ObjectId>2742</ObjectId>
+      <StateNumber>1</StateNumber>
+      <Type>index</Type>
+      <HandlerId>333</HandlerId>
+      <HandlerName>ginhandler</HandlerName>
+      <HandlerParentName>pg_catalog</HandlerParentName>
+    </access-method>
+    <access-method id="24" parent="3" name="spgist">
+      <Comment>SP-GiST index access method</Comment>
+      <ObjectId>4000</ObjectId>
+      <StateNumber>1</StateNumber>
+      <Type>index</Type>
+      <HandlerId>334</HandlerId>
+      <HandlerName>spghandler</HandlerName>
+      <HandlerParentName>pg_catalog</HandlerParentName>
+    </access-method>
+    <access-method id="25" parent="3" name="brin">
+      <Comment>block range index (BRIN) access method</Comment>
+      <ObjectId>3580</ObjectId>
+      <StateNumber>1</StateNumber>
+      <Type>index</Type>
+      <HandlerId>335</HandlerId>
+      <HandlerName>brinhandler</HandlerName>
+      <HandlerParentName>pg_catalog</HandlerParentName>
+    </access-method>
+    <extension id="26" parent="3" name="plpgsql">
       <Comment>PL/pgSQL procedural language</Comment>
+      <ObjectId>13304</ObjectId>
       <StateNumber>437</StateNumber>
       <Version>1.0</Version>
-      <SchemaName>pg_catalog</SchemaName>
-      <SchemaId>11</SchemaId>
+      <ExtSchemaId>11</ExtSchemaId>
+      <ExtSchemaName>pg_catalog</ExtSchemaName>
     </extension>
-    <language id="23" parent="3" name="c">
-      <ObjectId>13</ObjectId>
+    <language id="27" parent="3" name="c">
       <Comment>dynamically-loaded C functions</Comment>
+      <ObjectId>13</ObjectId>
       <StateNumber>1</StateNumber>
       <ValidatorName>fmgr_c_validator</ValidatorName>
       <ValidatorSchema>pg_catalog</ValidatorSchema>
     </language>
-    <language id="24" parent="3" name="internal">
-      <ObjectId>12</ObjectId>
+    <language id="28" parent="3" name="internal">
       <Comment>built-in functions</Comment>
+      <ObjectId>12</ObjectId>
       <StateNumber>1</StateNumber>
       <ValidatorName>fmgr_internal_validator</ValidatorName>
       <ValidatorSchema>pg_catalog</ValidatorSchema>
     </language>
-    <language id="25" parent="3" name="plpgsql">
-      <ObjectId>13308</ObjectId>
+    <language id="29" parent="3" name="plpgsql">
       <Comment>PL/pgSQL procedural language</Comment>
-      <StateNumber>437</StateNumber>
-      <Trusted>1</Trusted>
       <HandlerName>plpgsql_call_handler</HandlerName>
       <HandlerSchema>pg_catalog</HandlerSchema>
       <InlineHandlerName>plpgsql_inline_handler</InlineHandlerName>
       <InlineHandlerSchema>pg_catalog</InlineHandlerSchema>
+      <ObjectId>13308</ObjectId>
+      <StateNumber>437</StateNumber>
+      <Trusted>1</Trusted>
       <ValidatorName>plpgsql_validator</ValidatorName>
       <ValidatorSchema>pg_catalog</ValidatorSchema>
     </language>
-    <language id="26" parent="3" name="sql">
-      <ObjectId>14</ObjectId>
+    <language id="30" parent="3" name="sql">
       <Comment>SQL-language functions</Comment>
+      <ObjectId>14</ObjectId>
       <StateNumber>1</StateNumber>
       <Trusted>1</Trusted>
       <ValidatorName>fmgr_sql_validator</ValidatorName>
       <ValidatorSchema>pg_catalog</ValidatorSchema>
     </language>
-    <access-method id="27" parent="3" name="heap">
-      <ObjectId>2</ObjectId>
-      <Comment>heap table access method</Comment>
-      <StateNumber>1</StateNumber>
-      <Handler>pg_catalog.heap_tableam_handler</Handler>
-      <HandlerId>3</HandlerId>
-    </access-method>
-    <access-method id="28" parent="3" name="btree">
-      <ObjectId>403</ObjectId>
-      <Comment>b-tree index access method</Comment>
-      <StateNumber>1</StateNumber>
-      <Handler>pg_catalog.bthandler</Handler>
-      <HandlerId>330</HandlerId>
-      <Type>index</Type>
-    </access-method>
-    <access-method id="29" parent="3" name="hash">
-      <ObjectId>405</ObjectId>
-      <Comment>hash index access method</Comment>
-      <StateNumber>1</StateNumber>
-      <Handler>pg_catalog.hashhandler</Handler>
-      <HandlerId>331</HandlerId>
-      <Type>index</Type>
-    </access-method>
-    <access-method id="30" parent="3" name="gist">
-      <ObjectId>783</ObjectId>
-      <Comment>GiST index access method</Comment>
-      <StateNumber>1</StateNumber>
-      <Handler>pg_catalog.gisthandler</Handler>
-      <HandlerId>332</HandlerId>
-      <Type>index</Type>
-    </access-method>
-    <access-method id="31" parent="3" name="gin">
-      <ObjectId>2742</ObjectId>
-      <Comment>GIN index access method</Comment>
-      <StateNumber>1</StateNumber>
-      <Handler>pg_catalog.ginhandler</Handler>
-      <HandlerId>333</HandlerId>
-      <Type>index</Type>
-    </access-method>
-    <access-method id="32" parent="3" name="spgist">
-      <ObjectId>4000</ObjectId>
-      <Comment>SP-GiST index access method</Comment>
-      <StateNumber>1</StateNumber>
-      <Handler>pg_catalog.spghandler</Handler>
-      <HandlerId>334</HandlerId>
-      <Type>index</Type>
-    </access-method>
-    <access-method id="33" parent="3" name="brin">
-      <ObjectId>3580</ObjectId>
-      <Comment>block range index (BRIN) access method</Comment>
-      <StateNumber>1</StateNumber>
-      <Handler>pg_catalog.brinhandler</Handler>
-      <HandlerId>335</HandlerId>
-      <Type>index</Type>
-    </access-method>
-    <table id="34" parent="21" name="products">
+    <schema id="31" parent="3" name="information_schema">
+      <ObjectId>13018</ObjectId>
+      <StateNumber>282</StateNumber>
+      <OwnerName>postgres</OwnerName>
+    </schema>
+    <schema id="32" parent="3" name="pg_catalog">
+      <Comment>system catalog schema</Comment>
+      <ObjectId>11</ObjectId>
+      <StateNumber>275</StateNumber>
+      <OwnerName>postgres</OwnerName>
+    </schema>
+    <schema id="33" parent="3" name="public">
+      <Comment>standard public schema</Comment>
+      <Current>1</Current>
+      <IntrospectionStateNumber>2270</IntrospectionStateNumber>
+      <ObjectId>2200</ObjectId>
+      <StateNumber>276</StateNumber>
+      <OwnerName>postgres</OwnerName>
+    </schema>
+    <table id="34" parent="33" name="products">
       <ObjectId>49287</ObjectId>
-      <Owner>postgres</Owner>
+      <Outdated>1</Outdated>
       <StateNumber>2266</StateNumber>
+      <OwnerName>postgres</OwnerName>
     </table>
     <column id="35" parent="34" name="id">
-      <Position>1</Position>
       <DataType>bigint|0s</DataType>
       <NotNull>1</NotNull>
+      <Position>1</Position>
       <StateNumber>2266</StateNumber>
       <TypeId>20</TypeId>
     </column>
     <column id="36" parent="34" name="code">
-      <Position>2</Position>
       <DataType>varchar(5)|0s</DataType>
       <NotNull>1</NotNull>
+      <Position>2</Position>
       <StateNumber>2266</StateNumber>
       <TypeId>1043</TypeId>
     </column>
     <column id="37" parent="34" name="name">
-      <Position>3</Position>
       <DataType>varchar(80)|0s</DataType>
       <NotNull>1</NotNull>
+      <Position>3</Position>
       <StateNumber>2266</StateNumber>
       <TypeId>1043</TypeId>
     </column>
     <column id="38" parent="34" name="description">
-      <Position>4</Position>
       <DataType>varchar(2048)|0s</DataType>
       <NotNull>1</NotNull>
+      <Position>4</Position>
       <StateNumber>2266</StateNumber>
       <TypeId>1043</TypeId>
     </column>
     <column id="39" parent="34" name="price">
-      <Position>5</Position>
       <DataType>real|0s</DataType>
       <NotNull>1</NotNull>
+      <Position>5</Position>
       <StateNumber>2266</StateNumber>
       <TypeId>700</TypeId>
     </column>
     <column id="40" parent="34" name="unit">
-      <Position>6</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
+      <Position>6</Position>
       <StateNumber>2266</StateNumber>
       <TypeId>23</TypeId>
     </column>
     <index id="41" parent="34" name="products_pkey">
-      <ObjectId>49293</ObjectId>
-      <StateNumber>2266</StateNumber>
       <ColNames>id</ColNames>
-      <Unique>1</Unique>
+      <ObjectId>49293</ObjectId>
       <Primary>1</Primary>
+      <StateNumber>2266</StateNumber>
+      <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
-      <CollationIds>0</CollationIds>
       <ClassIds>3124</ClassIds>
+      <CollationIds>0</CollationIds>
     </index>
     <key id="42" parent="34" name="products_pkey">
-      <ObjectId>49294</ObjectId>
-      <StateNumber>2266</StateNumber>
       <ColNames>id</ColNames>
+      <ObjectId>49294</ObjectId>
       <Primary>1</Primary>
+      <StateNumber>2266</StateNumber>
       <UnderlyingIndexName>products_pkey</UnderlyingIndexName>
     </key>
   </database-model>

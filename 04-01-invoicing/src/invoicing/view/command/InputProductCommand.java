@@ -6,6 +6,7 @@ import invoicing.util.FieldConfig;
 import invoicing.util.InputUtil;
 import invoicing.view.Command;
 
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import static invoicing.util.FieldType.UNIT;
 public class InputProductCommand implements Command {
     private ProductService productService;
 
-    public InputProductCommand(ProductService productService) {
+    public InputProductCommand(ProductService productService, InputStream in) {
         this.productService = productService;
     }
 
@@ -29,7 +30,7 @@ public class InputProductCommand implements Command {
         });
 
         Product p = new Product();
-        if(InputUtil.inputInstance(productFields, p)) {
+        if(InputUtil.inputInstance(in, productFields, p)) {
             try {
                 productService.addProduct(p);
                 return String.format("Product %d: %s added successfully.", p.getId(), p.getName());

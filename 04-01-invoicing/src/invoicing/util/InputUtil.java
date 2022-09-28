@@ -4,6 +4,7 @@ import invoicing.exception.InvalidEntityDataException;
 import invoicing.model.Product;
 import invoicing.model.Unit;
 
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.time.LocalDate;
@@ -20,9 +21,9 @@ import static java.util.logging.Level.SEVERE;
 
 public class InputUtil {
     private static Logger LOG = Logger.getLogger(InputUtil.class.getName());
-    private static final Scanner sc = new Scanner(System.in);
 
-    public static boolean inputInstance(List<FieldConfig> fieldConfigs, Object instance) {
+    public static boolean inputInstance(InputStream in, List<FieldConfig> fieldConfigs, Object instance) {
+        Scanner sc = new Scanner(in);
         for (FieldConfig fc : fieldConfigs) {
             StringBuilder setterName = new StringBuilder(fc.property);
             setterName.setCharAt(0, Character.toUpperCase(setterName.charAt(0)));
